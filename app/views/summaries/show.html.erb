@@ -1,0 +1,13 @@
+<h2>入力内容</h2>
+<br>
+<p><%= @summary.content %></p>
+<br>
+<h2>要約結果</h2>
+<br>
+<ul>
+  <% @summary.summary.split(" ").each do |line| %>
+    <li>・<%= line %></li>
+  <% end %>
+</ul>
+<br>
+<%= link_to '一覧に戻る', summaries_path %>

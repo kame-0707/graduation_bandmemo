@@ -1,0 +1,9 @@
+<%= form_with model: @summary, local: true do |form| %>
+  <div>
+    <%= form.label :content, "コンテンツ:" %>
+    <%= form.text_area :content, rows: 5 %>
+  </div>
+  <div>
+    <%= form.submit "要約" %>
+  </div>
+<% end %>

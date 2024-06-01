@@ -1,30 +1,35 @@
-class ContentsController < ApplicationController
+# app/controllers/summaries_controller.rb
+class SummariesController < ApplicationController
   def new
-    @content = Content.new
+    @summary = Summary.new
   end
 
   def create
-    @content = Content.new(content_params)
-    if @content.save
-      summary = ::OpenaiService.new.summarize(@content.original)
-      if summary
-        @content.update(summary: summary)
-        redirect_to contents_path, notice: 'コンテンツが要約されて投稿されました。'
-      else
-        redirect_to new_content_path, alert: 'コンテンツの要約に失敗しました。'
-      end
+    client = OpenAI::Client.new
+    response = client.completions(
+      parameters: {
+        model: "text-davinci-003",
+        prompt: "以下のコンテンツを要約してください: #{params[:summary][:content]}",
+        max_tokens: 50
+      }
+    )
+
+    summary_text = response.dig("choices", 0, "text").strip
+
+    @summary = Summary.new(content: params[:summary][:content], summary: summary_text)
+
+    if @summary.save
+      redirect_to @summary
     else
       render :new
     end
   end
 
   def index
-    @contents = Content.all
+    @summaries = Summary.all
   end
 
-  private
-
-  def content_params
-    params.require(:content).permit(:original)
+  def show
+    @summary = Summary.find(params[:id])
   end
 end

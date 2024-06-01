@@ -1,0 +1,11 @@
+<h1>要約一覧</h1>
+
+<%= link_to '新しい要約を作成', new_summary_path %>
+
+<ul>
+  <% @summaries.each do |summary| %>
+    <li>
+      <%= link_to summary.summary, summary %>
+    </li>
+  <% end %>
+</ul>
