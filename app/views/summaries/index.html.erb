@@ -1,11 +1,40 @@
-<h1>練習内容メモ要約一覧</h1>
+<h1 class="text-center text-xl font-bold mb-4">要約メモ一覧</h1>
 
-<%= link_to '新しい要約メモを作成', new_summary_path %>
+<div class="flex justify-center mb-4">
+  <div class="flex justify-center mt-auto">
+    <%= link_to  new_summary_path do %>
+      <button class="btn btn-secondary">新しい要約メモを作成</button>
+    <% end %>
+  </div>
+</div>
 
-<ul>
-  <% @summaries.each do |summary| %>
-    <li>
-      <%= link_to summary.summary, summary %>
-    </li>
-  <% end %>
-</ul>
+<div class="flex justify-center">
+  <%# summary.summary：渡されてきたsummaryオブジェクトの、summaryカラムの中身 %>
+  <%# summary_path(summary)：渡されてきたummaryオブジェクトを、showページへ遷移するパスにわたしている %>
+  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto">
+    <% @summaries.each do |summary| %>
+      <li class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+        <div class="flex justify-center mt-auto">
+          <%= link_to summary_path(summary) do %>
+          <div class="mr-4"><button class="btn btn-outline btn-info">原文はこちら</button></div>
+          <% end %>
+          <%= link_to summary_path(summary) do %>
+          <div class="mr-4"><button class="btn btn-outline btn-success">編集する</button></div>
+          <% end %>
+          <%= link_to summary_path(summary) do %>
+          <div class="mr-4"><button class="btn btn-outline btn-error">削除する</button></div>
+          <% end %>
+        </div>
+        <div class="flex-grow">
+          <p class="mb-4">
+            <ul>
+              <% summary.summary.split(" ").each do |line| %>
+                <li><%= line %></li>
+              <% end %>
+            </ul>
+          </p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
