@@ -1,0 +1,10 @@
+<%= form_with model: @summary, local: true do |form| %>
+  <div>
+    <%= form.label :summary, "メモの要約:" %>
+    <%= form.text_area :summary, rows: 5 %>
+  </div>
+  <div>
+    <%= form.submit "編集を保存する" %>
+  </div>
+<% end %>
+<%= link_to '一覧に戻る', summaries_path %>
