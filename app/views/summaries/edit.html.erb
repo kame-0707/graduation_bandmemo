@@ -1,10 +1,24 @@
-<%= form_with model: @summary, local: true do |form| %>
-  <div>
-    <%= form.label :summary, "メモの要約:" %>
-    <%= form.text_area :summary, rows: 5 %>
-  </div>
-  <div>
-    <%= form.submit "編集を保存する" %>
-  </div>
-<% end %>
-<%= link_to '一覧に戻る', summaries_path %>
+<h1 class="text-center text-xl font-bold mb-4">メモの編集</h1>
+
+<div class="flex flex-col items-center">
+  <%= form_with model: @summary, local: true do |form| %>
+    <div class="mb-4 text-center">
+      <%= form.label :summary, "編集欄" %>
+    </div>
+    <div class="mb-4 w-full max-w-md">
+      <%= form.text_area :summary, rows: 5, class: "w-full" %>
+    </div>
+    <div class="flex justify-between w-full max-w-md" style="margin-top: 1cm;">
+      <div class="flex-1 mr-2">
+        <button class="btn btn-outline btn-success w-full">
+          <%= form.submit "編集して保存" %>
+        </button>
+      </div>
+      <div class="flex-1 ml-2">
+        <%= link_to summaries_path do %>
+          <button class="btn btn-outline btn-secondary w-full">練習メモ一覧に戻る</button>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

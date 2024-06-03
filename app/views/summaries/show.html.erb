@@ -1,9 +1,5 @@
-<h2>今日のメモ</h2>
+<h2>メモ原文</h2>
 <br>
 <p><%= @summary.content %></p>
-<br>
-<h2>メモの要約</h2>
-<br>
-  <%= markdown(@summary.summary) %>
 <br>
 <%= link_to '一覧に戻る', summaries_path %>
