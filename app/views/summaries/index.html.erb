@@ -26,13 +26,7 @@
           <% end %>
         </div>
         <div class="flex-grow">
-          <p class="mb-4">
-            <ul>
-              <% summary.summary.split(" ").each do |line| %>
-                <li><%= line %></li>
-              <% end %>
-            </ul>
-          </p>
+              <%= markdown(summary.summary) %>
         </div>
       </li>
     <% end %>

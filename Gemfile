@@ -5,6 +5,9 @@ ruby "3.2.3"
 #openai_api
 gem "ruby-openai"
 
+#openai_apiの出力するMarkdownのテキストをHTMLに変換
+gem 'redcarpet'
+
 #環境変数管理の設定
 gem 'dotenv-rails'
 

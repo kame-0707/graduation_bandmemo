@@ -4,10 +4,6 @@
 <br>
 <h2>メモの要約</h2>
 <br>
-<ul>
-  <% @summary.summary.split(" ").each do |line| %>
-    <li><%= line %></li>
-  <% end %>
-</ul>
+  <%= markdown(@summary.summary) %>
 <br>
 <%= link_to '一覧に戻る', summaries_path %>
