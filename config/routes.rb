@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "summaries#index"
+  root "static_pages#top"
   resources :summaries, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
