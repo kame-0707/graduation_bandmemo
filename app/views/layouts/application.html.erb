@@ -11,14 +11,23 @@
   </head>
 
   <body>
-    <%# <% if logged_in? %> 
-      <%= render 'shared/header' %> 
-    <%# <% else %> 
-      <%# <%= render 'shared/before_login_header' %> 
-    <%# <% end %> 
-<%# renderを使用して、部分テンプレートを呼び出す %>
-    <%# <%= render 'shared/flash_message' %> 
-    <%= yield %>
-    <%= render 'shared/footer' %>
+    <div class="min-h-screen w-full relative pb-12">
+      <div class="w-full">
+        <% if logged_in? %> 
+          <%= render 'shared/header' %>  
+        <% else %> 
+          <%= render 'shared/before_login_header' %> 
+      <% end %> 
+      </div>
+      <div class="my-5">
+        <%# フラッシュメッセージの表示 %>
+        <%# <%= render 'shared/flash_message' %> 
+        <%= yield %>
+      </div>
+      <div class="absolute bottom-0 w-full">
+        <!-- フッター -->
+        <%= render 'shared/footer' %>
+      </div>
+    </div>
   </body>
 </html>

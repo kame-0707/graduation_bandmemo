@@ -11,6 +11,9 @@ gem 'redcarpet'
 #環境変数管理の設定
 gem 'dotenv-rails'
 
+ #認証
+gem 'sorcery'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.3"
 
