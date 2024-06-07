@@ -1,4 +1,6 @@
-<h1 class="text-center text-xl font-bold mt-10">bandmemoロゴ</h1>
+<div class="flex justify-center mt-4">
+  <%= image_tag 'bandmemo.png', width: '400', height: '100' %>
+</div>
 
 <div class="flex justify-center mt-4">
   <p>アプリの説明を色々書く！</p>
@@ -6,7 +8,7 @@
 
 <div class="flex justify-center mt-4">
   <%= link_to summaries_path do %>
-    <button class="btn btn-outline btn-secondary">練習メモ一覧を見る</button>
+    <div class="mr-4"><button class="btn btn-outline btn-secondary">練習メモ一覧を見る</button></div>
   <% end %>
   <%= link_to  new_summary_path do %>
     <button class="btn btn-secondary">新しいメモを作成</button>
