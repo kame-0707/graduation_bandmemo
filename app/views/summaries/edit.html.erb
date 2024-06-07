@@ -1,11 +1,11 @@
-<h1 class="text-center text-xl font-bold mt-10">メモの編集</h1>
+<div class="text-center text-xl font-bold mt-10">メモの編集</div>
 
 <div class="flex flex-col items-center mt-4">
   <%= form_with model: @summary, local: true do |form| %>
-    <div class="mb-4 text-center">
-      <%= form.label :summary, "編集欄" %>
-    </div>
     <div class="mb-4 w-full max-w-md">
+      <%= form.label :title, 'タイトル'%>
+      <%= form.text_area :title, rows: 1, class: "w-full" %>
+      <%= form.label :summary, 'メモ内容' %>
       <%= form.text_area :summary, rows: 5, class: "w-full" %>
     </div>
     <div class="flex justify-between w-full max-w-md" style="margin-top: 1cm;">
