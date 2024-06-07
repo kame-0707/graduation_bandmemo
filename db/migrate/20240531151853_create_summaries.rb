@@ -3,6 +3,7 @@ class CreateSummaries < ActiveRecord::Migration[7.1]
     create_table :summaries do |t|
       t.text :content
       t.text :summary
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

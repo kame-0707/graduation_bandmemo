@@ -1,7 +1,7 @@
-<div class="container">
+<div class="flex justify-center">
   <div class="row">
     <div class=" col-md-10 col-lg-8 mx-auto">
-      <h1>ログイン</h1>
+      <h1 class="text-center text-xl font-bold mt-10">ログイン</h1>
       <%= form_with url: login_path do |f| %>
         <div class="mb-3">
           <%= f.label :email %>
@@ -15,7 +15,7 @@
       <% end %>
       <div class='text-center'>
         <%= link_to '登録ページへ', new_user_path %>
-        <%= link_to 'パスワードをお忘れの方はこちら', '#' %>
+        <%= link_to 'パスワードをお忘れの方はこちら(未)', '#' %>
       </div>
     </div>
   </div>
