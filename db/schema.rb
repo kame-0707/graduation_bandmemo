@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_06_023252) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_08_074759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "summaries", force: :cascade do |t|
-    t.text "title"
-    t.text "content"
-    t.text "summary"
+    t.text "title", null: false
+    t.text "content", null: false
+    t.text "summary", null: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,5 +34,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_06_023252) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "voices", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_voices_on_user_id"
+  end
+
   add_foreign_key "summaries", "users"
+  add_foreign_key "voices", "users"
 end

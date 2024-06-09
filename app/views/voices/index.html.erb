@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Speech to Text</title>
+  <meta name="csrf-token" content="<%= form_authenticity_token %>">
+  <%= javascript_include_tag 'application' %>
+</head>
+<body>
+  <h1>Speech to Text</h1>
+
+  <button id="start-button">Start</button>
+  <button id="stop-button">Stop</button>
+  <div id="transcript"></div>
+
+  <h2>Saved Voices</h2>
+  <ul>
+    <% @voices.each do |voice| %>
+      <li><%= voice.content %></li>
+    <% end %>
+  </ul>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const startButton = document.getElementById("start-button");
+      const stopButton = document.getElementById("stop-button");
+      const transcriptElement = document.getElementById("transcript");
+      let recognition;
+      let finalTranscript = '';
+
+      if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+      } else if ('SpeechRecognition' in window) {
+        recognition = new SpeechRecognition();
+      } else {
+        alert("Your browser does not support Web Speech API");
+        return;
+      }
+
+      recognition.continuous = true;
+      recognition.interimResults = true;
+
+      recognition.onresult = function(event) {
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+        transcriptElement.textContent = finalTranscript + interimTranscript;
+      };
+
+      recognition.onerror = function(event) {
+        console.error("Speech recognition error", event);
+      };
+
+      recognition.onend = function() {
+        if (finalTranscript.trim() !== "") {
+          fetch('/voices', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ voice: { content: finalTranscript } })
+          }).then(response => {
+            if (response.ok) {
+              window.location.reload();
+            } else {
+              return response.json().then(data => {
+                alert("Error saving voice: " + data.errors.join(", "));
+              });
+            }
+          });
+        }
+      };
+
+      startButton.addEventListener("click", function() {
+        finalTranscript = '';
+        recognition.start();
+      });
+
+      stopButton.addEventListener("click", function() {
+        recognition.stop();
+      });
+    });
+  </script>
+</body>
+</html>
