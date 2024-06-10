@@ -1,33 +1,40 @@
-<div class="text-center text-xl font-bold mt-10">練習メモ一覧</div >
+<div class="text-center text-xl font-bold mt-10">③練習メモ一覧</div >
 <div class="flex justify-center mt-4">
+  <%= link_to  voices_path do %>
+    <div class="mr-4"><button class="btn btn-accent">音声で仮メモを作成</button></div>
+  <% end %>
   <%= link_to  new_summary_path do %>
-    <button class="btn btn-secondary">新しいメモを作成</button>
+    <div class="mr-4"><button class="btn btn-secondary">メモを要約・保存</button></div>
   <% end %>
 </div>
 
 <div class="flex justify-center mt-10">
   <%# summary.summary：渡されてきたsummaryオブジェクトの、summaryカラムの中身 %>
   <%# summary_path(summary)：渡されてきたummaryオブジェクトを、showページへ遷移するパスにわたしている %>
-  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto">
-    <% @summaries.each do |summary| %>
-      <li class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
-        <div class="flex justify-center mt-auto">
-          <%= link_to summary_path(summary) do %>
-            <div class="mr-4"><button class="btn btn-outline btn-info">原文はこちら</button></div>
-          <% end %>
-          <%= link_to edit_summary_path(summary) do %>
-            <div class="mr-4"><button class="btn btn-outline btn-success">編集</button></div>
-          <% end %>
-          <%= link_to summary_path(summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
-            <div class="mr-4"><button class="btn btn-outline btn-error">削除</button></div>
-          <% end %>
-        </div>
-        <div class="flex-grow">
-          <div class="text-center text-lg font-bold mt-2"><%= summary.title %></div>
-          <div class="text-center mt-2"><%= summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>
-          <div class="mt-2"><%= markdown(summary.summary) %></div>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+  <% if @summaries.present? %>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto">
+        <% @summaries.each do |summary| %>
+          <li class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+            <div class="flex justify-center mt-auto">
+              <%= link_to summary_path(summary) do %>
+                <div class="mr-4"><button class="btn btn-outline btn-info">原文はこちら</button></div>
+              <% end %>
+              <%= link_to edit_summary_path(summary) do %>
+                <div class="mr-4"><button class="btn btn-outline btn-success">編集</button></div>
+              <% end %>
+              <%= link_to summary_path(summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                <div class="mr-4"><button class="btn btn-outline btn-error">削除</button></div>
+              <% end %>
+            </div>
+            <div class="flex-grow">
+              <div class="text-center text-lg font-bold mt-2"><%= summary.title %></div>
+              <div class="text-center mt-2"><%= summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>
+              <div class="mt-2"><%= markdown(summary.summary) %></div>
+            </div>
+          </li>
+        <% end %>
+    </ul>
+  <% else %>
+  <div>メモが見つかりません</div>
+  <% end %>
 </div>

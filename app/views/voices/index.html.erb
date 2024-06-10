@@ -1,89 +1,127 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Speech to Text</title>
-  <meta name="csrf-token" content="<%= form_authenticity_token %>">
-  <%= javascript_include_tag 'application' %>
+  <title>音声入力</title>
+  <%= csrf_meta_tags %>
 </head>
 <body>
-  <h1>Speech to Text</h1>
+  <div class="text-center text-xl font-bold mt-10">①音声で仮メモを作成</div>
+  
+  <div class="flex justify-center mt-4 mb-4">
+    <div class="mr-4"><button class="btn btn-outline btn-secondary" id="start-record-btn">録音開始</button></div>
+    <div class="mr-4"><button class="btn btn-outline btn-secondary" id="stop-record-btn" disabled>録音停止</button></div>
+  </div>
 
-  <button id="start-button">Start</button>
-  <button id="stop-button">Stop</button>
-  <div id="transcript"></div>
+<div class="text-center">
+    <div id="status">
+      <p>「録音開始」ボタンをクリックして話し始めてください...</p>
+      <p>※日本語のみに対応</p>
+    </div>
+    <div id="real-time-content"></div> <!-- リアルタイムの音声入力表示用 -->
+</div>
+    
+    <div class="text-center text-base font-bold mt-4 mb-4">音声文字起こし一覧</div>
+    <div class="flex justify-center mt-4">
+      <%= link_to  new_summary_path do %>
+        <div class="mr-4 mb-4"><button class="btn btn-secondary">メモを要約・保存ページへ</button></div>
+      <% end %>
+    </div>
+    <ul class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
+      <% if @voices.present? %>
+        <% @voices.each do |voice| %>
+          <li class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+            <div class="flex justify-center mt-auto">
+              <%= link_to edit_voice_path(voice) do %>
+                <div class="mr-4"><button class="btn btn-outline btn-success">編集</button></div>
+              <% end %>
+              <%= link_to voice_path(voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                <div class="mr-4"><button class="btn btn-outline btn-error">削除</button></div>
+              <% end %>
+            </div>
+            <div class="mt-2">
+              <%= voice.content %>
+            </div>
+          </li>
+        <% end %>
+      <% else %>
+        <div>音声文字起こしが見つかりません</div>
+      <% end %>
+    </ul>
+ 
 
-  <h2>Saved Voices</h2>
-  <ul>
-    <% @voices.each do |voice| %>
-      <li><%= voice.content %></li>
-    <% end %>
-  </ul>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const startButton = document.getElementById("start-button");
-      const stopButton = document.getElementById("stop-button");
-      const transcriptElement = document.getElementById("transcript");
-      let recognition;
-      let finalTranscript = '';
+      const startButton = document.getElementById('start-record-btn');
+      const stopButton = document.getElementById('stop-record-btn');
+      const status = document.getElementById('status');
+      const realTimeContent = document.getElementById('real-time-content');
+      
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'ja-JP'; // 言語を日本語に設定
+      recognition.interimResults = true; // 中間結果を取得
 
-      if ('webkitSpeechRecognition' in window) {
-        recognition = new webkitSpeechRecognition();
-      } else if ('SpeechRecognition' in window) {
-        recognition = new SpeechRecognition();
-      } else {
-        alert("Your browser does not support Web Speech API");
-        return;
-      }
+      let finalTranscript = ''; // 最終結果を保持する変数
 
-      recognition.continuous = true;
-      recognition.interimResults = true;
-
-      recognition.onresult = function(event) {
-        let interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          if (event.results[i].isFinal) {
-            finalTranscript += event.results[i][0].transcript;
-          } else {
-            interimTranscript += event.results[i][0].transcript;
-          }
-        }
-        transcriptElement.textContent = finalTranscript + interimTranscript;
-      };
-
-      recognition.onerror = function(event) {
-        console.error("Speech recognition error", event);
+      recognition.onstart = function() {
+        status.textContent = '録音中...';
+        startButton.disabled = true;
+        stopButton.disabled = false;
       };
 
       recognition.onend = function() {
-        if (finalTranscript.trim() !== "") {
-          fetch('/voices', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ voice: { content: finalTranscript } })
-          }).then(response => {
-            if (response.ok) {
-              window.location.reload();
-            } else {
-              return response.json().then(data => {
-                alert("Error saving voice: " + data.errors.join(", "));
-              });
-            }
-          });
-        }
+        status.textContent = '録音が停止されました';
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        saveVoiceContent(finalTranscript); // 最終結果を保存
       };
 
-      startButton.addEventListener("click", function() {
-        finalTranscript = '';
+      recognition.onresult = function(event) {
+        let interimTranscript = ''; // 中間結果を保持する変数
+
+        for (let i = 0; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript; // 最終結果に追加
+          } else {
+            interimTranscript += transcript; // 中間結果に追加
+          }
+        }
+        
+        realTimeContent.textContent = finalTranscript + interimTranscript; // リアルタイムの内容を表示
+      };
+
+      recognition.onerror = function(event) {
+        status.textContent = `認識中にエラーが発生しました: ${event.error}`;
+        startButton.disabled = false;
+        stopButton.disabled = true;
+      };
+
+      startButton.addEventListener('click', function() {
+        finalTranscript = ''; // 新しい録音のためにリセット
         recognition.start();
       });
 
-      stopButton.addEventListener("click", function() {
+      stopButton.addEventListener('click', function() {
         recognition.stop();
       });
+
+      function saveVoiceContent(content) {
+        $.ajax({
+          url: '/voices',
+          type: 'POST',
+          data: { voice: { content: content } },
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+          success: function(response) {
+            console.log('音声コンテンツが正常に保存されました');
+            location.reload(); // ページを再読み込みして新しい内容を表示
+          },
+          error: function(response) {
+            console.log('音声コンテンツの保存中にエラーが発生しました');
+          }
+        });
+      }
     });
   </script>
 </body>
