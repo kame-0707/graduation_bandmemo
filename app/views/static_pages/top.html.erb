@@ -2,15 +2,15 @@
   <%= image_tag 'bandmemo.png', width: '400', height: '100' %>
 </div>
 
-<div class="flex text-center justify-center mt-4">
+<div class="flex text-center justify-center mt-0 mb-10">
   「Aメロってどんなイメージで演奏することになったっけ、、？」<br>
   バンド練習で決まった決定事項、確実にメモして共有できていますか？<br>
-  忙しいけど、バンドで最高のパフォーマンスをしたい。<br>
-  そんな皆さんのための、メモアプリです<br>
+  忙しいけど、バンドで最高のパフォーマンスをしたい！<br>
+  そんな皆さんのための、メモアプリです。<br>
 </div>
 
 <% if logged_in? %> 
-  <div class="flex justify-center mt-4">
+  <div class="flex justify-center mb-10">
     <%= link_to  voices_path do %>
       <div class="mr-4"><button class="btn btn-accent">①音声文字起こしで仮メモ作成</button></div>
     <% end %>
@@ -21,4 +21,32 @@
       <div class="mr-4"><button class="btn btn-outline btn-secondary">③練習メモ一覧を見る</button></div>
     <% end %>
   </div>
+<% else %>
+  <div class="flex justify-center mb-10">
+    <%= link_to new_user_path do %>
+      <div class="mr-4"><button class="btn btn-accent">新規登録はこちら</button></div>
+    <% end %>
+    <%= link_to login_path do %>
+      <div class="mr-4"><button class="btn btn-secondary">ログインはこちら</button></div>
+    <% end %>
+  </div>
 <% end %>
+
+<div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
+  <div class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+    <div class="font-bold mb-4">①音声文字起こしで仮メモ作成</div>
+    ・手入力が面倒な場面でも、音声文字起こし機能で仮メモの作成ができます。<br>
+    ・作成されたテキストは編集可能です。<br>
+  </div>
+  <div class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+    <div class="font-bold mb-4">②メモを要約・保存</div>
+    ・音声文字起こしで作成した仮メモを、AIにまとめてもらいましょう。<br>
+    ・箇条書きで要点を押さえた書き方に変換。<br>
+    ・原文テキストの確認・変換後テキストの編集が可能であるため、メモ内容を最終調整できます。<br>
+  </div>
+  <div class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+    <div class="font-bold mb-4">③練習メモ一覧</div>
+    ・作成されたメモを一覧で確認。<br>
+    ・分かりやすくまとめられたメモをメンバーに共有して、次回以降の練習に活かしましょう！<br>
+  </div>
+</div>
