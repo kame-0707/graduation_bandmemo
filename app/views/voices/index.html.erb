@@ -46,7 +46,7 @@
   <% if @voices.present? %>
     <% @voices.each do |voice| %>
       <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4 relative">
-        <div class="absolute top-1 right-1 flex space-x-2">
+        <div class="absolute top-1 left-1 flex space-x-2">
           <%= link_to edit_voice_path(voice) do %>
             <div class="mb-2">
               <button class="btn btn-outline btn-success text-xs p-2">
@@ -60,7 +60,7 @@
             </button>
           <% end %>
         </div>
-        <div class="mt-2 pr-28">
+        <div class="mt-2 pl-28">
           <%= voice.content %>
         </div>
       </li>
