@@ -121,9 +121,8 @@
         status.textContent = `認識中にエラーが発生しました: ${event.error}`;
         startButton.disabled = false;
         stopButton.disabled = true;
-      };
 
-      // エラーの種類によって再試行
+        // エラーの種類によって再試行
         if (event.error === 'network') {
           console.log('ネットワークエラーが発生しました。再試行します...');
           if (isRecording) {
