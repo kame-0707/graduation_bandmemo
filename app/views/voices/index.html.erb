@@ -123,6 +123,17 @@
         stopButton.disabled = true;
       };
 
+      // エラーの種類によって再試行
+        if (event.error === 'network') {
+          console.log('ネットワークエラーが発生しました。再試行します...');
+          if (isRecording) {
+            setTimeout(() => recognition.start(), 1000); // 1秒後に再試行
+          }
+        } else {
+          console.log('エラー:', event.error);
+        }
+      };
+
       startButton.addEventListener('click', function() {
         finalTranscript = ''; // 新しい録音のためにリセット
         interimTranscript = ''; // 中間結果をリセット
