@@ -33,41 +33,42 @@
     <%= link_to new_summary_path do %>
       <div class="mr-4 mb-4">
         <button class="btn btn-secondary">
-          <div class="text-xs">メモを要約・保存ページへ</div>
+          <div class="text-xs">
+            必要な仮メモをコピー後、<br>
+            メモを要約・保存ページへ
+          </div>
         </button>
       </div>
     <% end %>
   </div>
   
-  <ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
-    <% if @voices.present? %>
-      <% @voices.each do |voice| %>
-        <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
-          <div class="flex justify-center mt-auto">
-            <%= link_to edit_voice_path(voice) do %>
-              <div class="mr-4">
-                <button class="btn btn-outline btn-success">
-                  <div class="text-xs">編集</div>
-                </button>
-              </div>
-            <% end %>
-            <%= link_to voice_path(voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
-              <div class="mr-4">
-                <button class="btn btn-outline btn-error">
-                  <div class="text-xs">削除</div>
-                </button>
-              </div>
-            <% end %>
-          </div>
-          <div class="mt-2">
-            <%= voice.content %>
-          </div>
-        </li>
-      <% end %>
-    <% else %>
-      <div>音声文字起こしが見つかりません</div>
+<ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
+  <% if @voices.present? %>
+    <% @voices.each do |voice| %>
+      <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4 relative">
+        <div class="absolute top-1 right-1 flex space-x-2">
+          <%= link_to edit_voice_path(voice) do %>
+            <div class="mb-2">
+              <button class="btn btn-outline btn-success text-xs p-2">
+                編集
+              </button>
+            </div>
+          <% end %>
+          <%= link_to voice_path(voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+            <button class="btn btn-outline btn-error text-xs p-2">
+              削除
+            </button>
+          <% end %>
+        </div>
+        <div class="mt-2 pr-28">
+          <%= voice.content %>
+        </div>
+      </li>
     <% end %>
-  </ul>
+  <% else %>
+    <div>音声文字起こしが見つかりません</div>
+  <% end %>
+</ul>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
   <script>
