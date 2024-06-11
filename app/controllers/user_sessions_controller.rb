@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
   skip_before_action :require_login, only: %i[new create]
+  # before_action :redirect_if_authenticated, only: %i[new create]
 
   def new; end
 
@@ -7,7 +8,7 @@ class UserSessionsController < ApplicationController
     @user = login(params[:email], params[:password])
 
     if @user
-      redirect_to root_path, notice: 'ログインしました'
+      redirect_back_or_to root_path, notice: 'ログインしました'
     else
       flash.now[:alert] = 'ログインできませんでした'
       render :new, status: :unprocessable_entity
