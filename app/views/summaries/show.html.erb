@@ -1,9 +1,11 @@
 <div class="text-center text-xl font-bold mt-10">メモ原文</div>
 <br>
-<p><%= @summary.content %></p>
+<div class="mx-4"><%= @summary.content %></div>
 <br>
 <div class="flex justify-center mt-4">
   <%= link_to  summaries_path do %>
-    <button class="btn btn-secondary">一覧に戻る</button>
+    <button class="btn btn-secondary">
+      <div class="text-xs">一覧に戻る</div>
+    </button>
   <% end %>
 </div>

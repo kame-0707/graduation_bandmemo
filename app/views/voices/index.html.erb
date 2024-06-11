@@ -8,11 +8,19 @@
   <div class="text-center text-xl font-bold mt-10">①音声文字起こしで仮メモ作成</div>
   
   <div class="flex justify-center mt-4 mb-4">
-    <div class="mr-4"><button class="btn btn-outline btn-secondary" id="start-record-btn">録音開始</button></div>
-    <div class="mr-4"><button class="btn btn-outline btn-secondary" id="stop-record-btn" disabled>録音停止</button></div>
+    <div class="mr-4">
+      <button class="btn btn-outline btn-secondary" id="start-record-btn">
+        <div class="text-xs">録音開始</div>
+       </button>
+    </div>
+    <div class="mr-4">
+      <button class="btn btn-outline btn-secondary" id="stop-record-btn" disabled>
+        <div class="text-xs">録音停止</div>
+      </button>
+    </div>
   </div>
 
-<div class="text-center">
+<div class="text-center text-sm mx-10">
     <div id="status">
       <p>「録音開始」ボタンをクリックして話し始めてください...</p>
       <p>※日本語のみに対応</p>
@@ -23,19 +31,31 @@
     <div class="text-center text-base font-bold mt-4 mb-4">音声文字起こし一覧</div>
     <div class="flex justify-center mt-4">
       <%= link_to  new_summary_path do %>
-        <div class="mr-4 mb-4"><button class="btn btn-secondary">メモを要約・保存ページへ</button></div>
+        <div class="mr-4 mb-4">
+          <button class="btn btn-secondary">
+            <div class="text-xs">メモを要約・保存ページへ</div>
+          </button>
+        </div>
       <% end %>
     </div>
-    <ul class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
+    <ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
       <% if @voices.present? %>
         <% @voices.each do |voice| %>
-          <li class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+          <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
             <div class="flex justify-center mt-auto">
               <%= link_to edit_voice_path(voice) do %>
-                <div class="mr-4"><button class="btn btn-outline btn-success">編集</button></div>
+                <div class="mr-4">
+                  <button class="btn btn-outline btn-success">
+                    <div class="text-xs">編集</div>
+                  </button>
+                </div>
               <% end %>
               <%= link_to voice_path(voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
-                <div class="mr-4"><button class="btn btn-outline btn-error">削除</button></div>
+                <div class="mr-4">
+                  <button class="btn btn-outline btn-error">
+                    <div class="text-xs">削除</div>
+                  </button>
+                </div>
               <% end %>
             </div>
             <div class="mt-2">
