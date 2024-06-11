@@ -14,7 +14,7 @@
        </button>
     </div>
     <div class="mr-4">
-      <button class="btn btn-outline btn-secondary" id="stop-record-btn">
+      <button class="btn btn-outline btn-secondary" id="stop-record-btn" disabled>
         <div class="text-xs">録音停止</div>
       </button>
     </div>
@@ -76,12 +76,14 @@
       const stopButton = document.getElementById('stop-record-btn');
       const status = document.getElementById('status');
       const realTimeContent = document.getElementById('real-time-content');
-      
+
       const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       recognition.lang = 'ja-JP'; // 言語を日本語に設定
       recognition.interimResults = true; // 中間結果を取得
 
       let finalTranscript = ''; // 最終結果を保持する変数
+      let interimTranscript = ''; // 中間結果を保持する変数
+      let isRecording = false; // 録音中かどうかを示すフラグ
 
       recognition.onstart = function() {
         status.textContent = '録音中...';
@@ -90,14 +92,18 @@
       };
 
       recognition.onend = function() {
-        status.textContent = '録音が停止されました';
-        startButton.disabled = false;
-        stopButton.disabled = true;
-        saveVoiceContent(finalTranscript); // 最終結果を保存
+        if (isRecording) { // 手動で停止されるまで再度開始
+          recognition.start();
+        } else {
+          status.textContent = '録音が停止されました';
+          startButton.disabled = false;
+          stopButton.disabled = true;
+          saveVoiceContent(finalTranscript); // 最終結果を保存
+        }
       };
 
       recognition.onresult = function(event) {
-        let interimTranscript = ''; // 中間結果を保持する変数
+        interimTranscript = ''; // 中間結果をリセット
 
         for (let i = 0; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
@@ -107,7 +113,7 @@
             interimTranscript += transcript; // 中間結果に追加
           }
         }
-        
+
         realTimeContent.textContent = finalTranscript + interimTranscript; // リアルタイムの内容を表示
       };
 
@@ -119,10 +125,13 @@
 
       startButton.addEventListener('click', function() {
         finalTranscript = ''; // 新しい録音のためにリセット
+        interimTranscript = ''; // 中間結果をリセット
+        isRecording = true; // 録音開始フラグを設定
         recognition.start();
       });
 
       stopButton.addEventListener('click', function() {
+        isRecording = false; // 録音停止フラグを設定
         recognition.stop();
       });
 
