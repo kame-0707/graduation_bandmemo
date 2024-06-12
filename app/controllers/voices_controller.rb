@@ -6,7 +6,7 @@ class VoicesController < ApplicationController
   end
 
   def show
-    @voice = Voice.find(params[:id])
+    @voice = current_user.voices.find(params[:id])
   end
 
   def create
@@ -41,7 +41,7 @@ class VoicesController < ApplicationController
   private
 
   def set_voice
-    @voice = Voice.find(params[:id])
+    @voice = current_user.voices.find(params[:id])
   end
 
   def voice_params
