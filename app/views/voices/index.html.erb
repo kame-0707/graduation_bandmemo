@@ -28,7 +28,12 @@
     <div id="real-time-content"></div> <!-- リアルタイムの音声入力表示用 -->
   </div>
 
-  <div class="text-center text-base font-bold mt-4 mb-4">音声文字起こし一覧</div>
+  <div class="text-center text-base font-bold mt-4 mb-4">【音声文字起こし一覧】</div>
+  <%= link_to new_summary_path do %>
+    <div class="text-center text-sm text-blue-600 mt-1 mb-4">
+      各投稿をクリックすると、編集・削除が可能です。
+    </div>
+  <% end %>
   <div class="flex justify-center mt-4">
     <%= link_to new_summary_path do %>
       <div class="mr-4 mb-4">
@@ -41,27 +46,14 @@
       </div>
     <% end %>
   </div>
+ 
   
 <ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
   <% if @voices.present? %>
     <% @voices.each do |voice| %>
-      <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4 relative">
-        <div class="absolute top-1 left-1 flex space-x-2">
-          <%= link_to edit_voice_path(voice) do %>
-            <div class="mb-2">
-              <button class="btn btn-outline btn-success text-xs p-2">
-                編集
-              </button>
-            </div>
-          <% end %>
-          <%= link_to voice_path(voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
-            <button class="btn btn-outline btn-error text-xs p-2">
-              削除
-            </button>
-          <% end %>
-        </div>
-        <div class="mt-2 pl-28">
-          <%= voice.content %>
+      <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
+        <div class="mt-2">
+          <%= link_to voice.content, voice_path(voice) %>
         </div>
       </li>
     <% end %>
