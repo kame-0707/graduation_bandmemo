@@ -37,11 +37,9 @@
   </div>
 <% else %>
   <div class="flex justify-center mb-10">
-    <%= link_to new_user_path do %>
-      <div class="mr-4"><button class="btn btn-accent">新規登録はこちら</button></div>
-    <% end %>
-    <%= link_to login_path do %>
-      <div class="mr-4"><button class="btn btn-secondary">ログインはこちら</button></div>
+    <%# googleでログイン %>
+    <%= link_to auth_at_provider_path(provider: :google) do %>
+      <div class="mr-4"><button class="btn btn-secondary">Googleでログイン</button></div>
     <% end %>
   </div>
 <% end %>

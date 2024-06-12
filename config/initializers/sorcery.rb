@@ -4,7 +4,7 @@
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging,
 # :magic_login, :external
-Rails.application.config.sorcery.submodules = []
+Rails.application.config.sorcery.submodules = [:external]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -80,7 +80,7 @@ Rails.application.config.sorcery.configure do |config|
   # i.e. [:twitter, :facebook, :github, :linkedin, :xing, :google, :liveid, :salesforce, :slack, :line].
   # Default: `[]`
   #
-  # config.external_providers =
+  config.external_providers = %i[google]
 
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
   # Path to ca_file. By default use a internal ca-bundle.crt.
@@ -106,10 +106,14 @@ Rails.application.config.sorcery.configure do |config|
   # For information about XING API:
   # - user info fields go to https://dev.xing.com/docs/get/users/me
   #
-  # config.xing.key = ""
-  # config.xing.secret = ""
-  # config.xing.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=xing"
-  # config.xing.user_info_mapping = {first_name: "first_name", last_name: "last_name"}
+  #credentials.ymlから情報を取得
+  config.google.key = Rails.application.credentials.dig(:google, :google_client_id)
+  config.google.secret = Rails.application.credentials.dig(:google, :google_client_secret)
+  #API設定で承認済みのリダイレクトURIとして登録したurlを設定
+  config.google.callback_url = 'http://localhost:3000/oauth/callback?provider=google'
+  #外部サービスから取得したユーザー情報をUserモデルの指定した属性にマッピング
+  config.google.user_info_mapping = {email: "email", name: "name"}
+
   #
   #
   # Twitter will not accept any requests nor redirect uri containing localhost,
@@ -226,7 +230,7 @@ Rails.application.config.sorcery.configure do |config|
   # config.line.bot_prompt = "normal"
   # config.line.user_info_mapping = {name: 'displayName'}
 
-  
+
   # For information about Discord API
   # https://discordapp.com/developers/docs/topics/oauth2
   # config.discord.key = "xxxxxx"
@@ -542,8 +546,9 @@ Rails.application.config.sorcery.configure do |config|
     # -- external --
     # Class which holds the various external provider data for this user.
     # Default: `nil`
-    #
-    # user.authentications_class =
+
+    ##外部サービスとの認証情報を保存するモデルを指定
+    user.authentications_class = Authentication
 
     # User's identifier in the `authentications` class.
     # Default: `:user_id`
