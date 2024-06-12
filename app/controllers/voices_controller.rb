@@ -48,3 +48,4 @@ class VoicesController < ApplicationController
     params.require(:voice).permit(:content)
   end
 end
+
