@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   def not_authenticated
     # googleログインのみのため、topページに遷移する形に変更
     # redirect_to login_path
-    redirect_to root_path, notice: 'ログインが必要です'
+    redirect_to root_path, alert: 'ログインが必要です'
   end
 end
