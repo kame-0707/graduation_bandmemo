@@ -36,6 +36,9 @@
     <% end %>
   </div>
 <% else %>
+<div class="flex text-center justify-center text-sm mt-0 mb-1">
+  ▼ログインして使い始める
+</div>
   <div class="flex justify-center mb-10">
     <%# googleでログイン %>
     <%= link_to auth_at_provider_path(provider: :google) do %>
