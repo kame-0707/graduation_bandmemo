@@ -15,7 +15,8 @@
     </div>
     <div class="mr-4">
       <button class="btn btn-outline btn-secondary" id="stop-record-btn" disabled>
-        <div class="text-xs">録音停止</div>
+        <div class="text-xs">録音停止・保存
+        </div>
       </button>
     </div>
   </div>
@@ -112,18 +113,6 @@
 
       recognition.onerror = function(event) {
         status.textContent = `認識中にエラーが発生しました: ${event.error}`;
-        startButton.disabled = false;
-        stopButton.disabled = true;
-
-        // エラーの種類によって再試行
-        if (event.error === 'network') {
-          console.log('ネットワークエラーが発生しました。再試行します...');
-          if (isRecording) {
-            setTimeout(() => recognition.start(), 1000); // 1秒後に再試行
-          }
-        } else {
-          console.log('エラー:', event.error);
-        }
       };
 
       startButton.addEventListener('click', function() {
