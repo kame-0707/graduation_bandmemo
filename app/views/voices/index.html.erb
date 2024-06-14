@@ -34,33 +34,35 @@
       各投稿の文字をクリックすると、編集・削除が可能です。
     </div>
   <% end %>
-  <div class="flex justify-center mt-4">
-    <div class="mr-4 mb-4 flex items-center">
-      <%= image_tag 'point.png', width: '150', height: '150', class: 'mr-2' %>
-      <%= link_to new_summary_path do %>
-        <button class="btn btn-secondary">
-          <div class="text-xs">
-            必要な仮メモをコピー後、<br>
-            メモを要約・保存ページへ
-          </div>
-        </button>
-      <% end %>
+    <div class="text-center text-sm mt-1 mb-4">
+    ※下記ボタン左横あたりを長押しすると、コメント範囲選択+コピーしやすいです。
     </div>
+  <div class="flex justify-center mt-4">
+      <div class="mr-4 mb-4">
+        <%= link_to new_summary_path do %>
+          <button class="btn btn-secondary">
+            <div class="text-xs">
+              必要な仮メモをコピー後、<br>
+              メモを要約・保存ページへ
+            </div>
+          </button>
+        <% end %>
+      </div>
   </div>
  
-  <ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
-    <% if @voices.present? %>
-      <% @voices.each do |voice| %>
-        <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
-          <div class="mt-2">
-            <%= link_to voice.content, voice_path(voice) %>
-          </div>
-        </li>
-      <% end %>
-    <% else %>
-      <div>音声文字起こしが見つかりません</div>
+<ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
+  <% if @voices.present? %>
+    <% @voices.each do |voice| %>
+      <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
+        <div class="mt-2">
+          <%= link_to voice.content, voice_path(voice) %>
+        </div>
+      </li>
     <% end %>
-  </ul>
+  <% else %>
+    <div>音声文字起こしが見つかりません</div>
+  <% end %>
+</ul>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
   <script>
