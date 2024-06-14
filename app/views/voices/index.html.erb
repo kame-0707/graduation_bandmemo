@@ -112,7 +112,7 @@
       };
 
       recognition.onerror = function(event) {
-        status.textContent = `認識中にエラーが発生しました: ${event.error}`;
+        status.textContent = `認識中にエラーが発生しました。ページを再読み込みしてください。: ${event.error}`;
       };
 
       startButton.addEventListener('click', function() {
