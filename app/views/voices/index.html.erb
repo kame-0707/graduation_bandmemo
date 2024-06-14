@@ -15,12 +15,10 @@
     </div>
     <div class="mr-4">
       <button class="btn btn-outline btn-secondary" id="stop-record-btn" disabled>
-        <div class="text-xs">録音停止・保存
-        </div>
+        <div class="text-xs">録音停止</div>
       </button>
     </div>
   </div>
-
   <div class="text-center text-sm mx-10">
     <div id="status">
       <p>「録音開始」ボタンをクリックして話し始めてください...</p>
@@ -28,41 +26,46 @@
     </div>
     <div id="real-time-content"></div> <!-- リアルタイムの音声入力表示用 -->
   </div>
-
-  <div class="text-center text-base font-bold mt-4 mb-4">【音声文字起こし一覧】</div>
-  <%= link_to new_summary_path do %>
-    <div class="text-center text-sm text-blue-600 mt-1 mb-4">
-      各投稿の文字をクリックすると、編集・削除が可能です。
-    </div>
-  <% end %>
+  <div class="text-center text-base font-bold mt-4 mb-4">音声文字起こし一覧</div>
   <div class="flex justify-center mt-4">
     <%= link_to new_summary_path do %>
       <div class="mr-4 mb-4">
         <button class="btn btn-secondary">
-          <div class="text-xs">
-            必要な仮メモをコピー後、<br>
-            メモを要約・保存ページへ
-          </div>
+          <div class="text-xs">メモを要約・保存ページへ</div>
         </button>
       </div>
     <% end %>
   </div>
- 
   
-<ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
-  <% if @voices.present? %>
-    <% @voices.each do |voice| %>
-      <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
-        <div class="mt-2">
-          <%= link_to voice.content, voice_path(voice) %>
-        </div>
-      </li>
+  <ul class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto">
+    <% if @voices.present? %>
+      <% @voices.each do |voice| %>
+        <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
+          <div class="flex justify-center mt-auto">
+            <%= link_to edit_voice_path(voice) do %>
+              <div class="mr-4">
+                <button class="btn btn-outline btn-success">
+                  <div class="text-xs">編集</div>
+                </button>
+              </div>
+            <% end %>
+            <%= link_to voice_path(voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+              <div class="mr-4">
+                <button class="btn btn-outline btn-error">
+                  <div class="text-xs">削除</div>
+                </button>
+              </div>
+            <% end %>
+          </div>
+          <div class="mt-2">
+            <%= voice.content %>
+          </div>
+        </li>
+      <% end %>
+    <% else %>
+      <div>音声文字起こしが見つかりません</div>
     <% end %>
-  <% else %>
-    <div>音声文字起こしが見つかりません</div>
-  <% end %>
-</ul>
-
+  </ul>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
   <script>
     document.addEventListener("turbo:load", function() {
@@ -70,11 +73,9 @@
       const stopButton = document.getElementById('stop-record-btn');
       const status = document.getElementById('status');
       const realTimeContent = document.getElementById('real-time-content');
-
       const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       recognition.lang = 'ja-JP'; // 言語を日本語に設定
       recognition.interimResults = true; // 中間結果を取得
-
       let finalTranscript = ''; // 最終結果を保持する変数
       let interimTranscript = ''; // 中間結果を保持する変数
       let isRecording = false; // 録音中かどうかを示すフラグ
@@ -98,7 +99,6 @@
 
       recognition.onresult = function(event) {
         interimTranscript = ''; // 中間結果をリセット
-
         for (let i = 0; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
@@ -107,12 +107,23 @@
             interimTranscript += transcript; // 中間結果に追加
           }
         }
-
         realTimeContent.textContent = finalTranscript + interimTranscript; // リアルタイムの内容を表示
       };
 
       recognition.onerror = function(event) {
         status.textContent = `認識中にエラーが発生しました。ページを再読み込みしてください。: ${event.error}`;
+        // startButton.disabled = false;
+        // stopButton.disabled = true;
+
+        // エラーの種類によって再試行
+        if (event.error === 'network') {
+          console.log('ネットワークエラーが発生しました。再試行します...');
+          if (isRecording) {
+            setTimeout(() => recognition.start(), 1000); // 1秒後に再試行
+          }
+        } else {
+          console.log('エラー:', event.error);
+        }
       };
 
       startButton.addEventListener('click', function() {
@@ -126,7 +137,7 @@
         isRecording = false; // 録音停止フラグを設定
         recognition.stop();
       });
-
+      
       function saveVoiceContent(content) {
         $.ajax({
           url: '/voices',
