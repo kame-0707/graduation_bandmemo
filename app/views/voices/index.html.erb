@@ -35,7 +35,7 @@
     </div>
   <% end %>
     <div class="text-center text-sm mt-1 mb-4">
-    ※下記青ボタン左横あたりを長押しすると、コメント範囲選択+コピーしやすいです。
+    ※この文章のあたりを長押しすると、コメント範囲選択+コピーしやすいです。
     </div>
   <div class="flex justify-center mt-4">
       <div class="mr-4 mb-4">
@@ -71,13 +71,59 @@
       const stopButton = document.getElementById('stop-record-btn');
       const status = document.getElementById('status');
       const realTimeContent = document.getElementById('real-time-content');
-      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       recognition.lang = 'ja-JP'; // 言語を日本語に設定
       recognition.interimResults = true; // 中間結果を取得
       let finalTranscript = ''; // 最終結果を保持する変数
       let interimTranscript = ''; // 中間結果を保持する変数
       let isRecording = false; // 録音中かどうかを示すフラグ
 
+      function resetRecognition() {
+        recognition.onend = null;
+        recognition.onerror = null;
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'ja-JP'; // 言語を日本語に設定
+        recognition.interimResults = true; // 中間結果を取得
+        recognition.onresult = handleResult;
+        recognition.onerror = handleError;
+        recognition.onend = handleEnd;
+      }
+
+      function handleResult(event) {
+        interimTranscript = ''; // 中間結果をリセット
+        for (let i = 0; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript; // 最終結果に追加
+          } else {
+            interimTranscript += transcript; // 中間結果に追加
+          }
+        }
+        realTimeContent.textContent = finalTranscript + interimTranscript; // リアルタイムの内容を表示
+      }
+
+      function handleError(event) {
+        status.textContent = `認識中にエラーが発生しました。ページを再読み込みしてください。: ${event.error}`;
+        if (event.error === 'network') {
+          console.log('ネットワークエラーが発生しました。再試行します...');
+          if (isRecording) {
+            setTimeout(() => recognition.start(), 1000); // 1秒後に再試行
+          }
+        } else {
+          console.log('エラー:', event.error);
+        }
+      }
+
+      function handleEnd() {
+        if (isRecording) { // 手動で停止されるまで再度開始
+          recognition.start();
+        } else {
+          status.textContent = '録音が停止されました';
+          startButton.disabled = false;
+          stopButton.disabled = true;
+          saveVoiceContent(finalTranscript); // 最終結果を保存
+        }
+      }
 
       startButton.addEventListener('click', function() {
         finalTranscript = ''; // 新しい録音のためにリセット
@@ -97,42 +143,10 @@
         stopButton.disabled = false;
       };
 
-      recognition.onresult = function(event) {
-        interimTranscript = ''; // 中間結果をリセット
-        for (let i = 0; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript; // 最終結果に追加
-          } else {
-            interimTranscript += transcript; // 中間結果に追加
-          }
-        }
-        realTimeContent.textContent = finalTranscript + interimTranscript; // リアルタイムの内容を表示
-      };
+      recognition.onresult = handleResult;
+      recognition.onerror = handleError;
+      recognition.onend = handleEnd;
 
-      recognition.onend = function() {
-        if (isRecording) { // 手動で停止されるまで再度開始
-          recognition.start();
-        } else {
-          status.textContent = '録音が停止されました';
-          startButton.disabled = false;
-          stopButton.disabled = true;
-          saveVoiceContent(finalTranscript); // 最終結果を保存
-        }
-      };
-
-      recognition.onerror = function(event) {
-        status.textContent = `認識中にエラーが発生しました。ページを再読み込みしてください。: ${event.error}`;
-        if (event.error === 'network') {
-          console.log('ネットワークエラーが発生しました。再試行します...');
-          if (isRecording) {
-            setTimeout(() => recognition.start(), 1000); // 1秒後に再試行
-          }
-        } else {
-          console.log('エラー:', event.error);
-        }
-      };
- 
       function saveVoiceContent(content) {
         $.ajax({
           url: '/voices',
@@ -143,6 +157,7 @@
           success: function(response) {
             console.log('音声コンテンツが正常に保存されました');
             location.reload(); // ページを再読み込みして新しい内容を表示
+            resetRecognition(); // ページリロード後にRecognitionをリセット
           },
           error: function(response) {
             console.log('音声コンテンツの保存中にエラーが発生しました');
