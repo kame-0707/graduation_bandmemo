@@ -97,17 +97,6 @@
         stopButton.disabled = false;
       };
 
-      recognition.onend = function() {
-        if (isRecording) { // 手動で停止されるまで再度開始
-          recognition.start();
-        } else {
-          status.textContent = '録音が停止されました';
-          startButton.disabled = false;
-          stopButton.disabled = true;
-          saveVoiceContent(finalTranscript); // 最終結果を保存
-        }
-      };
-
       recognition.onresult = function(event) {
         interimTranscript = ''; // 中間結果をリセット
         for (let i = 0; i < event.results.length; i++) {
@@ -119,6 +108,17 @@
           }
         }
         realTimeContent.textContent = finalTranscript + interimTranscript; // リアルタイムの内容を表示
+      };
+
+      recognition.onend = function() {
+        if (isRecording) { // 手動で停止されるまで再度開始
+          recognition.start();
+        } else {
+          status.textContent = '録音が停止されました';
+          startButton.disabled = false;
+          stopButton.disabled = true;
+          saveVoiceContent(finalTranscript); // 最終結果を保存
+        }
       };
 
       recognition.onerror = function(event) {
