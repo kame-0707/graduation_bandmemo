@@ -105,7 +105,7 @@
       }
 
       function handleError(event) {
-        status.textContent = `認識中にエラーが発生しました。ページを再読み込みしてください。: ${event.error}`;
+        status.textContent = `認識中にエラーが発生しました。録音停止ボタンを押してから、ページを再読み込みしてください。: ${event.error}`;
         if (event.error === 'network') {
           console.log('ネットワークエラーが発生しました。再試行します...');
           if (isRecording) {
