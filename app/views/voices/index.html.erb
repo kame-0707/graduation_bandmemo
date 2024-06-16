@@ -35,7 +35,7 @@
     </div>
   <% end %>
     <div class="text-center text-sm mt-1 mb-4">
-    ※この文章のあたりを長押しすると、コメント範囲選択+コピーしやすいです。
+    ※下記青ボタン左横あたりを長押しすると、コメント範囲選択+コピーしやすいです。
     </div>
   <div class="flex justify-center mt-4">
       <div class="mr-4 mb-4">
@@ -81,9 +81,10 @@
       function resetRecognition() {
         recognition.onend = null;
         recognition.onerror = null;
+        recognition.abort(); // 確実に停止させるためにabortを使用
         recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = 'ja-JP'; // 言語を日本語に設定
-        recognition.interimResults = true; // 中間結果を取得
+        recognition.lang = 'ja-JP';
+        recognition.interimResults = true;
         recognition.onresult = handleResult;
         recognition.onerror = handleError;
         recognition.onend = handleEnd;
@@ -153,7 +154,7 @@
           type: 'POST',
           data: { voice: { content: content } },
           headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
+            'X-CSRF-Token': getCsrfToken() },
           success: function(response) {
             console.log('音声コンテンツが正常に保存されました');
             location.reload(); // ページを再読み込みして新しい内容を表示
@@ -163,6 +164,10 @@
             console.log('音声コンテンツの保存中にエラーが発生しました');
           }
         });
+      }
+
+      function getCsrfToken() {
+        return $('meta[name="csrf-token"]').attr('content');
       }
     });
   </script>
