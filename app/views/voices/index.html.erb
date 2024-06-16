@@ -78,6 +78,19 @@
       let interimTranscript = ''; // 中間結果を保持する変数
       let isRecording = false; // 録音中かどうかを示すフラグ
 
+
+      startButton.addEventListener('click', function() {
+        finalTranscript = ''; // 新しい録音のためにリセット
+        interimTranscript = ''; // 中間結果をリセット
+        isRecording = true; // 録音開始フラグを設定
+        recognition.start();
+      });
+
+      stopButton.addEventListener('click', function() {
+        isRecording = false; // 録音停止フラグを設定
+        recognition.stop();
+      });
+
       recognition.onstart = function() {
         status.textContent = '録音中...';
         startButton.disabled = true;
@@ -119,19 +132,7 @@
           console.log('エラー:', event.error);
         }
       };
-
-      startButton.addEventListener('click', function() {
-        finalTranscript = ''; // 新しい録音のためにリセット
-        interimTranscript = ''; // 中間結果をリセット
-        isRecording = true; // 録音開始フラグを設定
-        recognition.start();
-      });
-
-      stopButton.addEventListener('click', function() {
-        isRecording = false; // 録音停止フラグを設定
-        recognition.stop();
-      });
-      
+ 
       function saveVoiceContent(content) {
         $.ajax({
           url: '/voices',
