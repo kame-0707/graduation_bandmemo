@@ -11,6 +11,7 @@ class VoicesController < ApplicationController
 
   def create
     @voice = current_user.voices.build(voice_params)
+    binding.pry
     if @voice.save
       respond_to do |format|
         format.html { redirect_to voices_path, notice: '音声メモが更新されました' }
