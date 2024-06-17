@@ -91,6 +91,35 @@
         recognition.onend = handleEnd;
       }
 
+        startButton.addEventListener('click', function() {
+        finalTranscript = ''; // 新しい録音のためにリセット
+        interimTranscript = ''; // 中間結果をリセット
+        isRecording = true; // 録音開始フラグを設定
+        recognition.start();
+      });
+
+        recognition.onstart = function() {
+        status.textContent = '録音中...(文字起こしができない場合は、録音停止→ページを再読み込み→再度録音開始してください)';
+        startButton.disabled = true;
+        stopButton.disabled = false;
+      };
+
+        stopButton.addEventListener('click', function() {
+        isRecording = false; // 録音停止フラグを設定
+        recognition.stop();
+      });
+
+      function handleEnd() {
+        if (isRecording) { // 手動で停止されるまで再度開始
+          recognition.start();
+        } else {
+          status.textContent = '録音が停止されました';
+          startButton.disabled = false;
+          stopButton.disabled = true;
+          saveVoiceContent(finalTranscript); // 最終結果を保存
+        }
+      }
+
       function handleResult(event) {
         interimTranscript = ''; // 中間結果をリセット
         for (let i = 0; i < event.results.length; i++) {
@@ -115,35 +144,6 @@
           console.log('エラー:', event.error);
         }
       }
-
-      function handleEnd() {
-        if (isRecording) { // 手動で停止されるまで再度開始
-          recognition.start();
-        } else {
-          status.textContent = '録音が停止されました';
-          startButton.disabled = false;
-          stopButton.disabled = true;
-          saveVoiceContent(finalTranscript); // 最終結果を保存
-        }
-      }
-
-      startButton.addEventListener('click', function() {
-        finalTranscript = ''; // 新しい録音のためにリセット
-        interimTranscript = ''; // 中間結果をリセット
-        isRecording = true; // 録音開始フラグを設定
-        recognition.start();
-      });
-
-      stopButton.addEventListener('click', function() {
-        isRecording = false; // 録音停止フラグを設定
-        recognition.stop();
-      });
-
-      recognition.onstart = function() {
-        status.textContent = '録音中...(文字起こしができない場合は、録音停止→ページを再読み込み→再度録音開始してください)';
-        startButton.disabled = true;
-        stopButton.disabled = false;
-      };
 
       recognition.onresult = handleResult;
       recognition.onerror = handleError;
