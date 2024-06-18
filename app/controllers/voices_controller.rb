@@ -11,18 +11,17 @@ class VoicesController < ApplicationController
 
   def create
     @voice = current_user.voices.build(voice_params)
-    binding.pry
     if @voice.save
       respond_to do |format|
-        format.html { redirect_to voices_path, notice: '音声メモが更新されました' }
+        # format.html { redirect_to voices_path, notice: '音声メモが更新されました' }
         format.json { render json: { message: 'Voice saved successfully' }, status: :created }
       end
     else
       respond_to do |format|
-        format.html do
-          flash.now[:alert] = '音声メモを更新できませんでした'
-          render :index, status: :unprocessable_entity
-        end
+        # format.html do
+        #   flash.now[:alert] = '音声メモを更新できませんでした'
+        #   render :index, status: :unprocessable_entity
+        # end
         format.json { render json: { errors: @voice.errors.full_messages }, status: :unprocessable_entity }
       end
     end
