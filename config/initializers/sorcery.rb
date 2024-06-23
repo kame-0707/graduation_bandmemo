@@ -153,7 +153,7 @@ Rails.application.config.sorcery.configure do |config|
   #
   # config.wechat.key = ""
   # config.wechat.secret = ""
-  # config.wechat.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=wechat"
+  # config.wechat.callback_url = "http://0.0.0.0:/oauth/callback?provider=wechat"
   #
   # For Auth0, site is required and should match the domain provided by Auth0.
   #
