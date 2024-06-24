@@ -36,13 +36,13 @@
     <% end %>
   </div>
 <% else %>
-<div class="flex text-center justify-center text-sm mt-0 mb-1">
-  ▼ログインして使い始める(Chromeでの使用を推奨)
-</div>
+  <div class="flex text-center justify-center text-sm mt-0 mb-1">
+    ▼ログインして使い始める(Chromeでの使用を推奨)
+  </div>
   <div class="flex justify-center mb-10">
-    <%# googleでログイン %>
-    <%= link_to auth_at_provider_path(provider: :google) do %>
-      <div class="mr-4"><button class="btn btn-secondary">Googleでログイン</button></div>
+    <%# ログイン画面 %>
+    <%= link_to login_path do %>
+      <div class="mr-4"><button class="btn btn-secondary">ログイン画面へ</button></div>
     <% end %>
   </div>
 <% end %>
