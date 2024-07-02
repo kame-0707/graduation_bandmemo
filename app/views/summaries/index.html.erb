@@ -7,7 +7,7 @@
       </button>
     </div>
   <% end %>
-  <%= link_to  new_summary_path do %>
+  <%= link_to  new_group_summary_path(@group) do %>
     <div class="mr-4">
       <button class="btn btn-secondary">
         <div class="text-xs">メモを要約・保存</div>
@@ -24,21 +24,21 @@
         <% @summaries.each do |summary| %>
           <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
             <div class="flex justify-center mt-auto">
-              <%= link_to summary_path(summary) do %>
+              <%= link_to group_summary_path(@group, summary) do %>
                 <div class="mr-4">
                   <button class="btn btn-outline btn-info">
                     <div class="text-xs">原文はこちら</div>
                   </button>
                 </div>
               <% end %>
-              <%= link_to edit_summary_path(summary) do %>
+              <%= link_to edit_group_summary_path(@group, summary) do %>
                 <div class="mr-4">
                   <button class="btn btn-outline btn-success">
                     <div class="text-xs">編集</div>
                   </button>
                 </div>
               <% end %>
-              <%= link_to summary_path(summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+              <%= link_to group_summary_path(@group, summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
                 <div class="mr-4">
                   <button class="btn btn-outline btn-error">
                     <div class="text-xs">削除</div>

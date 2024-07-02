@@ -2,17 +2,21 @@ require "openai"
 
 class SummariesController < ApplicationController
   before_action :set_summary, only: %i[edit update destroy]
+  before_action :set_group
+  before_action :authorize_user!
+  before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @summaries = current_user.summaries.order(created_at: :desc)
+    # @summaries = current_user.summaries.order(created_at: :desc)
+    @summaries = @group.summaries.order(created_at: :desc)
   end
 
   def show
-    @summary = current_user.summaries.find(params[:id])
+    @summary = @group.summaries.find(params[:id])
   end
 
   def new
-    @summary = Summary.new
+    @summary = @group.summaries.new
   end
 
   def create
@@ -34,12 +38,13 @@ class SummariesController < ApplicationController
     # "content"キーにアクセスして、その値である "要約されたテキスト" を取得。
     summary_text = response.dig("choices", 0, "message", "content")
 
-    @summary = current_user.summaries.build(title: summary_params[:title], content: summary_params[:content], summary: summary_text)
+    @summary = @group.summaries.new(title: summary_params[:title], content: summary_params[:content], summary: summary_text, user: current_user)
 
     if @summary.save
-      redirect_to summaries_path, notice: 'メモが保存されました'
+      redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
     else
       flash.now[:alert] = 'メモの保存ができませんでした'
+      # logger.error @summary.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
   end
@@ -48,7 +53,7 @@ class SummariesController < ApplicationController
 
   def update
     if @summary.update(summary_params)
-      redirect_to summaries_path, notice: 'メモが更新されました'
+      redirect_to group_summary_path(@group, @summary), notice: 'メモが更新されました'
     else
       flash.now[:alert] = 'メモを更新できませんでした'
       render :edit, status: :unprocessable_entity
@@ -58,13 +63,33 @@ class SummariesController < ApplicationController
   def destroy
     summary = @summary
     summary.destroy!
-    redirect_to summaries_path, status: :see_other, notice: 'メモが削除されました'
+    redirect_to group_summaries_path(@group), status: :see_other, notice: 'メモが削除されました'
   end
 
   private
 
   def set_summary
-    @summary = current_user.summaries.find(params[:id])
+    @group = Group.find(params[:group_id])
+    @summary = @group.summaries.find(params[:id])
+  end
+
+  def set_group
+    @group = Group.find(params[:group_id])
+  end
+
+  def authorize_user!
+    @group = Group.find(params[:group_id])
+    unless current_user.groups.include?(@group)
+      redirect_to root_path, alert: 'グループメンバーとして承認されていません'
+    end
+  end
+
+  def authorize_owner!
+    @summary = @group.summaries.find(params[:id])
+    @group = Group.find(params[:group_id])
+    unless @summary.user == current_user
+      redirect_to group_summaries_path(@group), alert: '編集・削除ができるのは投稿者のみです'
+    end
   end
 
   def summary_params

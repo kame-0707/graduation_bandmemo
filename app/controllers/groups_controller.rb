@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :ensure_correct_user, only: %i[edit update destroy]
+  before_action :ensure_correct_user, only: %i[edit update destroy permits]
 
   def index
     @groups = Group.all
@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.build(group_params)
+    @group = Group.new(group_params)
     # 誰が作ったグループかを判断するため
     @group.owner_id = current_user.id
     if @group.save
@@ -42,6 +42,10 @@ class GroupsController < ApplicationController
     redirect_to groups_path, status: :see_other, notice: 'グループが削除されました'
   end
 
+  def permits
+    @group = Group.find(params[:id])
+    @permits = @group.permits.page(params[:page])
+  end
 
   private
 
@@ -54,7 +58,7 @@ class GroupsController < ApplicationController
   def ensure_correct_user
     @group = Group.find(params[:id])
     unless @group.owner_id == current_user.id
-      redirect_to groups_path
+      redirect_to group_path(@group), alert: 'グループ作成者のみ編集可能です'
     end
   end
 end

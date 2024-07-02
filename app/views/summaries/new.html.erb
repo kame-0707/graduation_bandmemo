@@ -1,7 +1,7 @@
 <div class="text-center text-xl font-bold mt-10">②メモを要約・保存</div>
 
 <div class="flex flex-col items-center mt-4">
-  <%= form_with model: @summary, local: true do |form| %>
+  <%= form_with model: @summary, url: group_summaries_path(@group) do |form| %>
     <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
       <%= form.label :title, 'タイトル'%>
       <%= form.text_area :title, rows: 1, class: "rounded-lg p-4 w-full" %>

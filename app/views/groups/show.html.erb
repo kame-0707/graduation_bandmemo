@@ -23,17 +23,26 @@
               <td>
                 <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
                 <% if @group.group_users.exists?(user_id: current_user.id) %>
-                  <%= link_to '脱退する', group_group_user_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
+                  <%= link_to 'グループ退出する', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
+                <% elsif @group.permits.exists?(user_id: current_user.id) %>
+                  <%= link_to '申請取消する', group_permits_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %>    
                 <% else %>
-                  <%= button_to '加入する', group_group_users_path(@group), class: "btn btn-sm btn-success" %>
+                  <%= button_to '加入申請する', group_permits_path(@group), class: "btn btn-sm btn-success" %>
                 <% end %>
               </td>
               <td>
-              <% if @group.owner_id == current_user.id %>
-                  <%= link_to '編集', edit_group_path(@group), class: "btn btn-sm btn-success" %>
-                  <%= link_to '削除', group_path(@group), class: "btn btn-sm btn-success", data: { turbo_method: :delete, turbo_confirm: "削除しますか" }%>
-              </td>
-              <% end %>
+                <% if @group.owner_id == current_user.id %>
+                  <div>
+                    <%= link_to "承認待ち一覧", permits_path(@group),  class: "btn btn-sm btn-success" %> 
+                    <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-success" %>
+                    <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-success", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
+                  </div>
+                <% end %>
+              </td> 
+              <td>
+                <%= link_to "練習メモ作成へ", new_group_summary_path(@group),  class: "btn btn-sm btn-success" %> 
+                <%= link_to "練習メモ一覧へ", group_summaries_path(@group),  class: "btn btn-sm btn-success" %> 
+              </td> 
             </tr>
         </tbody>
       </table>

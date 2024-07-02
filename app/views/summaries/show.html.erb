@@ -3,7 +3,7 @@
 <div class="mx-4"><%= @summary.content %></div>
 <br>
 <div class="flex justify-center mt-4">
-  <%= link_to  summaries_path do %>
+  <%= link_to  group_summaries_path(@group) do %>
     <button class="btn btn-secondary">
       <div class="text-xs">一覧に戻る</div>
     </button>

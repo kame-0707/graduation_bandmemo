@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_26_065740) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_01_140534) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_065740) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "permits", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_permits_on_group_id"
+    t.index ["user_id"], name: "index_permits_on_user_id"
+  end
+
   create_table "summaries", force: :cascade do |t|
     t.text "title", null: false
     t.text "content", null: false
@@ -47,6 +56,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_065740) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "group_id", null: false
+    t.index ["group_id"], name: "index_summaries_on_group_id"
     t.index ["user_id"], name: "index_summaries_on_user_id"
   end
 
@@ -65,11 +76,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_065740) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "group_id", null: false
+    t.index ["group_id"], name: "index_voices_on_group_id"
     t.index ["user_id"], name: "index_voices_on_user_id"
   end
 
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
+  add_foreign_key "permits", "groups"
+  add_foreign_key "permits", "users"
+  add_foreign_key "summaries", "groups"
   add_foreign_key "summaries", "users"
+  add_foreign_key "voices", "groups"
   add_foreign_key "voices", "users"
 end
