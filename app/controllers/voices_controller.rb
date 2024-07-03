@@ -2,10 +2,10 @@ class VoicesController < ApplicationController
   before_action :set_voice, only: %i[edit update destroy]
   before_action :set_group
   before_action :authorize_user!
-  before_action :authorize_owner!, only: [:edit, :update, :destroy]
+  before_action :authorize_owner!, only: %i[show edit update destroy]
 
   def index
-    @voices = @group.voices.order(created_at: :desc)
+    @voices = @group.voices.where(user: current_user).order(created_at: :desc)
   end
 
   def show
@@ -64,7 +64,7 @@ class VoicesController < ApplicationController
     @voice = @group.voices.find(params[:id])
     @group = Group.find(params[:group_id])
     unless @voice.user == current_user
-      redirect_to group_voices_path(@group), alert: '編集・削除ができるのは投稿者のみです'
+      redirect_to group_voices_path(@group), alert: '操作の権限がありません'
     end
   end
 
