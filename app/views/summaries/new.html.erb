@@ -15,9 +15,16 @@
         </button>
       </div>
       <div class="mr-4">
-        <%= link_to voices_path do %>
+        <%= link_to group_voices_path(@group) do %>
           <button class="btn btn-outline btn-secondary">
             <div class="text-xs">音声入力に戻る</div>
+          </button>
+        <% end %>
+      </div>
+      <div class="mr-4">
+        <%= link_to group_summaries_path(@group) do %>
+          <button class="btn btn-outline btn-secondary">
+            <div class="text-xs">練習メモ一覧へ</div>
           </button>
         <% end %>
       </div>

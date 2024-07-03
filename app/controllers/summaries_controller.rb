@@ -7,12 +7,14 @@ class SummariesController < ApplicationController
   before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def index
-    # @summaries = current_user.summaries.order(created_at: :desc)
     @summaries = @group.summaries.order(created_at: :desc)
   end
 
   def show
     @summary = @group.summaries.find(params[:id])
+    unless (@summary.user_id == current_user.id)
+      redirect_to group_summaries_path(@group), alert: '原文を確認できるのは投稿者のみです'
+    end
   end
 
   def new
@@ -26,8 +28,16 @@ class SummariesController < ApplicationController
         parameters: {
             model: "gpt-3.5-turbo",
             messages: [
-                { role: "system", content: "私はバンドでリーダーをしています。あなたには私の立場に立って、言葉を要約してメンバーに伝えて欲しいです。バンドメンバーに決定事項を簡潔に伝達するための手助けをしてください。" },
-                { role: "user", content: "以下のコンテンツを、マークダウンでわかりやすくまとめてください。小見出しは必ず番号付きで、番号と小見出し全体を**で囲んで太字にしてください（例：**1. 小見出し**）。小見出しの数が少なすぎないように注意し、内容は箇条書きで簡潔にまとめてください。#{summary_params[:content]}" },
+                { role: "system",
+                content: "私はバンドでリーダーをしています。
+                あなたには私の立場に立って、言葉を要約してメンバーに伝えて欲しいです。
+                バンドメンバーに決定事項を簡潔に伝達するための手助けをしてください。"
+              },
+                { role: "user",
+                content: "以下のコンテンツを、マークダウンでわかりやすくまとめてください。#{summary_params[:content]}
+                小見出しは必ず番号付きで、番号と小見出し全体を**で囲んで太字にしてください（例：**1. 小見出し**）。
+                小見出しの数が少なすぎないように注意し、内容は箇条書きで簡潔にまとめてください。"
+              },
             ],
         })
     # response：ハッシュオブジェクト。OpenAI APIからのレスポンスを格納
@@ -44,7 +54,6 @@ class SummariesController < ApplicationController
       redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
     else
       flash.now[:alert] = 'メモの保存ができませんでした'
-      # logger.error @summary.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
   end
@@ -53,7 +62,7 @@ class SummariesController < ApplicationController
 
   def update
     if @summary.update(summary_params)
-      redirect_to group_summary_path(@group, @summary), notice: 'メモが更新されました'
+      redirect_to group_summaries_path(@group, @summary), notice: 'メモが更新されました'
     else
       flash.now[:alert] = 'メモを更新できませんでした'
       render :edit, status: :unprocessable_entity
@@ -87,8 +96,8 @@ class SummariesController < ApplicationController
   def authorize_owner!
     @summary = @group.summaries.find(params[:id])
     @group = Group.find(params[:group_id])
-    unless @summary.user == current_user
-      redirect_to group_summaries_path(@group), alert: '編集・削除ができるのは投稿者のみです'
+    unless (@summary.user_id == current_user.id) || (@group.owner_id == current_user.id)
+      redirect_to group_summaries_path(@group), alert: '編集・削除ができるのは投稿者とオーナーのみです'
     end
   end
 

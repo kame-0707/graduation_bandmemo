@@ -1,22 +1,24 @@
 <div class="grid justify-items-center max-w-4xl mx-auto">
   <div class="bg-white shadow-md rounded-lg p-4 max-w-md mb-4">
-    <div class="flex justify-center space-x-4 mb-2">
-      <%= link_to edit_voice_path(@voice) do %>
-        <button class="btn btn-outline btn-success text-xs p-4">
-          編集
-        </button>
-      <% end %>
-      <%= link_to voice_path(@voice), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
-        <button class="btn btn-outline btn-error text-xs p-4">
-          削除
-        </button>
-      <% end %>
-    </div>
+    <% if @voice.user_id == current_user.id %>
+      <div class="flex justify-center space-x-4 mb-2">
+        <%= link_to edit_group_voice_path(@group, @voice) do %>
+          <button class="btn btn-outline btn-success text-xs p-4">
+            編集
+          </button>
+        <% end %>
+        <%= link_to group_voice_path(@group), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+          <button class="btn btn-outline btn-error text-xs p-4">
+            削除
+          </button>
+        <% end %>
+      </div>
+    <% end %>
     <div class="mt-2">
       <%= @voice.content %>
     </div>
   </div>
-    <%= link_to voices_path do %>
+    <%= link_to group_voices_path(@group) do %>
       <button class="btn btn-outline btn-secondary">
         <div class="text-xs">音声文字起こし一覧に戻る</div>
       </button>

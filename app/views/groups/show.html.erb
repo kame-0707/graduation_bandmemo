@@ -8,6 +8,9 @@
             <th>グループ名</th>
             <th>紹介文</th>
             <th>メンバー</th>
+            <th></th>
+            <th>オーナー専用</th>
+            <th>各種機能へ</th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -22,11 +25,12 @@
               </td>
               <td>
                 <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
-                <% if @group.group_users.exists?(user_id: current_user.id) %>
+                <% if (@group.group_users.exists?(user_id: current_user.id)) && (@group.owner_id != current_user.id) %>
                   <%= link_to 'グループ退出する', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
-                <% elsif @group.permits.exists?(user_id: current_user.id) %>
+                <% end %>
+                <% if @group.permits.exists?(user_id: current_user.id) %>
                   <%= link_to '申請取消する', group_permits_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %>    
-                <% else %>
+                <% elsif (@group.permits.exists?(user_id: current_user.id)) && (@group.owner_id != current_user.id)%>
                   <%= button_to '加入申請する', group_permits_path(@group), class: "btn btn-sm btn-success" %>
                 <% end %>
               </td>
@@ -40,8 +44,11 @@
                 <% end %>
               </td> 
               <td>
-                <%= link_to "練習メモ作成へ", new_group_summary_path(@group),  class: "btn btn-sm btn-success" %> 
-                <%= link_to "練習メモ一覧へ", group_summaries_path(@group),  class: "btn btn-sm btn-success" %> 
+                <% if @group.group_users.exists?(user_id: current_user.id) %>
+                  <%= link_to "音声仮メモ作成へ", group_voices_path(@group),  class: "btn btn-sm btn-success" %> 
+                  <%= link_to "練習メモ作成へ", new_group_summary_path(@group),  class: "btn btn-sm btn-success" %> 
+                  <%= link_to "練習メモ一覧へ", group_summaries_path(@group),  class: "btn btn-sm btn-success" %> 
+                <% end %>
               </td> 
             </tr>
         </tbody>
