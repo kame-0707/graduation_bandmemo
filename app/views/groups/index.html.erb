@@ -18,7 +18,7 @@
               <td><%= group.introduction %></td>
               <td><%= group.group_users.count %></td>
               <% if group.owner_id == current_user.id && group.permits.exists? %>
-                <td>オーナー：承認待ちユーザーがいます</td>
+                <td><p class="text-blue-600">オーナー：承認待ちユーザーがいます</p></td>
               <% elsif group.owner_id == current_user.id %>
                 <td>オーナー</td>
               <% elsif (group.owner_id != current_user.id) && (group.group_users.exists?(user_id: current_user.id)) %>
