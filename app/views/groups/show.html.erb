@@ -7,7 +7,7 @@
           <tr>
             <th>グループ名</th>
             <th>紹介文</th>
-            <th>メンバー</th>
+            <th>オーナー</th>
             <th></th>
             <th>オーナー専用</th>
             <th>各種機能へ</th>
@@ -18,11 +18,7 @@
             <tr>
               <td><%= @group.name %></td>
               <td><%= @group.introduction %></td>
-              <td>
-                <% @group.users.each do |member| %>
-                  <li style="list-style: none;"><%= member.name %></li>
-                <% end %>
-              </td>
+              <td><%= @owner.name %></td>
               <td>
                 <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
                 <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
@@ -36,22 +32,25 @@
               <td>
                 <% if @group.owner_id == current_user.id %>
                   <div>
-                    <%= link_to "承認待ち一覧", permits_path(@group),  class: "btn btn-sm btn-success" %> 
-                    <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-success" %>
-                    <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-success", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
+                    <%= link_to '承認待ち一覧', permits_path(@group),  class: "btn btn-sm btn-outline btn-info" %> 
+                    <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-outline btn-success" %>
+                    <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
                   </div>
                 <% end %>
               </td> 
               <td>
                 <% if @group.group_users.exists?(user_id: current_user.id) %>
-                  <%= link_to "音声仮メモ作成へ", group_voices_path(@group),  class: "btn btn-sm btn-success" %> 
-                  <%= link_to "練習メモ作成へ", new_group_summary_path(@group),  class: "btn btn-sm btn-success" %> 
-                  <%= link_to "練習メモ一覧へ", group_summaries_path(@group),  class: "btn btn-sm btn-success" %> 
+                  <%= link_to '①音声仮メモ作成へ', group_voices_path(@group),  class: "btn btn-sm btn-accent" %> 
+                  <%= link_to '②練習メモ作成へ', new_group_summary_path(@group),  class: "btn btn-sm btn-secondary" %> 
+                  <%= link_to '③練習メモ一覧へ', group_summaries_path(@group),  class: "btn btn-sm btn-primary" %> 
                 <% end %>
               </td> 
             </tr>
         </tbody>
       </table>
     </div>
+  </div>
+  <div class="flex justify-center mt-4 mx-4">
+    <%= link_to 'グループ一覧に戻る', groups_path,  class: "btn btn-success" %> 
   </div>
 </div>

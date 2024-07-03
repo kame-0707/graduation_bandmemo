@@ -13,24 +13,10 @@
 
 <% if logged_in? %> 
   <div class="flex justify-center mb-10 mx-4">
-    <%= link_to '#' do %>
+    <%= link_to new_group_path do %>
       <div class="mr-4">
         <button class="btn btn-accent">
-          <div class="text-xs">①音声文字起こし</div>
-        </button>
-      </div>
-    <% end %>
-    <%= link_to '#' do %>
-      <div class="mr-4">
-        <button class="btn btn-secondary">
-          <div class="text-xs">②メモを要約・保存</div>
-        </button>
-      </div>
-    <% end %>
-    <%= link_to '#' do %>
-      <div class="mr-4">
-        <button class="btn btn-outline btn-secondary">
-         <div class="text-xs"> ③練習メモ一覧</div>
+          <div class="text-xs">バンドグループを作成する</div>
         </button>
       </div>
     <% end %>

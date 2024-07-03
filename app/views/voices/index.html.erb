@@ -5,6 +5,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="flex justify-center mt-4 mx-4">
+    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
+  </div>
   <div class="text-center text-xl font-bold mt-10">①音声文字起こしで仮メモ作成</div>
   
   <div class="flex justify-center mt-4 mb-4">
