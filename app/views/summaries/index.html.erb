@@ -1,13 +1,13 @@
 <div class="text-center text-xl font-bold mt-10">③練習メモ一覧</div >
 <div class="flex justify-center mt-4">
-  <%= link_to voices_path do %>
+  <%= link_to group_voices_path(@group) do %>
     <div class="mr-4">
       <button class="btn btn-accent">
         <div class="text-xs">音声で仮メモを作成</div>
       </button>
     </div>
   <% end %>
-  <%= link_to  new_summary_path do %>
+  <%= link_to  new_group_summary_path(@group) do %>
     <div class="mr-4">
       <button class="btn btn-secondary">
         <div class="text-xs">メモを要約・保存</div>
@@ -19,33 +19,37 @@
 <div class="flex justify-center mt-10">
   <%# summary.summary：渡されてきたsummaryオブジェクトの、summaryカラムの中身 %>
   <%# summary_path(summary)：渡されてきたummaryオブジェクトを、showページへ遷移するパスにわたしている %>
-  <% if @summaries.present? %>
+  <% if @summaries.exists? %>
     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto mb-4">
         <% @summaries.each do |summary| %>
           <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
             <div class="flex justify-center mt-auto">
-              <%= link_to summary_path(summary) do %>
-                <div class="mr-4">
-                  <button class="btn btn-outline btn-info">
-                    <div class="text-xs">原文はこちら</div>
-                  </button>
-                </div>
-              <% end %>
-              <%= link_to edit_summary_path(summary) do %>
-                <div class="mr-4">
-                  <button class="btn btn-outline btn-success">
-                    <div class="text-xs">編集</div>
-                  </button>
-                </div>
-              <% end %>
-              <%= link_to summary_path(summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
-                <div class="mr-4">
-                  <button class="btn btn-outline btn-error">
-                    <div class="text-xs">削除</div>
-                  </button>
-                </div>
-              <% end %>
-            </div>
+            <% if summary.user_id == current_user.id %>
+                <%= link_to group_summary_path(@group, summary) do %>
+                  <div class="mr-4">
+                    <button class="btn btn-outline btn-info">
+                      <div class="text-xs">原文はこちら</div>
+                    </button>
+                  </div>
+                <% end %>
+            <% end %>
+            <% if summary.user_id == current_user.id || @group.owner_id == current_user.id%>
+                <%= link_to edit_group_summary_path(@group, summary) do %>
+                  <div class="mr-4">
+                    <button class="btn btn-outline btn-success">
+                      <div class="text-xs">編集</div>
+                    </button>
+                  </div>
+                <% end %>
+                <%= link_to group_summary_path(@group, summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                  <div class="mr-4">
+                    <button class="btn btn-outline btn-error">
+                      <div class="text-xs">削除</div>
+                    </button>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
             <div class="flex-grow">
               <div class="text-center text-lg font-bold mt-2"><%= summary.title %></div>
               <div class="text-center mt-2"><%= summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>

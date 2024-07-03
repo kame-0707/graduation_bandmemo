@@ -1,0 +1,58 @@
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <div class='col-md-8 offset-md-1'>
+      <h2>グループ詳細</h2>
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th>グループ名</th>
+            <th>紹介文</th>
+            <th>メンバー</th>
+            <th></th>
+            <th>オーナー専用</th>
+            <th>各種機能へ</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td><%= @group.name %></td>
+              <td><%= @group.introduction %></td>
+              <td>
+                <% @group.users.each do |member| %>
+                  <li style="list-style: none;"><%= member.name %></li>
+                <% end %>
+              </td>
+              <td>
+                <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
+                <% if (@group.group_users.exists?(user_id: current_user.id)) && (@group.owner_id != current_user.id) %>
+                  <%= link_to 'グループ退出する', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
+                <% end %>
+                <% if @group.permits.exists?(user_id: current_user.id) %>
+                  <%= link_to '申請取消する', group_permits_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %>    
+                <% elsif (@group.permits.exists?(user_id: current_user.id)) && (@group.owner_id != current_user.id)%>
+                  <%= button_to '加入申請する', group_permits_path(@group), class: "btn btn-sm btn-success" %>
+                <% end %>
+              </td>
+              <td>
+                <% if @group.owner_id == current_user.id %>
+                  <div>
+                    <%= link_to "承認待ち一覧", permits_path(@group),  class: "btn btn-sm btn-success" %> 
+                    <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-success" %>
+                    <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-success", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
+                  </div>
+                <% end %>
+              </td> 
+              <td>
+                <% if @group.group_users.exists?(user_id: current_user.id) %>
+                  <%= link_to "音声仮メモ作成へ", group_voices_path(@group),  class: "btn btn-sm btn-success" %> 
+                  <%= link_to "練習メモ作成へ", new_group_summary_path(@group),  class: "btn btn-sm btn-success" %> 
+                  <%= link_to "練習メモ一覧へ", group_summaries_path(@group),  class: "btn btn-sm btn-success" %> 
+                <% end %>
+              </td> 
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

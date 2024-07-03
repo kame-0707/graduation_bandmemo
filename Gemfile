@@ -17,6 +17,9 @@ gem 'sorcery', '0.17.0'
 #i18n対応
 gem 'rails-i18n', '~> 7.0.0'
 
+#ページネーション
+gem 'kaminari'
+
 gem 'config'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
