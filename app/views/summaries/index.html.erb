@@ -20,8 +20,6 @@
 </div>
 
 <div class="flex justify-center mt-10">
-  <%# summary.summary：渡されてきたsummaryオブジェクトの、summaryカラムの中身 %>
-  <%# summary_path(summary)：渡されてきたummaryオブジェクトを、showページへ遷移するパスにわたしている %>
   <% if @summaries.exists? %>
     <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto mb-4">
         <% @summaries.each do |summary| %>
