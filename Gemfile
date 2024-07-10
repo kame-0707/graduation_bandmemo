@@ -20,6 +20,9 @@ gem 'rails-i18n', '~> 7.0.0'
 #ページネーション
 gem 'kaminari'
 
+#Speech-to-Text API
+gem 'google-cloud-speech'
+
 gem 'config'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
