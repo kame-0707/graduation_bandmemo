@@ -104,8 +104,6 @@
 
     stopBtn.onclick = () => {
       recognition.stop();
-      startBtn.disabled = false; // 録音開始ボタンを有効化
-      stopBtn.disabled = true; // 録音停止・保存ボタンを無効化
       if (finalTranscript.trim() !== '') {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         fetch('<%= group_voices_path(@group) %>', {
@@ -120,7 +118,7 @@
             resultDiv.innerHTML = '音声データが保存されました';
             setTimeout(() => {
               window.location.reload(); // 保存後、ページをリロードして新しいデータを表示
-            }, 2000);
+            }, 200);
           } else {
             resultDiv.innerHTML = '音声データの保存に失敗しました';
           }
