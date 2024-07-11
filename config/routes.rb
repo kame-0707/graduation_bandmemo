@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :users, only: %i[new create]
+  resource :profile, only: %i[show edit update destroy]
 
   resources :spots, only: %i[new create index show edit update destroy]
   resources :groups, only: %i[new create index show edit update destroy] do

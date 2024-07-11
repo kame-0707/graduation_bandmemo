@@ -1,0 +1,20 @@
+<div class="text-center text-xl font-bold mt-10">プロフィール編集</div>
+
+<div class="flex flex-col items-center mt-4">
+  <%= form_with model: @user, url: profile_path, method: :put do |f| %>
+    <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
+      <%= f.label :email, 'メールアドレス' %>
+      <%= f.text_area :email, rows: 1, class: "rounded-lg p-4 w-full" %>
+      <%= f.label :name, '名前' %>
+      <%= f.text_area :name, rows: 1, class: "rounded-lg p-4 w-full" %>
+    </div>
+    <div class="flex justify-center mt-4 mx-4">
+      <div class="mr-4"">
+        <button class="btn btn-outline btn-success">
+          <div class="text-xs"><%= f.submit "更新する" %></div>
+        </button>
+      </div>
+    </div>
+  <% end %>
+</div>
+

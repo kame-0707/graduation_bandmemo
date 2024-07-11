@@ -1,0 +1,16 @@
+<div class="text-center text-xl font-bold mt-10">プロフィール</div>
+<div class="flex flex-col items-center">
+  <div class="mt-4">メールアドレス</div>
+  <div class="mt-4"><%= @user.email %></div>
+  <div class="mt-4">ユーザー名</div>
+  <div class="mt-4"><%= @user.name %></div>
+
+  <div class="flex justify-center mt-4">
+    <div class="mr-4">
+    <%= link_to '編集', edit_profile_path , class: 'btn btn-success float-right' %>
+    </div>
+    <div class="mr-4">
+    <%= link_to 'ユーザー削除', profile_path, class: "btn btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※メモのデータは全て削除されます。" }%>
+    </div>
+  </div>
+</div>
