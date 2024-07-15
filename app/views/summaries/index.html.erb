@@ -55,7 +55,13 @@
               <div class="text-center text-lg font-bold mt-2"><%= summary.title %></div>
               <div class="text-center mt-2">作成：<%= summary.user.name %></div>
               <div class="text-center mt-2"><%= summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>
-              <div class="mt-2"><%= markdown(summary.summary) %></div>
+              <div class="mt-2">
+                <% if summary.summary.present? %>
+                <%= markdown(summary.summary) %>
+                <% else %>
+                <%= markdown(summary.content) %>
+                <% end %>
+              </div>
             </div>
           </li>
         <% end %>
