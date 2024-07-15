@@ -26,7 +26,7 @@ class SummariesController < ApplicationController
 
     input_content = summary_params[:content]
 
-    if params[:commit] == 'AI要約して保存'
+    if params[:commit] == "AI要約して保存"
       # 入力内容が10文字以下の場合はそのまま出力
       if input_content.length < 10
         summary_text = input_content
@@ -61,21 +61,26 @@ class SummariesController < ApplicationController
       end
 
       @summary = @group.summaries.new(title: summary_params[:title], content: summary_params[:content], summary: summary_text, user: current_user)
+      if @summary.save
+        redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
+      else
+        flash.now[:alert] = 'メモの保存ができませんでした'
+        render :new, status: :unprocessable_entity
+      end
 
-    elsif params[:commit] == '入力内容をそのまま保存'
+    elsif params[:commit] == "入力内容をそのまま保存"
       @summary = @group.summaries.new(
         title: summary_params[:title],
         content: input_content,
         summary: nil,
         user: current_user
       )
-    end  
-
-    if @summary.save
-      redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
-    else
-      flash.now[:alert] = 'メモの保存ができませんでした'
-      render :new, status: :unprocessable_entity
+      if @summary.save
+        redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
+      else
+        flash.now[:alert] = 'メモの保存ができませんでした'
+        render :new, status: :unprocessable_entity
+      end
     end
   end
 
