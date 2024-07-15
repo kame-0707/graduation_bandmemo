@@ -23,6 +23,7 @@ class SummariesController < ApplicationController
 
   def create
     client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_TOKEN'])
+
     input_content = summary_params[:content]
 
     if params[:commit] == 'AI要約して保存'
@@ -68,7 +69,7 @@ class SummariesController < ApplicationController
         summary: nil,
         user: current_user
       )
-    end
+    end  
 
     if @summary.save
       redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
