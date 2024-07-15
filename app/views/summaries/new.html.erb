@@ -13,8 +13,11 @@
     </div>
     <div class="flex justify-center mt-4 mx-4">
       <div class="mr-4">
-        <button class="btn btn-outline btn-success">
-          <div class="text-xs"><%= form.submit "AI要約して保存" %></div>
+        <button class="btn btn-outline btn-success mr-4">
+          <div class="text-xs"><%= form.submit "AI要約して保存", name: 'commit'%></div>
+        </button>
+        <button class="btn btn-outline btn-success mr-4">
+        <div class="text-xs"><%= form.submit "入力内容をそのまま保存", name: 'commit'%></div>
         </button>
       </div>
       <div class="mr-4">

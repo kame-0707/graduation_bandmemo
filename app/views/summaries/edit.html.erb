@@ -5,8 +5,13 @@
     <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
       <%= form.label :title, 'タイトル'%>
       <%= form.text_area :title, rows: 1, class: "rounded-lg p-4 w-full" %>
+      <% if @summary.summary.present? %>
       <%= form.label :summary, 'メモ内容' %>
       <%= form.text_area :summary, rows: 5, class: "rounded-lg p-4 w-full" %>
+      <% else %>
+      <%= form.label :content, 'メモ内容' %>
+      <%= form.text_area :content, rows: 5, class: "rounded-lg p-4 w-full" %>
+      <% end %>
     </div>
     <div class="flex justify-center mt-4 mx-4">
       <div class="mr-4"">
