@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_13_031728) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_16_085149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_031728) do
     t.index ["user_id"], name: "index_permits_on_user_id"
   end
 
+  create_table "spots", force: :cascade do |t|
+    t.string "registered_title"
+    t.string "address"
+    t.float "latitude", null: false
+    t.float "longitude", null: false
+    t.string "opening_hours"
+    t.string "phone_number"
+    t.string "website"
+    t.string "place_id"
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_spots_on_group_id"
+    t.index ["user_id"], name: "index_spots_on_user_id"
+  end
+
   create_table "summaries", force: :cascade do |t|
     t.text "title", null: false
     t.text "content", null: false
@@ -85,6 +102,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_031728) do
   add_foreign_key "group_users", "users"
   add_foreign_key "permits", "groups"
   add_foreign_key "permits", "users"
+  add_foreign_key "spots", "groups"
+  add_foreign_key "spots", "users"
   add_foreign_key "summaries", "groups"
   add_foreign_key "summaries", "users"
   add_foreign_key "voices", "groups"

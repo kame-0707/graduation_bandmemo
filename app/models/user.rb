@@ -4,6 +4,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :authentications
   has_many :summaries, dependent: :destroy
   has_many :voices, dependent: :destroy
+  has_many :spots, dependent: :destroy
   has_many :group_users, dependent: :destroy
   has_many :permits, dependent: :destroy
   has_many :groups, through: :group_users

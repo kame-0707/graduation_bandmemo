@@ -2,23 +2,26 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Sample_GoogleMap</title>
+  <title>スタジオ一覧</title>
 </head>
 <body>
-  <h2>GoogleMap</h2>
+  <div class="flex flex-col items-center mt-4">
+    <div class="text-center text-xl font-bold mt-10">スタジオ一覧</div>
+    
+    <input id="address" type="textbox" class="w-2/3 mt-4 mb-4">
+    <input type="button" value="検索する" onclick="codeAddress()" class="btn btn-sm btn-success mb-4">
+    <%= link_to 'スタジオ登録画面へ', new_group_spot_path(@group), class: "btn btn-sm btn-success mb-4" %>
 
-  <!-- ここから追加 -->
-  <input id="address" type="textbox" value="GeekSalon">
-  <input type="button" value="検索する" onclick="codeAddress()">
-  <!-- ここまで追加-->
-  <div id='map'></div>
-
+    <div id='map'></div>
+  </div>  
   <style>
   #map {
-    height: 600px;
-    width: 600px;
+    height: 400px;
+    width: 90%;
+    margin: 0 auto;
   }
   </style>
+  </div>
 
   <script>
   let map
@@ -27,20 +30,25 @@
     geocoder = new google.maps.Geocoder()
 
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 40.7828, lng:-73.9653},
-      zoom: 12,
+      center: { lat: 35.6803997, lng: 139.7690174 }, //東京
+      zoom: 10,
     });
 
     marker = new google.maps.Marker({
       position:  {lat: 40.7828, lng:-73.9653},
       map: map
     });
+
+    const input = document.getElementById("address");
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo("bounds", map);
   }
-  // ここから追加 
+
+
   let geocoder
 
   function codeAddress(){
-    let inputAddress = document.getElementById('address').value;
+    let inputAddress = document.getElementById("address").value;
 
     geocoder.geocode( { 'address': inputAddress}, function(results, status) {
       if (status == 'OK') {
@@ -55,6 +63,6 @@
     });   
   }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&libraries=places&callback=initMap" async defer></script>
 </body>
 </html>
