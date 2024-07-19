@@ -1,0 +1,20 @@
+<div class="flex justify-center mt-4 mx-4">
+  <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
+</div>
+<div class="text-center text-xl font-bold mt-10">登録したスタジオ詳細</div>
+<div class="flex flex-col items-center">
+  <div class="mt-4">登録タイトル</div>
+  <div class="mt-4"><%= @spot.registered_title %></div>
+  <div class="mt-4">投稿者名</div>
+  <div class="mt-4"><%= @spot.user.name %></div>
+
+  <div class="flex justify-center mt-4">
+    <div class="mr-4">
+    <%= link_to 'タイトル編集', edit_group_spot_path(@group, @spot) , class: 'btn btn-success float-right' %>
+    </div>
+    <div class="mr-4">
+    <%= link_to 'スタジオ削除', group_spot_path,  class: "btn btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "削除しますか" }%>
+    </div>
+  </div>
+  <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 my-4"%>
+</div>

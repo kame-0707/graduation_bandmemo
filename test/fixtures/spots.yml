@@ -5,9 +5,9 @@ one:
   string: MyString
   address: MyString
   string: MyString
-  latitude: MyString
+  lat: MyString
   float: MyString
-  longitude: MyString
+  lng: MyString
   float: MyString
   opening_hours: MyString
   string: MyString
@@ -23,9 +23,9 @@ two:
   string: MyString
   address: MyString
   string: MyString
-  latitude: MyString
+  lat: MyString
   float: MyString
-  longitude: MyString
+  lng: MyString
   float: MyString
   opening_hours: MyString
   string: MyString

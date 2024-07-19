@@ -5,15 +5,16 @@
   <title>スタジオ一覧</title>
 </head>
 <body>
+  <div class="flex justify-center mt-4 mx-4">
+    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
+  </div>
   <div class="flex flex-col items-center mt-4">
     <div class="text-center text-xl font-bold mt-10">スタジオ一覧</div>
     
-    <input id="address" type="textbox" class="w-2/3 mt-4 mb-4">
-    <input type="button" value="検索する" onclick="codeAddress()" class="btn btn-sm btn-success mb-4">
     <%= link_to 'スタジオ登録画面へ', new_group_spot_path(@group), class: "btn btn-sm btn-success mb-4" %>
 
-    <div id='map'></div>
-  </div>  
+  <div id="map"></div>
+
   <style>
   #map {
     height: 400px;
@@ -21,47 +22,79 @@
     margin: 0 auto;
   }
   </style>
-  </div>
+
+  <ul  class="grid grid-cols-1 justify-items-center max-w-4xl mx-auto mt-4" id="spot-list">
+    <% if @spots.present? %>
+      <% @spots.each do |spot| %>
+        <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md mb-4">
+          <div class="flex justify-between items-center mt-2">
+            <div>
+              <a href="#" class="spot-link link-hover" data-index="<%= @spots.index(spot) %>"><%= spot.registered_title %></a>
+              <div class="text-sm text-gray-500 mt-2"><%= spot.address %></div>
+            </div>
+            <%= link_to '詳細', group_spot_path(@group, spot), class: "btn btn-sm btn-success my-4 mx-4" %>
+          </div>
+        </li>
+      <% end %>
+    <% else %>
+        <div>登録したスタジオが見つかりません</div>
+    <% end %>
+  </ul>
 
   <script>
-  let map
+    function initMap() {
+      let latlng = new google.maps.LatLng(35.6803997, 139.7690174); // 地図の表示初期値(東京)
+      let map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: latlng
+      });
+      let activeInfoWindow; // 現在開いているInfoWindowを追跡
 
-  function initMap(){
-    geocoder = new google.maps.Geocoder()
+      let markers = []; // マーカーを保存する配列
+      let infoWindows = []; // InfoWindowを保存する配列
 
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: { lat: 35.6803997, lng: 139.7690174 }, //東京
-      zoom: 10,
-    });
+      <% @spots.each_with_index do |spot, index| %> 
+        (function() {
+          let markerLatLng = { lat: <%= spot.lat %>, lng: <%= spot.lng %> };
+          let marker = new google.maps.Marker({
+            position: markerLatLng,
+            map: map
+          });
+          markers.push(marker); // マーカーを配列に追加
 
-    marker = new google.maps.Marker({
-      position:  {lat: 40.7828, lng:-73.9653},
-      map: map
-    });
+          let infowindow = new google.maps.InfoWindow({
+            position: markerLatLng,
+            content: "<a href='<%= group_spot_path(@group, spot) %>' class='text-blue-600 link-hover'><%= spot.registered_title %></a>"
+          });
+          infoWindows.push(infowindow); // InfoWindowを配列に追加
 
-    const input = document.getElementById("address");
-    const autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo("bounds", map);
-  }
+          // マーカーをクリックしたら詳細情報の吹き出しが表示される
+          marker.addListener('click', function() {
+            if (activeInfoWindow) { 
+              activeInfoWindow.close(); // 前のInfoWindowを閉じる
+            }
+            infowindow.open(map, marker); // 新しいInfoWindowを開く
+            activeInfoWindow = infowindow; // 現在開いているInfoWindowを更新
+          });
+        })();
+      <% end %>
 
+      // 一覧のタイトルをクリックすると、地図上の対象のピン上に吹き出しが表示される
+      document.querySelectorAll('.spot-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          let index = parseInt(this.getAttribute('data-index'), 10);
+          let marker = markers[index];
+          let infowindow = infoWindows[index];
 
-  let geocoder
-
-  function codeAddress(){
-    let inputAddress = document.getElementById("address").value;
-
-    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
+          if (activeInfoWindow) { 
+            activeInfoWindow.close(); // 前のInfoWindowを閉じる
+          }
+          infowindow.open(map, marker); // 新しいInfoWindowを開く
+          activeInfoWindow = infowindow; // 現在開いているInfoWindowを更新
         });
-      } else {
-        alert('該当する結果がありませんでした：' + status);
-      }
-    });   
-  }
+      });
+    }
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&libraries=places&callback=initMap" async defer></script>
 </body>

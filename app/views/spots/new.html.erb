@@ -5,15 +5,18 @@
   <title>スタジオを登録</title>
 </head>
 <body>
+  <div class="flex justify-center mt-4 mx-4">
+    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
+  </div>
   <div class="flex flex-col items-center mt-4">
     <div class="text-center text-xl font-bold mt-10">スタジオを登録</div>
-  
-    <input id="address" type="textbox" placeholder="ピンを刺したい地名を検索" class="w-2/3 mt-4 mb-4">
+
+    <%= form_with model: @spot, url: group_spots_path(@group), class: "w-full flex flex-col items-center" do |f|  %>
+    <%= f.text_field :address, id: :address, placeholder: "ピンを刺したい地名を検索", class: "w-2/3 mb-4" %>
     <input type="button" value="①地図上にピンを刺す" onclick="codeAddress()" class="btn btn-sm btn-success mb-4">
-    <%= form_with model: @map, class: "w-full flex flex-col items-center" do |f|  %>
     <%= f.text_field :registered_title, placeholder: "登録タイトルを入力", class: "w-2/3 mb-4" %>
-    <%= f.hidden_field :latitude, id: :lat %>
-    <%= f.hidden_field :longitude, id: :lng %>
+    <%= f.hidden_field :lat, id: :lat %>
+    <%= f.hidden_field :lng, id: :lng %>
     <%= f.submit "②スタジオ一覧に登録する", class: "btn btn-sm btn-success mb-4" %>
     <% end %>
     <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 mb-4"%>
@@ -74,6 +77,7 @@
      }
    });
  }
+ 
 </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&libraries=places&callback=initMap" async defer></script>
 </body>
