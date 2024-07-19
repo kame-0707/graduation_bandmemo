@@ -17,7 +17,7 @@ class SpotsController < ApplicationController
   end
 
   def create
-    @spot = @group.spots.new(content: spot_params[:content], user: current_user)
+    @spot = @group.spots.new(spot_params.merge(user: current_user))
     if @spot.save
       redirect_to group_spots_path(@group), notice: 'スタジオが登録されました'
     else
@@ -45,7 +45,7 @@ class SpotsController < ApplicationController
 
   private
 
-  def set_voice
+  def set_spot
     @group = Group.find(params[:group_id])
     @spot = @group.spots.find(params[:id])
   end
@@ -62,7 +62,7 @@ class SpotsController < ApplicationController
   end
 
   def authorize_owner!
-    @voice = @group.spots.find(params[:id])
+    @spot = @group.spots.find(params[:id])
     @group = Group.find(params[:group_id])
     unless @spot.user == current_user
       redirect_to group_voices_path(@group), alert: '操作の権限がありません'
@@ -70,6 +70,6 @@ class SpotsController < ApplicationController
   end
 
   def spot_params
-    params.require(:spot).permit(:registered_title, :address, :latitude, :longitude, :opening_hours, :phone_number, :website, :place_id)
+    params.require(:spot).permit(:registered_title, :address, :lat, :lng, :opening_hours, :phone_number, :website, :place_id)
   end
 end

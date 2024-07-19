@@ -27,27 +27,23 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <div class="font-notosansjp">
-      <div class="min-h-screen w-full relative pb-12">
-        <div class="w-full">
-          <% if logged_in? %> 
-            <%= render 'shared/header' %>  
-          <% else %> 
-            <%= render 'shared/before_login_header' %> 
-        <% end %> 
-        </div>
-        <div class="my-5 relative z-0">
-          <!-- フラッシュメッセージの表示 -->
-          <%= render 'shared/flash_message' %> 
-          <%= yield %>
-        </div>
-        <div class="absolute bottom-0 w-full">
-          <!-- フッター -->
-          <%= render 'shared/footer' %>
-        </div>
-      </div>
-    </div>
+<body class="min-h-screen flex flex-col">
+    <header class="w-full">
+      <% if logged_in? %> 
+        <%= render 'shared/header' %>  
+      <% else %> 
+        <%= render 'shared/before_login_header' %> 
+      <% end %> 
+    </header>
+    <main class="flex-grow my-5">
+      <!-- フラッシュメッセージの表示 -->
+      <%= render 'shared/flash_message' %> 
+      <%= yield %>
+    </main>
+    <footer class="w-full">
+      <!-- フッター -->
+      <%= render 'shared/footer' %>
+    </footer>
   </body>
 </html>
 

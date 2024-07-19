@@ -1,12 +1,10 @@
-<div class="text-center text-xl font-bold mt-10">プロフィール編集</div>
+<div class="text-center text-xl font-bold mt-10">スタジオ編集</div>
 
 <div class="flex flex-col items-center mt-4">
-  <%= form_with model: @user, url: profile_path do |f| %>
+  <%= form_with model: @spot, url: group_spot_path(@group) do |f| %>
     <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
-      <%= f.label :email, 'メールアドレス' %>
-      <%= f.text_area :email, rows: 1, class: "rounded-lg p-4 w-full" %>
-      <%= f.label :name, '名前' %>
-      <%= f.text_area :name, rows: 1, class: "rounded-lg p-4 w-full" %>
+      <%= f.label :registered_title, '登録タイトル' %>
+      <%= f.text_area :registered_title, rows: 1, class: "rounded-lg p-4 w-full" %>
     </div>
     <div class="flex justify-center mt-4 mx-4">
       <div class="mr-4"">
