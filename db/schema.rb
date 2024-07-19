@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_18_104012) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_19_142650) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_104012) do
     t.bigint "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_datetime"
     t.index ["group_id"], name: "index_spots_on_group_id"
     t.index ["user_id"], name: "index_spots_on_user_id"
   end

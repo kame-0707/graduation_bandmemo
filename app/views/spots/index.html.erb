@@ -9,7 +9,7 @@
     <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
   </div>
   <div class="flex flex-col items-center mt-4">
-    <div class="text-center text-xl font-bold mt-10">スタジオ一覧</div>
+    <div class="text-center text-xl font-bold my-10">スタジオ一覧</div>
     
     <%= link_to 'スタジオ登録画面へ', new_group_spot_path(@group), class: "btn btn-sm btn-success mb-4" %>
 
@@ -31,6 +31,7 @@
             <div>
               <a href="#" class="spot-link link-hover" data-index="<%= @spots.index(spot) %>"><%= spot.registered_title %></a>
               <div class="text-sm text-gray-500 mt-2"><%= spot.address %></div>
+              <div class="text-sm text-gray-500 mt-2">練習開始：<%= spot.start_datetime.strftime("%Y/%m/%d %H:%M") %></div>
             </div>
             <%= link_to '詳細', group_spot_path(@group, spot), class: "btn btn-sm btn-success my-4 mx-4" %>
           </div>

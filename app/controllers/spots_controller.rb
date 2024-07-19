@@ -5,7 +5,7 @@ class SpotsController < ApplicationController
   before_action :authorize_owner!, only: %i[show edit update destroy]
 
   def index
-    @spots = @group.spots.order(created_at: :desc)
+    @spots = @group.spots.order(start_datetime: :asc)
   end
 
   def show
@@ -70,6 +70,6 @@ class SpotsController < ApplicationController
   end
 
   def spot_params
-    params.require(:spot).permit(:registered_title, :address, :lat, :lng, :opening_hours, :phone_number, :website, :place_id)
+    params.require(:spot).permit(:registered_title, :start_datetime, :address, :lat, :lng, :opening_hours, :phone_number, :website, :place_id)
   end
 end

@@ -5,12 +5,14 @@
 <div class="flex flex-col items-center">
   <div class="mt-4">登録タイトル</div>
   <div class="mt-4"><%= @spot.registered_title %></div>
+  <div class="mt-4">練習開始日時</div>
+  <div class="mt-4"><%= @spot.start_datetime.strftime("%Y/%m/%d %H:%M") %></div>
   <div class="mt-4">投稿者名</div>
   <div class="mt-4"><%= @spot.user.name %></div>
 
   <div class="flex justify-center mt-4">
     <div class="mr-4">
-    <%= link_to 'タイトル編集', edit_group_spot_path(@group, @spot) , class: 'btn btn-success float-right' %>
+    <%= link_to 'タイトル日時編集', edit_group_spot_path(@group, @spot) , class: 'btn btn-success float-right' %>
     </div>
     <div class="mr-4">
     <%= link_to 'スタジオ削除', group_spot_path,  class: "btn btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "削除しますか" }%>

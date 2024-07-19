@@ -9,15 +9,17 @@
     <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
   </div>
   <div class="flex flex-col items-center mt-4">
-    <div class="text-center text-xl font-bold mt-10">スタジオを登録</div>
+    <div class="text-center text-xl font-bold my-10">スタジオを登録</div>
 
     <%= form_with model: @spot, url: group_spots_path(@group), class: "w-full flex flex-col items-center" do |f|  %>
     <%= f.text_field :address, id: :address, placeholder: "ピンを刺したい地名を検索", class: "w-2/3 mb-4" %>
     <input type="button" value="①地図上にピンを刺す" onclick="codeAddress()" class="btn btn-sm btn-success mb-4">
-    <%= f.text_field :registered_title, placeholder: "登録タイトルを入力", class: "w-2/3 mb-4" %>
+    <%= f.text_field :registered_title, placeholder: "登録タイトルを入力(例：初回練習)", class: "w-2/3 mb-4" %>
+    <%= f.label :start_datetime, '練習開始日時', class: "font-semibold"%>
+    <%= f.datetime_field :start_datetime %>
     <%= f.hidden_field :lat, id: :lat %>
     <%= f.hidden_field :lng, id: :lng %>
-    <%= f.submit "②スタジオ一覧に登録する", class: "btn btn-sm btn-success mb-4" %>
+    <%= f.submit "②スタジオ一覧に登録する", class: "btn btn-sm btn-success my-4" %>
     <% end %>
     <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 mb-4"%>
     <div id="map" class="form-map"></div>
