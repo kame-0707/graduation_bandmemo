@@ -62,10 +62,18 @@
             map: map
           });
           markers.push(marker); // マーカーを配列に追加
+          let googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=<%= spot.lat %>,<%= spot.lng %>&query_place_id=<%= spot.place_id %>";
+          
 
           let infowindow = new google.maps.InfoWindow({
             position: markerLatLng,
-            content: "<a href='<%= group_spot_path(@group, spot) %>' class='text-blue-600 link-hover'><%= spot.registered_title %></a>"
+            content: `
+              <a href='<%= group_spot_path(@group, spot) %>' class='text-blue-600 link-hover'>
+                <%= spot.registered_title %>
+              </a><br>
+              <a href='${googleMapsUrl}' target='_blank' class='text-blue-600 link-hover'>
+                Googleマップで見る
+              </a>`
           });
           infoWindows.push(infowindow); // InfoWindowを配列に追加
 
