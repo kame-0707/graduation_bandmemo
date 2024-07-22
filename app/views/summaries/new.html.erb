@@ -13,12 +13,8 @@
     </div>
     <div class="flex justify-center mt-4 mx-4">
       <div class="mr-4">
-        <button class="btn btn-outline btn-success mr-4">
-          <div class="text-xs"><%= form.submit "AI要約して保存", name: 'commit'%></div>
-        </button>
-        <button class="btn btn-outline btn-success mr-4">
-        <div class="text-xs"><%= form.submit "入力内容をそのまま保存", name: 'commit'%></div>
-        </button>
+        <%= form.submit "AI要約して保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
+        <%= form.submit "入力内容をそのまま保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
       </div>
       <div class="mr-4">
         <%= link_to group_voices_path(@group) do %>

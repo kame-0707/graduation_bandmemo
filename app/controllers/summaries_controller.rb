@@ -7,7 +7,7 @@ class SummariesController < ApplicationController
   before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @summaries = @group.summaries.order(created_at: :desc)
+    @summaries = @group.summaries.includes(:user).order(created_at: :desc)
   end
 
   def show
@@ -33,7 +33,7 @@ class SummariesController < ApplicationController
       else
       response = client.chat(
         parameters: {
-          model: "gpt-3.5-turbo",
+          model: "gpt-4o-mini",
           messages: [
               { role: "system",
               content: "入力された内容を厳密に要約してください。絶対に情報を追加しないでください。質問や推測、対策案、メリット、注意点などは一切追加しないでください。日本語で出力してください。"
