@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'videos/index'
-  get 'profiles/index'
   root "static_pages#top"
 
   resources :users, only: %i[new create]
