@@ -37,16 +37,12 @@
             <% if summary.user_id == current_user.id || @group.owner_id == current_user.id%>
                 <%= link_to edit_group_summary_path(@group, summary) do %>
                   <div class="mr-4">
-                    <button class="btn btn-outline btn-success">
-                      <div class="text-xs">編集</div>
-                    </button>
+                    <i class="fa-solid fa-pen"></i>
                   </div>
                 <% end %>
                 <%= link_to group_summary_path(@group, summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
                   <div class="mr-4">
-                    <button class="btn btn-outline btn-error">
-                      <div class="text-xs">削除</div>
-                    </button>
+                    <i class="fa-solid fa-trash"></i>
                   </div>
                 <% end %>
               </div>

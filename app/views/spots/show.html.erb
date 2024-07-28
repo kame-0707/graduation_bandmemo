@@ -12,10 +12,14 @@
 
   <div class="flex justify-center mt-4">
     <div class="mr-4">
-    <%= link_to 'タイトル日時編集', edit_group_spot_path(@group, @spot) , class: 'btn btn-success float-right' %>
+      <%= link_to edit_group_spot_path(@group, @spot) do %>
+        <i class="fa-solid fa-pen"></i>
+      <% end %>
     </div>
     <div class="mr-4">
-    <%= link_to 'スタジオ削除', group_spot_path,  class: "btn btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "削除しますか" }%>
+      <%= link_to group_spot_path, data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do%>
+        <i class="fa-solid fa-trash"></i>
+      <% end %>
     </div>
   </div>
   <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 my-4"%>
