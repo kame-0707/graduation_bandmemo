@@ -1,0 +1,57 @@
+<div class="flex justify-center mt-4 mx-4">
+    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
+  </div>
+<div class="text-center text-xl font-bold mt-10">参考動画一覧</div >
+<div class="flex justify-center mt-4">
+  <%= link_to new_group_video_path do %>
+    <div class="mr-4">
+      <button class="btn btn-accent">
+        <div class="text-xs">動画を登録する</div>
+      </button>
+    </div>
+  <% end %>
+</div>
+<div class="flex justify-center mt-10">
+  <% if @videos.exists? %>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center max-w-4xl mx-auto mb-4">
+        <% @videos.each do |video| %>
+          <li class="bg-white shadow-md rounded-lg p-4 w-full max-w-md">
+            <div class="flex justify-center mt-auto">
+            <% if video.user_id == current_user.id || @group.owner_id == current_user.id%>
+                <%= link_to edit_group_video_path(@group, video) do %>
+                  <div class="mr-4">
+                    <button class="btn btn-outline btn-success">
+                      <div class="text-xs">編集</div>
+                    </button>
+                  </div>
+                <% end %>
+                <%= link_to group_video_path(@group, video), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                  <div class="mr-4">
+                    <button class="btn btn-outline btn-error">
+                      <div class="text-xs">削除</div>
+                    </button>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="flex-grow">
+              <div class="text-center text-lg font-bold mt-2"><%= video.title %></div>
+              <div class="text-center mt-2">作成：<%= video.user.name %></div>
+              <div class="text-center mt-2"><%= video.created_at.strftime("%Y/%m/%d %H:%M") %></div>
+              <div class="text-center mt-2">
+                <iframe src="https://www.youtube.com/embed/<%= video.split_id_from_youtube_url %>", 
+                    allow ="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", 
+                    allowfullscreen="", 
+                    frameborder="0", 
+                    height="315", 
+                    width="400">
+                </iframe>
+              </div>
+            </div>
+          </li>
+        <% end %>
+    </ul>
+  <% else %>
+  <div>動画が見つかりません</div>
+  <% end %>
+</div>

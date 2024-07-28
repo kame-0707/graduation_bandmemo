@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'profiles/index'
   root "static_pages#top"
 
   resources :users, only: %i[new create]
@@ -9,6 +8,7 @@ Rails.application.routes.draw do
     resources :summaries, only: %i[new create index show edit update destroy]
     resources :voices, only: %i[new create index show edit update destroy]
     resources :spots, only: %i[new create index show edit update destroy]
+    resources :videos, only: %i[new create index show edit update destroy]
     resource :permits, only: [:create, :destroy]
     resource :group_users, only: %i[create destroy]
   end
