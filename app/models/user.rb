@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_many :summaries, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_many :voices, dependent: :destroy
   has_many :spots, dependent: :destroy

@@ -26,13 +26,20 @@
           <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
             <div class="flex justify-center mt-auto">
               <% if summary.user_id == current_user.id %>
-                <%= link_to group_summary_path(@group, summary) do %>
-                  <div class="mr-4">
+                <%= link_to group_original_path(@group, summary) do %>
+                  <div class="mb-4 mr-4">
                     <button class="btn btn-outline btn-info">
                       <div class="text-xs">原文はこちら</div>
                     </button>
                   </div>
                 <% end %>
+              <% end %>
+              <%= link_to group_summary_path(@group, summary) do %>
+                <div class="mb-4 mr-4">
+                  <button class="btn btn-outline btn-info">
+                    <div class="text-xs">詳細・コメント</div>
+                  </button>
+                </div>
               <% end %>
             </div>
             <div class="flex justify-between items-center mt-auto">
@@ -54,7 +61,7 @@
               <div class="text-center text-lg font-bold mt-2"><%= summary.title %></div>
               <div class="text-center mt-2">作成：<%= summary.user.name %></div>
               <div class="text-center mt-2"><%= summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>
-              <div class="text-center mt-2">
+              <div class="mt-2">
                 <% if summary.summary.present? %>
                 <%= markdown(summary.summary) %>
                 <% else %>
