@@ -39,6 +39,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    @group = Group.find(params[:id])
     group = @group
     group.destroy!
     redirect_to groups_path, status: :see_other, notice: 'グループが削除されました'
