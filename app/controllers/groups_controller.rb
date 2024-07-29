@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :ensure_correct_user, only: %i[edit update permits]
+  before_action :ensure_correct_user, only: %i[edit update destroy permits]
 
   def index
     @groups = Group.all
@@ -39,7 +39,6 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @group = Group.find(params[:id])
     group = @group
     group.destroy!
     redirect_to groups_path, status: :see_other, notice: 'グループが削除されました'
