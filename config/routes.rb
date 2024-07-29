@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resource :profile, only: %i[show edit update destroy]
 
   resources :groups, only: %i[new create index show edit update destroy] do
-    resources :summaries, only: %i[new create index show edit update destroy]
+    resources :summaries, only: %i[new create index show edit update destroy] do
+      resource :likes, only: %i[create destroy]
+    end
     resources :voices, only: %i[new create index show edit update destroy]
     resources :spots, only: %i[new create index show edit update destroy]
     resources :videos, only: %i[new create index show edit update destroy]

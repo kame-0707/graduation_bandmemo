@@ -5,7 +5,7 @@ class VideosController < ApplicationController
   before_action :authorize_owner!, only: %i[show edit update destroy]
 
   def index
-    @videos = @group.videos.where(user: current_user).order(created_at: :desc)
+    @videos = @group.videos.includes(:user).order(created_at: :desc)
   end
 
   def show

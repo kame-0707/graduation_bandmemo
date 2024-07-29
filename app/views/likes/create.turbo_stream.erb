@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "like-button-for-summary-#{@group.id}-#{summary.id}" do %>
+  <%= render 'summaries/like', summary: summary %>
+<% end %>

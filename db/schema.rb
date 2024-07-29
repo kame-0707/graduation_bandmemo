@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_24_051424) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_28_085252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_051424) do
     t.integer "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.bigint "summary_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_likes_on_group_id"
+    t.index ["summary_id"], name: "index_likes_on_summary_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "permits", force: :cascade do |t|
@@ -112,6 +123,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_051424) do
 
   add_foreign_key "group_users", "groups"
   add_foreign_key "group_users", "users"
+  add_foreign_key "likes", "groups"
+  add_foreign_key "likes", "summaries"
+  add_foreign_key "likes", "users"
   add_foreign_key "permits", "groups"
   add_foreign_key "permits", "users"
   add_foreign_key "spots", "groups"
