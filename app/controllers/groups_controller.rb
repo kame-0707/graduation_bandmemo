@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :ensure_correct_user, only: %i[edit update destroy permits]
+  before_action :ensure_correct_user, only: %i[edit update permits]
 
   def index
     @groups = Group.all
