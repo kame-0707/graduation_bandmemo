@@ -1,11 +1,69 @@
-<div class="text-center text-xl font-bold mt-10">メモ原文</div>
-<br>
-<div class="mx-4"><%= @summary.content %></div>
-<br>
+<div class="flex justify-center mt-4 mx-4">
+    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
+</div>
+<div class="text-center text-xl font-bold mt-10">メモ詳細</div >
 <div class="flex justify-center mt-4">
-  <%= link_to  group_summaries_path(@group) do %>
-    <button class="btn btn-secondary">
-      <div class="text-xs">一覧に戻る</div>
-    </button>
+  <%= link_to group_summaries_path(@group) do %>
+    <div class="mr-4">
+      <button class="btn btn-accent">
+        <div class="text-xs">メモ一覧に戻る</div>
+      </button>
+    </div>
   <% end %>
 </div>
+<div class="flex justify-center mt-10">
+    <!-- メモフォーム -->
+    <ul class="justify-center max-w-4xl mx-auto mb-4 flex flex-col items-center">
+          <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
+            <div class="flex justify-center mt-auto">
+              <% if @summary.user_id == current_user.id %>
+                <%= link_to group_original_path(@group, @summary) do %>
+                  <div class="mr-4">
+                    <button class="btn btn-outline btn-info">
+                      <div class="text-xs">原文はこちら</div>
+                    </button>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="flex justify-between items-center mt-auto">
+              <% if @summary.user_id == current_user.id || @group.owner_id == current_user.id%>
+                <div class="ml-4 mr-auto flex space-x-4">
+                  <%= link_to edit_group_summary_path(@group, @summary) do %>
+                      <i class="fa-solid fa-pen"></i>
+                  <% end %>
+                  <%= link_to group_summary_path(@group, @summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                      <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <div class="flex-grow">
+              <div class="text-center text-lg font-bold mt-2"><%= @summary.title %></div>
+              <div class="text-center mt-2">作成：<%= @summary.user.name %></div>
+              <div class="text-center mt-2"><%= @summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>
+              <div class="mt-2">
+                <% if @summary.summary.present? %>
+                <%= markdown(@summary.summary) %>
+                <% else %>
+                <%= markdown(@summary.content) %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+          <!-- コメントフォーム -->
+          <div class="w-full flex justify-center mb-4">
+            <%= render 'comments/form', { group: @group, summary: @summary, comment: @comment } %>
+          </div>
+          <!-- コメントエリア -->
+            <div class="w-full flex justify-center">
+              <div class="w-5/6 max-w-md">
+                <table class="table">
+                  <tbody id="table-comment">
+                    <%= render @comments, { group: @group, summary: @summary }%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+    </ul>
+  </div>

@@ -5,13 +5,15 @@ Rails.application.routes.draw do
   resource :profile, only: %i[show edit update destroy]
 
   resources :groups, only: %i[new create index show edit update destroy] do
+    get "summaries/:id/original" => "summaries#original", as: :original
     resources :summaries, only: %i[new create index show edit update destroy] do
-      resource :likes, only: %i[create destroy]
+      resource :like, only: %i[create destroy]
+      resources :comments, only: %i[create destroy]
     end
     resources :voices, only: %i[new create index show edit update destroy]
     resources :spots, only: %i[new create index show edit update destroy]
     resources :videos, only: %i[new create index show edit update destroy]
-    resource :permits, only: [:create, :destroy]
+    resource :permits, only: %i[create destroy]
     resource :group_users, only: %i[create destroy]
   end
 

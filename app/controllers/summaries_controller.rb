@@ -10,7 +10,15 @@ class SummariesController < ApplicationController
     @summaries = @group.summaries.includes(:user).order(created_at: :desc)
   end
 
+  
   def show
+    @summary = @group.summaries.find(params[:id])
+    @comment = Comment.new
+    @comments = @summary.comments.includes(:user).order(created_at: :desc)
+  end
+  
+  
+  def original
     @summary = @group.summaries.find(params[:id])
     unless (@summary.user_id == current_user.id)
       redirect_to group_summaries_path(@group), alert: '原文を確認できるのは投稿者のみです'
