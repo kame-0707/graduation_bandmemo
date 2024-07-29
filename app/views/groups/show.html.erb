@@ -34,11 +34,9 @@
                   <div>
                     <%= link_to '承認待ち一覧', permits_path(@group),  class: "btn btn-sm btn-outline btn-info" %> 
                     <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-outline btn-success" %>
+                    <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
                   </div>
                 <% end %>
-                <div><%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%></div>
-                  
-                
               </td> 
               <td>
                 <% if @group.group_users.exists?(user_id: current_user.id) %>

@@ -29,6 +29,7 @@
                 <td></td>
               <% end %>
                 <td><%= link_to 'グループ詳細', group_path(group), class: "btn btn-outline btn-secondary" %></td>
+                <td><%= link_to 'グループ削除', group_path(group), class: "btn btn-sm btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%></td>
             </tr>
           <% end %>
         </tbody>
