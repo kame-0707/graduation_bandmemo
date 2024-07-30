@@ -8,9 +8,6 @@ gem "ruby-openai"
 #openai_apiの出力するMarkdownのテキストをHTMLに変換
 gem 'redcarpet'
 
-#環境変数管理の設定
-gem 'dotenv-rails'
-
 #認証
 gem 'sorcery', '0.17.0'
 
@@ -19,9 +16,6 @@ gem 'rails-i18n', '~> 7.0.0'
 
 #ページネーション
 gem 'kaminari'
-
-#Speech-to-Text API
-gem 'google-cloud-speech'
 
 gem 'config'
 
