@@ -30,7 +30,7 @@ class SummariesController < ApplicationController
   end
 
   def create
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_ACCESS_TOKEN'])
+    client = OpenAI::Client.new(access_token: Rails.application.credentials.OPENAI_ACCESS_TOKEN)
 
     input_content = summary_params[:content]
 
