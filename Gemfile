@@ -11,6 +11,11 @@ gem 'redcarpet'
 #認証
 gem 'sorcery', '0.17.0'
 
+#開発環境でのメール送信確認
+group :development do
+  gem 'letter_opener_web', '~> 3.0'
+end
+
 #i18n対応
 gem 'rails-i18n', '~> 7.0.0'
 

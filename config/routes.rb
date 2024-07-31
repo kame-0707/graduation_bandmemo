@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+
   root "static_pages#top"
 
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update destroy]
+  resources :password_resets, only: %i[new create edit update]
 
   resources :groups, only: %i[new create index show edit update destroy] do
     get "summaries/:id/original" => "summaries#original", as: :original
