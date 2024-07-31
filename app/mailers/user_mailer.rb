@@ -4,6 +4,6 @@ class UserMailer < ApplicationMailer
     @user = User.find user.id
     @url  = edit_password_reset_url(@user.reset_password_token)
     mail(:to => user.email,
-         :subject => "パスワードリセット")
+         :subject => "【bandmemo】パスワード再発行のご案内")
   end
 end
