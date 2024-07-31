@@ -1,5 +1,4 @@
 class UserMailer < ApplicationMailer
-  default from: 'from@bandmemo.com'
 
   def reset_password_email(user)
     @user = User.find user.id
