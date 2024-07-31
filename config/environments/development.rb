@@ -73,4 +73,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # 送信方法を指定(letter_opener_webを使って、開発環境で送信状況を確認)
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { host: 'localhost:3001' }
 end
