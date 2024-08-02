@@ -1,6 +1,4 @@
-<div class="flex justify-center mt-4 mx-4">
-    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
-  </div>
+<%= render 'shared/band_name' %> 
 <div class="text-center text-xl font-bold mt-10">参考動画一覧</div >
 <div class="flex justify-center mt-4">
   <%= link_to new_group_video_path do %>

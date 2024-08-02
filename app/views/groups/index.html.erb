@@ -28,7 +28,18 @@
               <% else %>
                 <td></td>
               <% end %>
-                <td><%= link_to 'グループ詳細', group_path(group), class: "btn btn-outline btn-secondary" %></td>
+
+              <% if group.group_users.exists?(user_id: current_user.id) %>
+                <td><%= link_to '入室する', group_spots_path(group), class: "btn btn-outline btn-sm btn-secondary" %></td>
+              <% else %>  
+                <td>""</td>
+              <% end %>
+
+              <% if group.owner_id == current_user.id %>
+                <td><%= link_to 'オーナー専用', group_path(group), class: "btn btn-outline btn-sm btn-secondary" %></td>
+              <% else %>  
+                <td>""</td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>

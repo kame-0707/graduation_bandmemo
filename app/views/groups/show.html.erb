@@ -10,7 +10,6 @@
             <th>オーナー</th>
             <th></th>
             <th>オーナー専用</th>
-            <th>各種機能へ</th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -36,15 +35,6 @@
                     <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-outline btn-success" %>
                     <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
                   </div>
-                <% end %>
-              </td> 
-              <td>
-                <% if @group.group_users.exists?(user_id: current_user.id) %>
-                  <%= link_to 'スタジオ一覧・登録へ', group_spots_path(@group),  class: "btn btn-sm btn-primary" %> 
-                  <%= link_to '参考動画一覧・登録へ', group_videos_path(@group),  class: "btn btn-sm btn-primary" %> 
-                  <%= link_to '①音声仮メモ作成へ', group_voices_path(@group),  class: "btn btn-sm btn-accent" %> 
-                  <%= link_to '②練習メモ作成へ', new_group_summary_path(@group),  class: "btn btn-sm btn-secondary" %> 
-                  <%= link_to '③練習メモ一覧へ', group_summaries_path(@group),  class: "btn btn-sm btn-primary" %> 
                 <% end %>
               </td> 
             </tr>
