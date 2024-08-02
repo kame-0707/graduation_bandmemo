@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
     resources :voices, only: %i[new create index show edit update destroy]
     resources :spots, only: %i[new create index show edit update destroy]
-    resources :videos, only: %i[new create index show edit update destroy]
+    resources :videos, only: %i[new create index edit update destroy]
     resource :permits, only: %i[create destroy]
     resource :group_users, only: %i[create destroy]
   end

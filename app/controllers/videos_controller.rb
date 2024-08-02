@@ -2,14 +2,10 @@ class VideosController < ApplicationController
   before_action :set_video, only: %i[edit update destroy]
   before_action :set_group
   before_action :authorize_user!
-  before_action :authorize_owner!, only: %i[show edit update destroy]
+  before_action :authorize_owner!, only: %i[edit update destroy]
 
   def index
     @videos = @group.videos.includes(:user).order(created_at: :desc)
-  end
-
-  def show
-    @video = @group.videos.find(params[:id])
   end
 
   def new
