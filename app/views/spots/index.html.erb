@@ -5,9 +5,7 @@
   <title>スタジオ一覧</title>
 </head>
 <body>
-  <div class="flex justify-center mt-4 mx-4">
-    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
-  </div>
+  <%= render 'shared/band_name' %> 
   <div class="flex flex-col items-center mt-4">
     <div class="text-center text-xl font-bold my-10">スタジオ一覧</div>
     
@@ -41,6 +39,8 @@
         <div>登録したスタジオが見つかりません</div>
     <% end %>
   </ul>
+  <%= render 'shared/privacy_policy' %>
+  <%= render 'shared/in_group_menu' %>
 
   <script>
     function initMap() {

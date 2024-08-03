@@ -1,6 +1,4 @@
-<div class="flex justify-center mt-4 mx-4">
-  <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
-</div>
+<%= render 'shared/band_name' %> 
 <div class="text-center text-xl font-bold mt-10">登録したスタジオ詳細</div>
 <div class="flex flex-col items-center">
   <div class="mt-4">登録タイトル</div>
@@ -24,3 +22,5 @@
   </div>
   <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 my-4"%>
 </div>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_group_menu' %>

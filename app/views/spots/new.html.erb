@@ -5,9 +5,7 @@
   <title>スタジオを登録</title>
 </head>
 <body>
-  <div class="flex justify-center mt-4 mx-4">
-    <%= link_to "#{@group.name}:グループ詳細画面", group_path(@group),  class: "btn btn-sm btn-success" %> 
-  </div>
+  <%= render 'shared/band_name' %> 
   <div class="flex flex-col items-center mt-4">
     <div class="text-center text-xl font-bold my-10">スタジオを登録</div>
 
@@ -25,6 +23,9 @@
     <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 mb-4"%>
     <div id="map" class="form-map"></div>
   </div> 
+
+  <%= render 'shared/privacy_policy' %>
+  <%= render 'shared/in_group_menu' %>
 
   <style>
   #map {
