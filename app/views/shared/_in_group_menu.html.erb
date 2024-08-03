@@ -1,3 +1,19 @@
-<footer class="fixed bottom-0 w-full bg-gray-800 text-white text-center py-4">
-  フッターの内容をここに追加します
+<footer class="fixed bottom-0 w-full bg-base-300 text-center py-4">
+  <div class="flex justify-center space-x-20">
+    <%= link_to group_spots_path(@group) do %>
+      <i class="fa-solid fa-location-dot fa-xl"></i>
+    <% end %>
+    <%= link_to group_voices_path(@group) do %>
+      <i class="fa-solid fa-microphone fa-xl"></i>
+    <% end %>
+    <%= link_to new_group_summary_path(@group) do %>
+      <i class="fa-solid fa-pen-to-square fa-xl"></i>
+    <% end %>
+    <%= link_to group_summaries_path(@group) do %>
+      <i class="fa-solid fa-list fa-xl"></i>
+    <% end %>
+    <%= link_to group_videos_path(@group) do %>
+      <i class="fa-brands fa-square-youtube fa-xl"></i>
+    <% end %>
+  <div>
 </footer>
