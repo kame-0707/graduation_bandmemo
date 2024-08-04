@@ -21,11 +21,11 @@
               <td>
                 <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
                 <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
-                  <%= link_to 'グループ退出する', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
+                  <%= link_to 'グループ退出', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
                 <% elsif @group.permits.exists?(user_id: current_user.id) %>
-                  <%= link_to '申請取消する', group_permits_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %>    
+                  <%= link_to '申請取消', group_permits_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %>    
                 <% elsif (@group.owner_id != current_user.id) %>
-                  <%= button_to '加入申請する', group_permits_path(@group), class: "btn btn-sm btn-success" %>
+                  <%= button_to '加入申請', group_permits_path(@group), class: "btn btn-sm btn-success" %>
                 <% end %>
               </td>
               <td>
