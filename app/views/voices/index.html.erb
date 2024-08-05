@@ -31,13 +31,6 @@
   </div>
 
   <div class="text-center text-base font-bold mt-4 mb-4">【音声文字起こし一覧】</div>
-    <div class="text-center text-sm text-blue-600 mt-1 mb-4">
-      各投稿の文字をクリックすると、編集・削除が可能です。
-    </div>
-    <div class="text-center text-sm mt-1 mb-4">
-    ※この文のあたりを長押しすると、<br>
-    コメント範囲選択+コピーしやすいです。
-    </div>
   <div class="flex justify-center mt-4">
       <div class="mr-4 mb-4">
         <%= link_to new_group_summary_path(@group) do %>
@@ -54,9 +47,15 @@
 <ul class="grid grid-cols-1 justify-items-center mx-auto">
   <% if @voices.present? %>
     <% @voices.each do |voice| %>
-      <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mb-4">
-        <div class="mt-2">
-          <%= link_to voice.content, group_voice_path(@group, voice) %>
+      <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mb-4 flex justify-between">
+        <div class="mt-1">
+          <%= voice.content %>
+        </div>
+        <div class="ml-auto">
+          <%= link_to group_voice_path(@group, voice), class: "btn btn-sm btn-success" do %>
+            <i class="fa-solid fa-pen"></i>
+            <i class="fa-solid fa-trash"></i>
+          <% end %>
         </div>
       </li>
     <% end %>
