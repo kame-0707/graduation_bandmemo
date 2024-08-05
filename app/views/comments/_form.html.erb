@@ -1,5 +1,5 @@
 <div class="w-full flex justify-center my-3" id="comment-form">
-  <div class="w-5/6 max-w-md">
+  <div class="w-[90vw] mx-auto">
     <%= form_with model: comment, url: group_summary_comments_path(group, summary) do |f| %>
       <%= f.label :content, "コメント"%>
       <%= f.text_area :content, class: "rounded-lg p-4 w-full", row: "4", placeholder: "コメントを入力してください" %>

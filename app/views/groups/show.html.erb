@@ -1,48 +1,42 @@
-<div class='container px-5 px-sm-0'>
-  <div class='row'>
-    <div class='col-md-8 offset-md-1'>
-      <h2>グループ詳細</h2>
-      <table class="table table-hover table-inverse">
-        <thead>
-          <tr>
-            <th>グループ名</th>
-            <th>紹介文</th>
-            <th>オーナー</th>
-            <th></th>
-            <th>オーナー専用</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td><%= @group.name %></td>
-              <td><%= @group.introduction %></td>
-              <td><%= @owner.name %></td>
+<div class="text-center text-xl font-bold mt-10 mb-4">グループ詳細</div >
+<div class="overflow-x-auto">
+  <table class="table table-xs table-pin-rows table-pin-cols mx-4">
+    <thead>
+      <tr>
+        <th>グループ名</th>
+        <th>紹介文</th>
+        <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
+          <th>脱退</th>
+        <% end %>
+        <% if @group.owner_id == current_user.id %>
+          <th>オーナー専用</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><%= @group.name %></td>
+          <td><%= @group.introduction %></td>
+            <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
+            <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
               <td>
-                <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
-                <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
-                  <%= link_to 'グループ退出', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
-                <% elsif @group.permits.exists?(user_id: current_user.id) %>
-                  <%= link_to '申請取消', group_permits_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %>    
-                <% elsif (@group.owner_id != current_user.id) %>
-                  <%= button_to '加入申請', group_permits_path(@group), class: "btn btn-sm btn-success" %>
-                <% end %>
+                <%= link_to '脱退', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
               </td>
+            <% end %>
+            <% if @group.owner_id == current_user.id %>
               <td>
-                <% if @group.owner_id == current_user.id %>
-                  <div>
-                    <%= link_to '承認待ち一覧', permits_path(@group),  class: "btn btn-sm btn-outline btn-info" %> 
-                    <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-outline btn-success" %>
-                    <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
-                  </div>
-                <% end %>
+                <div class="flex flex-col space-y-1 ">
+                  <%= link_to '承認待ち一覧', permits_path(@group),  class: "btn btn-sm btn-outline btn-info w-1/2" %> 
+                  <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-outline btn-success w-1/2" %>
+                  <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error w-1/2", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
+                </div>
               </td> 
-            </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="flex justify-center mt-4 mx-4">
-    <%= link_to 'グループ一覧に戻る', groups_path,  class: "btn btn-success" %> 
-  </div>
+            <% end %>
+        </tr>
+    </tbody>
+  </table>
 </div>
+<div class="flex justify-center mt-4 mx-4">
+  <%= link_to 'グループ一覧に戻る', groups_path,  class: "btn btn-success" %> 
+</div>
+
