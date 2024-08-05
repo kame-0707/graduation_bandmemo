@@ -1,10 +1,10 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold mt-10">音声文字起こしの編集</div>
+<div class="text-center text-xl font-bold my-2">音声文字起こしの編集</div>
 
 <div class="flex flex-col items-center mt-4">
   <%= form_with model: @voice, url: group_voice_path(@group) do |form| %>
-    <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
-      <%= form.label :content, '音声文字起こし'%>
+    <div class="grid grid-cols-1 gap-4 justify-items-center w-[90vw] mx-auto">
+      <%= form.label :content, '内容'%>
       <%= form.text_area :content, rows: 5, class: "rounded-lg p-4 w-full" %>
     </div>
     <div class="flex justify-center mt-4 mx-4">

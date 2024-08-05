@@ -1,11 +1,11 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold mt-10">登録したスタジオ詳細</div>
+<div class="text-center text-xl font-bold my-2">登録したスタジオ詳細</div>
 <div class="flex flex-col items-center">
-  <div class="mt-4">【登録タイトル】</div>
+  <div class="mt-4 font-bold">【登録タイトル】</div>
   <div class="mt-4"><%= @spot.registered_title %></div>
-  <div class="mt-4">【練習開始日時】</div>
+  <div class="mt-4 font-bold">【練習開始日時】</div>
   <div class="mt-4"><%= @spot.start_datetime.strftime("%Y/%m/%d %H:%M") %></div>
-  <div class="mt-4">【投稿者名】</div>
+  <div class="mt-4 font-bold">【投稿者名】</div>
   <div class="mt-4"><%= @spot.user.name %></div>
 
   <div class="flex justify-center mt-4">

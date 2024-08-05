@@ -1,6 +1,6 @@
 <%= render 'shared/band_name' %> 
 <div class="grid justify-items-center max-w-4xl mx-auto">
-  <div class="bg-white shadow-md rounded-lg p-4 max-w-md mb-4">
+  <div class="bg-white shadow-md rounded-lg p-4 w-[90vw] my-4">
     <% if @voice.user_id == current_user.id %>
       <div class="flex justify-center space-x-4 mb-2">
         <%= link_to edit_group_voice_path(@group, @voice) do %>

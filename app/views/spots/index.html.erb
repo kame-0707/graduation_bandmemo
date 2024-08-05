@@ -6,16 +6,15 @@
 </head>
 <body>
   <%= render 'shared/band_name' %> 
-  <div class="flex flex-col items-center mt-4">
-    <div class="text-center text-xl font-bold my-10">スタジオ一覧</div>
-    
+  <div class="flex flex-col items-center">
+    <div class="text-center text-xl font-bold my-2">スタジオ一覧</div>
     <%= link_to 'スタジオ登録画面へ', new_group_spot_path(@group), class: "btn btn-sm btn-success mb-4" %>
-
+  </div>
   <div id="map"></div>
 
   <style>
   #map {
-    height: 400px;
+    height: 250px;
     width: 90%;
     margin: 0 auto;
   }

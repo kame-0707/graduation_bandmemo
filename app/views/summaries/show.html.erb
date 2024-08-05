@@ -1,12 +1,10 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold mt-10">メモ詳細</div >
+<div class="text-center text-xl font-bold my-2">メモ詳細</div >
 <div class="flex justify-center mt-4">
   <%= link_to group_summaries_path(@group) do %>
-    <div class="mr-4">
       <button class="btn btn-accent">
         <div class="text-xs">メモ一覧に戻る</div>
       </button>
-    </div>
   <% end %>
 </div>
 <div class="flex justify-center mt-10">
@@ -16,11 +14,8 @@
             <div class="flex justify-center mt-auto">
               <% if @summary.user_id == current_user.id %>
                 <%= link_to group_original_path(@group, @summary) do %>
-                  <div class="mr-4">
                     <button class="btn btn-outline btn-info">
                       <div class="text-xs">原文はこちら</div>
-                    </button>
-                  </div>
                 <% end %>
               <% end %>
             </div>

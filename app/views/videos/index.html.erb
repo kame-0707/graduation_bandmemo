@@ -1,15 +1,13 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold mt-10">参考動画一覧</div >
+<div class="text-center text-xl font-bold my-2">参考動画一覧</div >
 <div class="flex justify-center mt-4">
   <%= link_to new_group_video_path do %>
-    <div class="mr-4">
       <button class="btn btn-accent">
         <div class="text-xs">動画を登録する</div>
       </button>
-    </div>
   <% end %>
 </div>
-<div class="flex justify-center mt-10">
+<div class="flex justify-center mt-4">
   <% if @videos.exists? %>
     <ul class="grid grid-cols-1 gap-4 justify-items-center mx-auto mb-4">
         <% @videos.each do |video| %>
