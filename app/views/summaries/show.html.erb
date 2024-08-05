@@ -1,26 +1,21 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold mt-10">メモ詳細</div >
+<div class="text-center text-xl font-bold my-2">メモ詳細</div >
 <div class="flex justify-center mt-4">
   <%= link_to group_summaries_path(@group) do %>
-    <div class="mr-4">
       <button class="btn btn-accent">
         <div class="text-xs">メモ一覧に戻る</div>
       </button>
-    </div>
   <% end %>
 </div>
 <div class="flex justify-center mt-10">
     <!-- メモフォーム -->
     <ul class="justify-center max-w-4xl mx-auto mb-4 flex flex-col items-center">
-          <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
+          <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mx-auto">
             <div class="flex justify-center mt-auto">
               <% if @summary.user_id == current_user.id %>
                 <%= link_to group_original_path(@group, @summary) do %>
-                  <div class="mr-4">
                     <button class="btn btn-outline btn-info">
                       <div class="text-xs">原文はこちら</div>
-                    </button>
-                  </div>
                 <% end %>
               <% end %>
             </div>
@@ -55,7 +50,7 @@
           </div>
           <!-- コメントエリア -->
             <div class="w-full flex justify-center">
-              <div class="w-5/6 max-w-md">
+              <div class="w-[90vw] mx-auto">
                 <table class="table">
                   <tbody id="table-comment">
                     <%= render @comments, { group: @group, summary: @summary }%>

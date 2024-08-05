@@ -1,29 +1,30 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold mt-10">②メモを要約・保存</div>
+<div class="text-center text-xl font-bold my-2">②メモを要約・保存</div>
 
 <div class="flex flex-col items-center mt-4">
   <%= form_with model: @summary, url: group_summaries_path(@group) do |form| %>
-    <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 gap-4 justify-items-center w-[90vw] mx-auto">
       <%= form.label :title, 'タイトル'%>
       <%= form.text_area :title, rows: 1, class: "rounded-lg p-4 w-full" %>
       <%= form.label :content, 'メモ内容'%>
       <%= form.text_area :content, rows: 5, class: "rounded-lg p-4 w-full" %>
     </div>
-    <div class="flex justify-center mt-4 mx-4">
+    <div class="flex justify-center mt-4">
       <div class="mr-4">
         <%= form.submit "AI要約して保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
       </div>
       <div class="mr-4">
-        <%= form.submit "入力内容をそのまま保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
-      </div>
-      <div class="mr-4">
-        <%= link_to group_summaries_path(@group) do %>
-          <button class="btn btn-outline btn-secondary">
-            <div class="text-xs">練習メモ一覧へ</div>
-          </button>
-        <% end %>
+        <%= form.submit "そのまま保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
       </div>
     </div>
+    <div class="flex justify-center mt-4">
+      <%= link_to group_summaries_path(@group) do %>
+        <button class="btn btn-outline btn-secondary">
+          <div class="text-xs">練習メモ一覧へ</div>
+        </button>
+      <% end %>
+    </div>
+    
   <% end %>
   <div class="text-xs mt-2">※入力した原文は一覧画面で確認可能です</div>
 

@@ -1,49 +1,49 @@
-<div class='container px-5 px-sm-0'>
-  <div class='row'>
-    <div class='col-md-8 offset-md-1'>
-      <h2>グループ一覧</h2>
-      <table class="table table-hover table-inverse">
-        <thead>
-          <tr>
-            <th>グループ名</th>
-            <th>紹介文</th>
-            <th>メンバー数</th>
-            <th>ステータス</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @groups.each do |group| %>
-            <tr>
-              <td><%= group.name %></td>
-              <td><%= group.introduction %></td>
-              <td><%= group.group_users.count %></td>
-              <% if group.owner_id == current_user.id && group.permits.exists? %>
-                <td><p class="text-blue-600">オーナー：承認待ちユーザーがいます</p></td>
-              <% elsif group.owner_id == current_user.id %>
-                <td>オーナー</td>
-              <% elsif (group.owner_id != current_user.id) && (group.group_users.exists?(user_id: current_user.id)) %>
-                <td>加入中</td>
-              <% elsif (group.owner_id != current_user.id) && (group.permits.exists?(user_id: current_user.id)) %>
-                <td>加入申請中</td>
-              <% else %>
-                <td></td>
-              <% end %>
+<div class="text-center text-xl font-bold mt-10 mb-4">グループ一覧</div >
+<div class="overflow-x-auto">
+  <table class="table table-xs table-pin-rows table-pin-cols mx-4">
+    <thead>
+      <tr>
+        <td>グループ名</td>
 
-              <% if group.group_users.exists?(user_id: current_user.id) %>
-                <td><%= link_to '入室する', group_spots_path(group), class: "btn btn-outline btn-sm btn-secondary" %></td>
-              <% else %>  
-                <td>""</td>
-              <% end %>
+        <td>人数</td>
+        <td>ステータス</td>
+        <td>加入・脱退</td>
+        <td>詳細</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td><%= group.name %></td>
 
-              <% if group.owner_id == current_user.id %>
-                <td><%= link_to 'オーナー専用', group_path(group), class: "btn btn-outline btn-sm btn-secondary" %></td>
-              <% else %>  
-                <td>""</td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+          <td><%= group.group_users.count %></td>
+          <td>
+            <% if group.owner_id == current_user.id && group.permits.exists? %>
+              <p class="text-blue-600">オーナー：承認待ちユーザーがいます</p>
+            <% elsif group.owner_id == current_user.id %>
+              オーナー
+            <% elsif (group.owner_id != current_user.id) && (group.group_users.exists?(user_id: current_user.id)) %>
+              加入中
+            <% elsif (group.owner_id != current_user.id) && (group.permits.exists?(user_id: current_user.id)) %>
+              加入申請中
+            <% else %>
+            <% end %>
+          </td>
+          <td>
+            <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
+            <% if group.permits.exists?(user_id: current_user.id) %>
+              <%= link_to '申請取消', group_permits_path(group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %> 
+            <% elsif group.group_users.exists?(user_id: current_user.id) %>
+              <%= link_to '入室', group_spots_path(group), class: "btn btn-outline btn-sm btn-secondary" %>   
+            <% elsif (group.owner_id != current_user.id) %>
+              <%= button_to '加入申請', group_permits_path(group), class: "btn btn-sm btn-success" %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to '詳細', group_path(group), class: "btn btn-outline btn-sm btn-secondary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

@@ -19,9 +19,11 @@
           <%= f.label :password_confirmation, class: "form-label" %>
           <%= f.password_field :password_confirmation, class: "form-control" %>
         </div>
-        <%= f.submit "登録", class: "btn btn-primary" %>
+        <div class="flex justify-center mb-10">
+          <%= f.submit "登録", class: "btn btn-primary" %>
+        </div>
       <% end %>
-      <div class='text-center'>
+      <div class='text-center text-blue-600 underline'>
         <%= link_to 'ログインページへ', login_path %>
       </div>
     </div>
