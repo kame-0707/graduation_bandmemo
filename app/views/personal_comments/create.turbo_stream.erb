@@ -1,0 +1,12 @@
+<% if @comment.errors.present? %>
+  <%= turbo_stream.replace "comment-form" do %>
+    <%= render 'personal_comments/form', summary: @comment.summary, comment: @comment %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.prepend "table-comment" do %>
+    <%= render 'personal_comments/comment', summary: @comment.summary, comment: @comment %>
+  <% end %>
+  <%= turbo_stream.replace "comment-form" do %>
+    <%= render 'personal_comments/form', summary: @comment.summary, comment: Comment.new %>
+  <% end %>
+<% end %>

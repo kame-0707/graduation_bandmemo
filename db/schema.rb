@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_31_032022) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_07_074159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_032022) do
   create_table "comments", force: :cascade do |t|
     t.string "content"
     t.bigint "user_id", null: false
-    t.bigint "group_id", null: false
+    t.bigint "group_id"
     t.bigint "summary_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_032022) do
 
   create_table "likes", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "group_id", null: false
+    t.bigint "group_id"
     t.bigint "summary_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -82,7 +82,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_032022) do
     t.string "website"
     t.string "place_id"
     t.bigint "user_id", null: false
-    t.bigint "group_id", null: false
+    t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "start_datetime"
@@ -94,10 +94,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_032022) do
     t.text "title", null: false
     t.text "content", null: false
     t.text "summary"
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "group_id", null: false
+    t.bigint "group_id"
     t.index ["group_id"], name: "index_summaries_on_group_id"
     t.index ["user_id"], name: "index_summaries_on_user_id"
   end
@@ -130,10 +130,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_032022) do
 
   create_table "voices", force: :cascade do |t|
     t.text "content", null: false
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "group_id", null: false
+    t.bigint "group_id"
     t.index ["group_id"], name: "index_voices_on_group_id"
     t.index ["user_id"], name: "index_voices_on_user_id"
   end

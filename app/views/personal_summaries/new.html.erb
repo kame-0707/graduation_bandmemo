@@ -1,0 +1,45 @@
+<%= render 'shared/personal_band_name' %> 
+<div class="text-center text-xl font-bold my-2">②メモを要約・保存</div>
+
+<div class="flex flex-col items-center mt-4">
+  <%= form_with model: @summary, url: personal_summaries_path do |form| %>
+    <div class="grid grid-cols-1 gap-4 justify-items-center w-[90vw] mx-auto">
+      <%= form.label :title, 'タイトル'%>
+      <%= form.text_area :title, rows: 1, class: "rounded-lg p-4 w-full" %>
+      <%= form.label :content, 'メモ内容'%>
+      <%= form.text_area :content, rows: 5, class: "rounded-lg p-4 w-full" %>
+    </div>
+    <div class="flex justify-center mt-4">
+      <div class="mr-4">
+        <%= form.submit "AI要約して保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
+      </div>
+      <div class="mr-4">
+        <%= form.submit "そのまま保存", name: 'commit', class: "text-xs btn btn-outline btn-success mr-4" %>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4">
+      <%= link_to personal_summaries_path do %>
+        <button class="btn btn-outline btn-secondary">
+          <div class="text-xs">練習メモ一覧へ</div>
+        </button>
+      <% end %>
+    </div>
+    
+  <% end %>
+  <div class="text-xs mt-2">※入力した原文は一覧画面で確認可能です</div>
+
+  <button class="btn" onclick="my_modal_2.showModal()">▼入力例文を見てみる</button>
+  <dialog id="my_modal_2" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">入力例文</h3>
+        <p class="py-4">皆さん、先日の初めてのバンド練習、お疲れ様でした。いくつか重要な決定事項と注意点があるので、次回の練習までに確認しておいてくださいね。まず、キーとテンポについてですが、キーは原曲のままのGメジャーでいきます。そしてテンポはBPM 160、原曲と同じ速さで合わせます。イントロについては、キーボードがリードし、ドラムは軽くフィルインを入れてください。ギターはイントロでクリーンな音色を使うことにしましょう。サビ前のブレイクについてですが、サビに入る前に一拍のブレイクを全員で入れます。リードギターがフィルを入れるので、タイミングをしっかり合わせてください。アウトロについては、原曲通りのフェードアウトではなく、しっかりとエンディングを決めて締めることにします。エンディングのパターンは次回の練習で詳細を決めます。注意点ですが、ボーカルはメロディラインをしっかりとキープし、特にサビで声が埋もれないように気をつけてください。次回の練習ではこれらのポイントを踏まえて、さらに細かい部分を詰めていきましょう。質問や不明点があれば、遠慮なく連絡してくださいね。みんなで素晴らしい演奏を目指しましょう。よろしくお願いします。</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">閉じる</button>
+          </form>
+        </div>
+    </div>
+  </dialog>
+</div>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_personal_menu' %>

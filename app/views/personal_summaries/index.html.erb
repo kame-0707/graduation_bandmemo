@@ -1,0 +1,69 @@
+<%= render 'shared/personal_band_name' %> 
+<div class="text-center text-xl font-bold my-2">③練習メモ一覧</div >
+<div class="flex justify-center mt-4">
+  <%= link_to  new_personal_summary_path do %>
+    <div class="mr-4">
+      <button class="btn btn-secondary">
+        <div class="text-xs">メモを要約・保存</div>
+      </button>
+    </div>
+  <% end %>
+</div>
+
+<div class="flex justify-center mt-4">
+  <% if @summaries.exists? %>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center w-[90vw] mb-4">
+        <% @summaries.each do |summary| %>
+          <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
+            <div class="flex justify-center mt-auto">
+              <% if summary.user_id == current_user.id %>
+                <%= link_to original_personal_summary_path(summary) do %>
+                  <div class="mb-4 mr-4">
+                    <button class="btn btn-outline btn-info">
+                      <div class="text-xs">原文はこちら</div>
+                    </button>
+                  </div>
+                <% end %>
+              <% end %>
+              <%= link_to personal_summary_path(summary) do %>
+                <div class="mb-4 mr-4">
+                  <button class="btn btn-outline btn-info">
+                    <div class="text-xs">詳細・コメント</div>
+                  </button>
+                </div>
+              <% end %>
+            </div>
+            <div class="flex justify-between items-center mt-auto">
+                <div class="ml-4 mr-auto flex space-x-4">
+                  <%= link_to edit_personal_summary_path(summary) do %>
+                      <i class="fa-solid fa-pen"></i>
+                  <% end %>
+                  <%= link_to personal_summary_path(summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                      <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                </div>
+              <div class="ml-auto mr-4">
+                <%= render 'like_buttons', { summary: summary }  %>
+              </div>
+            </div>
+            <div class="flex-grow">
+              <div class="text-center text-lg font-bold mt-2"><%= summary.title %></div>
+              <div class="text-center mt-2">作成：<%= summary.user.name %></div>
+              <div class="text-center mt-2"><%= summary.created_at.strftime("%Y/%m/%d %H:%M") %></div>
+              <div class="mt-2">
+                <% if summary.summary.present? %>
+                <%= markdown(summary.summary) %>
+                <% else %>
+                <%= markdown(summary.content) %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+    </ul>
+  <% else %>
+  <div>メモが見つかりません</div>
+  <% end %>
+</div>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_personal_menu' %>

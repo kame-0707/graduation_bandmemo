@@ -1,0 +1,3 @@
+<%= link_to personal_summary_personal_like_path(summary), id: "like-button-for-summary-#{summary.id}", data: { turbo_method: :post }, remote: true do %>
+    <i class="fa-regular fa-heart"></i>
+<% end %>

@@ -11,6 +11,13 @@
 </div>
 
 <% if logged_in? %> 
+  <div class="flex justify-center mb-10">
+    <%= link_to personal_spots_path do %>
+        <button class="btn btn-accent">
+          <div class="text-xs">個人用機能を使う</div>
+        </button>
+    <% end %>
+  </div>
   <div class="flex justify-center mb-10 mx-4">
     <%= link_to new_group_path do %>
       <div class="mr-4">
