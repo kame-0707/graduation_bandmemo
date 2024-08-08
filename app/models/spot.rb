@@ -1,6 +1,6 @@
 class Spot < ApplicationRecord
   belongs_to :user
-  belongs_to :group
+  belongs_to :group, optional: true
   validates :lat, presence: true
   validates :lng, presence: true
 end

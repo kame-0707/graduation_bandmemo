@@ -1,32 +1,28 @@
 require "openai"
 
-class SummariesController < ApplicationController
+class PersonalSummariesController < ApplicationController
   before_action :set_summary, only: %i[edit update destroy]
-  before_action :set_group
-  before_action :authorize_user!
-  before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def index
-    @summaries = @group.summaries.includes(:user).order(created_at: :desc)
+    @summaries = current_user.summaries.order(created_at: :desc)
   end
 
-
   def show
-    @summary = @group.summaries.find(params[:id])
+    @summary = current_user.summaries.find(params[:id])
     @comment = Comment.new
     @comments = @summary.comments.includes(:user).order(created_at: :desc)
   end
 
 
   def original
-    @summary = @group.summaries.find(params[:id])
+    @summary = current_user.summaries.find(params[:id])
     unless (@summary.user_id == current_user.id)
-      redirect_to group_summaries_path(@group), alert: '原文を確認できるのは投稿者のみです'
+      redirect_to personal_summaries_path, alert: '原文を確認できるのは投稿者のみです'
     end
   end
 
   def new
-    @summary = @group.summaries.new
+    @summary = current_user.summaries.new
   end
 
   def create
@@ -68,23 +64,24 @@ class SummariesController < ApplicationController
       summary_text = response.dig("choices", 0, "message", "content")
       end
 
-      @summary = @group.summaries.new(title: summary_params[:title], content: summary_params[:content], summary: summary_text, user: current_user)
+      @summary = current_user.summaries.new(title: summary_params[:title], content: summary_params[:content], summary: summary_text, user: current_user)
+      @summary.group_id = nil unless params[:summary][:group_id].present?
       if @summary.save
-        redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
+        redirect_to personal_summaries_path, notice: 'メモが保存されました'
       else
         flash.now[:alert] = 'メモの保存ができませんでした'
         render :new, status: :unprocessable_entity
       end
 
     elsif params[:commit] == "そのまま保存"
-      @summary = @group.summaries.new(
+      @summary = current_user.summaries.new(
         title: summary_params[:title],
         content: input_content,
         summary: nil,
         user: current_user
       )
       if @summary.save
-        redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
+        redirect_to personal_summaries_path, notice: 'メモが保存されました'
       else
         flash.now[:alert] = 'メモの保存ができませんでした'
         render :new, status: :unprocessable_entity
@@ -97,7 +94,7 @@ class SummariesController < ApplicationController
 
   def update
     if @summary.update(summary_params)
-      redirect_to group_summaries_path(@group, @summary), notice: 'メモが更新されました'
+      redirect_to personal_summaries_path(@summary), notice: 'メモが更新されました'
     else
       flash.now[:alert] = 'メモを更新できませんでした'
       render :edit, status: :unprocessable_entity
@@ -107,33 +104,13 @@ class SummariesController < ApplicationController
   def destroy
     summary = @summary
     summary.destroy!
-    redirect_to group_summaries_path(@group), status: :see_other, notice: 'メモが削除されました'
+    redirect_to personal_summaries_path, status: :see_other, notice: 'メモが削除されました'
   end
 
   private
 
   def set_summary
-    @group = Group.find(params[:group_id])
-    @summary = @group.summaries.find(params[:id])
-  end
-
-  def set_group
-    @group = Group.find(params[:group_id])
-  end
-
-  def authorize_user!
-    @group = Group.find(params[:group_id])
-    unless current_user.groups.include?(@group)
-      redirect_to root_path, alert: 'グループメンバーとして承認されていません'
-    end
-  end
-
-  def authorize_owner!
-    @summary = @group.summaries.find(params[:id])
-    @group = Group.find(params[:group_id])
-    unless (@summary.user_id == current_user.id) || (@group.owner_id == current_user.id)
-      redirect_to group_summaries_path(@group), alert: '編集・削除ができるのは投稿者とオーナーのみです'
-    end
+    @summary = current_user.summaries.find(params[:id])
   end
 
   def summary_params

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>音声入力</title>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render 'shared/personal_band_name' %> 
+  <div class="text-center text-xl font-bold my-2">①音声文字起こしで仮メモ作成</div>
+  
+  <div class="flex justify-center mt-4 mb-4">
+    <div class="mr-4">
+      <button class="btn btn-outline btn-secondary" id="start-btn">
+        <div class="text-xs">録音開始</div>
+       </button>
+    </div>
+    <div class="mr-4">
+      <button class="btn btn-outline btn-secondary" id="stop-btn">
+        <div class="text-xs">録音停止・保存
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="text-center text-sm mx-10">
+    <div id="status">
+      <p>「録音開始」ボタンをクリックして話し始めてください..</p>
+      <p>※日本語のみに対応</p>
+    </div>
+    <div id="result-div"></div> <!-- リアルタイムの音声入力表示用 -->
+  </div>
+
+  <div class="text-center text-base font-bold mt-4 mb-4">【音声文字起こし一覧】</div>
+  <div class="flex justify-center mt-4">
+      <div class="mr-4 mb-4">
+        <%= link_to new_personal_summary_path do %>
+          <button class="btn btn-secondary">
+            <div class="text-xs">
+              必要な仮メモをコピー後、<br>
+              メモを要約・保存ページへ
+            </div>
+          </button>
+        <% end %>
+      </div>
+  </div>
+ 
+<ul class="grid grid-cols-1 justify-items-center mx-auto">
+  <% if @voices.present? %>
+    <% @voices.each do |voice| %>
+      <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mb-4 flex justify-between">
+        <div class="mt-1">
+          <%= voice.content %>
+        </div>
+        <div class="ml-auto">
+          <%= link_to personal_voice_path(voice), class: "btn btn-sm btn-success" do %>
+            <i class="fa-solid fa-pen"></i>
+            <i class="fa-solid fa-trash"></i>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  <% else %>
+    <div>音声文字起こしが見つかりません</div>
+  <% end %>
+</ul>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_personal_menu' %>
+
+  <script>
+  document.addEventListener('turbo:load', function() {
+    const startBtn = document.querySelector('#start-btn');
+    const stopBtn = document.querySelector('#stop-btn');
+    const resultDiv = document.querySelector('#result-div');
+
+    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+    let recognition = new SpeechRecognition();
+
+    recognition.lang = 'ja-JP';
+    recognition.interimResults = true;
+    recognition.continuous = true;
+
+    let finalTranscript = ''; // 確定した(黒の)認識結果
+
+    recognition.onresult = (event) => {
+      let interimTranscript = ''; // 入力中音声の認識結果
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        let transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+      resultDiv.innerHTML = finalTranscript + '<i style="color:#80A1C1;">' + interimTranscript + '</i>';
+    }
+
+    startBtn.onclick = () => {
+      finalTranscript = ''; // 新しい録音のためにリセット
+      interimTranscript = ''; // 中間結果をリセット
+      recognition.start();
+      startBtn.disabled = true; // 録音開始ボタンを無効化
+      stopBtn.disabled = false; // 録音停止・保存ボタンを有効化
+    }
+
+    stopBtn.onclick = () => {
+    recognition.stop();
+    }
+
+    recognition.onend = () => {
+    saveTranscript(finalTranscript + interimTranscript);
+    }
+
+
+    function saveTranscript(transcript) {
+      if (transcript.trim() !== '') {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch('<%= personal_voices_path %>', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
+          },
+          body: JSON.stringify({ voice: { content: finalTranscript } })
+        }).then(response => {
+          if (response.ok) {
+            resultDiv.innerHTML = '音声データが保存されました';
+            setTimeout(() => {
+              window.location.reload(); // 保存後、ページをリロードして新しいデータを表示
+            }, 200);
+          } else {
+            resultDiv.innerHTML = '<span style="color:#BF616A;">' + '音声データの保存に失敗しました' + '</span>';
+            setTimeout(() => {
+              window.location.reload(); // 保存後、ページをリロードして新しいデータを表示
+            }, 200);
+          }
+        });
+      } else {
+        resultDiv.innerHTML = '保存する音声データがありません';
+        setTimeout(() => {
+          window.location.reload(); // 保存後、ページをリロードして新しいデータを表示
+        }, 200);
+      }
+
+    }
+  });
+  </script>
+</body>
+</html>

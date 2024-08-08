@@ -1,0 +1,23 @@
+<%= render 'shared/personal_band_name' %> 
+<div class="text-center text-xl font-bold my-2">スタジオ編集</div>
+
+<div class="flex flex-col items-center mt-4">
+  <%= form_with model: @spot, url: personal_spot_path do |f| %>
+    <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
+      <%= f.label :registered_title, '登録タイトル' %>
+      <%= f.text_area :registered_title, rows: 1, class: "rounded-lg p-4 w-full" %>
+      <%= f.label :start_datetime, '練習開始日時', class: "font-semibold"%>
+      <%= f.datetime_field :start_datetime %>
+    </div>
+    <div class="flex justify-center mt-4 mx-4">
+      <div class="mr-4"">
+        <button class="btn btn-outline btn-success">
+          <div class="text-xs"><%= f.submit "更新する" %></div>
+        </button>
+      </div>
+    </div>
+  <% end %>
+</div>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_personal_menu' %>
+

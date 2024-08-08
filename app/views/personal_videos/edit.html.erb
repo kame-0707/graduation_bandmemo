@@ -1,0 +1,30 @@
+<%= render 'shared/band_name' %> 
+<div class="text-center text-xl font-bold my-2">参考動画の編集</div>
+
+<div class="flex flex-col items-center mt-4">
+  <%= form_with model: @video, url: personal_video_path do |form| %>
+    <div class="grid grid-cols-1 gap-4 justify-items-center w-[90vw] mx-auto">
+      <%= form.label :title, 'タイトル'%>
+      <%= form.text_area :title, rows: 1, class: "rounded-lg p-4 w-full" %>
+      <%= form.label :videos_url, 'YouTube動画URL'%>
+      ※YouTubeアプリの「共有」ボタンから、共有リンクを取得してください。
+      <%= form.text_area :videos_url, rows: 1, class: "rounded-lg p-4 w-full" %>
+    </div>
+    <div class="flex justify-center mt-4 mx-4">
+      <div class="mr-4"">
+        <button class="btn btn-outline btn-success">
+          <div class="text-xs"><%= form.submit "編集して保存" %></div>
+        </button>
+      </div>
+      <div class="mr-4"">
+        <%= link_to personal_videos_path do %>
+          <button class="btn btn-outline btn-secondary">
+            <div class="text-xs">参考動画一覧に戻る</div>
+          </button>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_personal_menu' %>

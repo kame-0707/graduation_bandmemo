@@ -1,0 +1,14 @@
+<%= render 'shared/personal_band_name' %> 
+<div class="text-center text-xl font-bold my-2">メモ原文</div>
+<br>
+<div class="mx-4"><%= @summary.content %></div>
+<br>
+<div class="flex justify-center mt-4">
+  <%= link_to personal_summaries_path do %>
+    <button class="btn btn-secondary">
+      <div class="text-xs">一覧に戻る</div>
+    </button>
+  <% end %>
+</div>
+<%= render 'shared/privacy_policy' %>
+<%= render 'shared/in_personal_menu' %>

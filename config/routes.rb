@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource :profile, only: %i[show edit update destroy]
   resources :password_resets, only: %i[new create edit update]
 
+  #グループ機能用
   resources :groups, only: %i[new create index show edit update destroy] do
     get "summaries/:id/original" => "summaries#original", as: :original
     resources :summaries, only: %i[new create index show edit update destroy] do
@@ -19,9 +20,22 @@ Rails.application.routes.draw do
     resource :permits, only: %i[create destroy]
     resource :group_users, only: %i[create destroy]
   end
-
   # createアクションとdestroyアクションとパスの名前が被ってしまうため、判別しやすいようにパスの名前を「permits_path」に指定
   get "groups/:id/permits" => "groups#permits", as: :permits
+
+
+  #個人機能用
+  resources :personal_summaries, only: %i[new create index show edit update destroy] do
+    member do
+      get :original
+    end
+    resource :personal_like, only: %i[create destroy]
+    resources :personal_comments, only: %i[create destroy]
+  end
+  resources :personal_voices, only: %i[new create index show edit update destroy]
+  resources :personal_spots, only: %i[new create index show edit update destroy]
+  resources :personal_videos, only: %i[new create index edit update destroy]
+
 
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'

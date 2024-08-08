@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スタジオを登録</title>
+</head>
+<body>
+  <%= render 'shared/personal_band_name' %> 
+  <div class="flex flex-col items-center mt-2">
+    <div class="text-center text-xl font-bold my-2">スタジオを登録</div>
+
+    <%= form_with model: @spot, url: personal_spots_path, class: "w-full flex flex-col items-center" do |f|  %>
+    <%= f.text_field :address, id: :address, placeholder: "ピンを刺したい地名を検索", class: "w-2/3 mb-4" %>
+    <input type="button" value="①地図上にピンを刺す" onclick="codeAddress()" class="btn btn-sm btn-success mb-4">
+    <%= f.text_field :registered_title, placeholder: "登録タイトルを入力(例：初回練習)", class: "w-2/3 mb-4" %>
+    <%= f.label :start_datetime, '練習開始日時', class: "font-semibold"%>
+    <%= f.datetime_field :start_datetime %>
+    <%= f.hidden_field :place_id, id: :place_id %>
+    <%= f.hidden_field :lat, id: :lat %>
+    <%= f.hidden_field :lng, id: :lng %>
+    <%= f.submit "②スタジオ一覧に登録する", class: "btn btn-sm btn-success my-4" %>
+    <% end %>
+    <%= link_to "スタジオ一覧に戻る", personal_spots_path, class: "underline text-blue-600 mb-4"%>
+    <div id="map" class="form-map"></div>
+  </div> 
+
+  <%= render 'shared/privacy_policy' %>
+  <%= render 'shared/in_personal_menu' %>
+
+  <style>
+  #map {
+    height: 250px;
+    width: 90%;
+    margin: 0 auto;
+  }
+  </style>
+  </div>
+
+  <script>
+ if (typeof map == "undefined") {
+   let map;
+   var marker;
+   var geocoder;
+   var afterPinned;
+ }
+
+ function initMap(){
+   geocoder = new google.maps.Geocoder()
+
+   map = new google.maps.Map(document.getElementById('map'),{
+     center: { lat: 35.6803997, lng: 139.7690174 }, //東京
+     zoom: 10,
+   });
+
+    const input = document.getElementById("address");
+    const autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo("bounds", map);
+ }
+
+ function codeAddress(){ 
+   let inputAddress = document.getElementById('address').value; //入力した住所情報を取得
+   geocoder.geocode( { 'address': inputAddress }, function(results, status) {
+     if (status == 'OK') {
+       if (afterPinned == true) {
+         marker.setMap(null);
+       }
+       map.setCenter(results[0].geometry.location);
+         marker = new google.maps.Marker({
+           map: map,
+           position: results[0].geometry.location,
+         });
+
+       afterPinned = true;
+       //ピンは一本しか刺せない
+
+       document.getElementById('lat').value = results[0].geometry.location.lat();
+       document.getElementById('lng').value = results[0].geometry.location.lng();
+       document.getElementById('place_id').value = results[0].place_id;
+	//情報をフォームのhidden_fieldへ送る
+     } else {
+       alert('該当する結果はありませんでした');
+     }
+   });
+ }
+ 
+</script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
