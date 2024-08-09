@@ -3,7 +3,7 @@
     <div class="col-md-10 col-lg-8 mx-auto">
       <h1 class="text-center text-xl font-bold mt-10">パスワードリセット</h1>
       <%= form_with model: @user, url: password_reset_path(@token) do |f| %>
-      <%= render 'shared/error_messages', object: form.object%>
+      <%= render 'shared/error_messages', object: f.object%>
         <div class="my-3">
           <%= f.label :email%>
           <br>
