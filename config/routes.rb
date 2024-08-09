@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   root "static_pages#top"
+  get "static_pages/service" => "static_pages#service"
+  get "static_pages/policy" => "static_pages#policy"
 
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update destroy]
