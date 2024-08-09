@@ -13,6 +13,7 @@ class UsersController < ApplicationController
       auto_login(@user)
       redirect_to root_path, notice: 'ユーザー登録が完了しました'
     else
+      flash.now[:alert] = 'ユーザー登録ができませんでした'
       render :new
     end
   end

@@ -9,5 +9,6 @@ class Group < ApplicationRecord
   has_many :permits, dependent: :destroy
   has_many :users, through: :group_users
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 255 }
+  validates :introduction, presence: true, length: { maximum: 255 }
 end
