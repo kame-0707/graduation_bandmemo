@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PersonalLikesController < ApplicationController
   def create
     Like.create(user_id: current_user.id, summary_id: params[:personal_summary_id])

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PersonalVoicesController < ApplicationController
   before_action :set_voice, only: %i[edit update destroy]
 
@@ -9,9 +11,11 @@ class PersonalVoicesController < ApplicationController
     @voice = current_user.voices.find(params[:id])
   end
 
+  def edit; end
+
   def create
     @voice = current_user.voices.new(content: voice_params[:content])
-    @voice .group_id = nil unless params[:voice][:group_id].present?
+    @voice.group_id = nil if params[:voice][:group_id].blank?
     if @voice.save
       respond_to do |format|
         format.json { render json: { message: 'Voice saved successfully' }, status: :created }
@@ -22,8 +26,6 @@ class PersonalVoicesController < ApplicationController
       end
     end
   end
-
-  def edit; end
 
   def update
     if @voice.update(voice_params)

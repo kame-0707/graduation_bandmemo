@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GroupsController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy permits]
 
@@ -14,6 +16,8 @@ class GroupsController < ApplicationController
     @group = Group.new
   end
 
+  def edit; end
+
   def create
     @group = Group.new(group_params)
     # 誰が作ったグループかを判断するため
@@ -26,8 +30,6 @@ class GroupsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @group.update(group_params)
@@ -59,8 +61,8 @@ class GroupsController < ApplicationController
   # 違う場合、グループ一覧ページへ遷移させる。
   def ensure_correct_user
     @group = Group.find(params[:id])
-    unless @group.owner_id == current_user.id
-      redirect_to group_path(@group), alert: 'グループ作成者のみ編集可能です'
-    end
+    return if @group.owner_id == current_user.id
+
+    redirect_to group_path(@group), alert: 'グループ作成者のみ編集可能です'
   end
 end

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # The first thing you need to configure is which modules you need in your app.
 # The default is nothing which will include only core features (password encryption, login/logout).
 #
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging,
 # :magic_login, :external
-Rails.application.config.sorcery.submodules = [:external, :reset_password]
+Rails.application.config.sorcery.submodules = %i[external reset_password]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -106,13 +108,13 @@ Rails.application.config.sorcery.configure do |config|
   # For information about XING API:
   # - user info fields go to https://dev.xing.com/docs/get/users/me
   #
-  #credentials.ymlから情報を取得
+  # credentials.ymlから情報を取得
   config.google.key = Rails.application.credentials.dig(:google, :google_client_id)
   config.google.secret = Rails.application.credentials.dig(:google, :google_client_secret)
-  #API設定で承認済みのリダイレクトURIとして登録したurlを設定
+  # API設定で承認済みのリダイレクトURIとして登録したurlを設定
   config.google.callback_url = 'https://bandmemo-app.com/oauth/callback?provider=google'
-  #外部サービスから取得したユーザー情報をUserモデルの指定した属性にマッピング
-  config.google.user_info_mapping = {email: "email", name: "name"}
+  # 外部サービスから取得したユーザー情報をUserモデルの指定した属性にマッピング
+  config.google.user_info_mapping = { email: 'email', name: 'name' }
 
   #
   #
@@ -229,7 +231,6 @@ Rails.application.config.sorcery.configure do |config|
   # config.line.scope = "profile"
   # config.line.bot_prompt = "normal"
   # config.line.user_info_mapping = {name: 'displayName'}
-
 
   # For information about Discord API
   # https://discordapp.com/developers/docs/topics/oauth2
@@ -547,7 +548,7 @@ Rails.application.config.sorcery.configure do |config|
     # Class which holds the various external provider data for this user.
     # Default: `nil`
 
-    ##外部サービスとの認証情報を保存するモデルを指定
+    # #外部サービスとの認証情報を保存するモデルを指定
     user.authentications_class = Authentication
 
     # User's identifier in the `authentications` class.
@@ -568,5 +569,5 @@ Rails.application.config.sorcery.configure do |config|
 
   # This line must come after the 'user config' block.
   # Define which model authenticates with sorcery.
-  config.user_class = "User"
+  config.user_class = 'User'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PersonalSpotsController < ApplicationController
   before_action :set_spot, only: %i[edit update destroy]
 
@@ -13,9 +15,11 @@ class PersonalSpotsController < ApplicationController
     @spot = current_user.spots.new
   end
 
+  def edit; end
+
   def create
     @spot = current_user.spots.new(spot_params)
-    @spot.group_id = nil unless params[:spot][:group_id].present?
+    @spot.group_id = nil if params[:spot][:group_id].blank?
     if @spot.save
       redirect_to personal_spots_path, notice: 'スタジオが登録されました'
     else
@@ -23,8 +27,6 @@ class PersonalSpotsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @spot.update(spot_params)
@@ -48,6 +50,7 @@ class PersonalSpotsController < ApplicationController
   end
 
   def spot_params
-    params.require(:spot).permit(:registered_title, :start_datetime, :address, :lat, :lng, :opening_hours, :phone_number, :website, :place_id)
+    params.require(:spot).permit(:registered_title, :start_datetime, :address, :lat, :lng, :opening_hours,
+                                 :phone_number, :website, :place_id)
   end
 end

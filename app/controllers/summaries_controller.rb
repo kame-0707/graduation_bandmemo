@@ -1,15 +1,16 @@
-require "openai"
+# frozen_string_literal: true
+
+require 'openai'
 
 class SummariesController < ApplicationController
   before_action :set_summary, only: %i[edit update destroy]
   before_action :set_group
   before_action :authorize_user!
-  before_action :authorize_owner!, only: [:edit, :update, :destroy]
+  before_action :authorize_owner!, only: %i[edit update destroy]
 
   def index
     @summaries = @group.summaries.includes(:user).order(created_at: :desc)
   end
-
 
   def show
     @summary = @group.summaries.find(params[:id])
@@ -17,35 +18,36 @@ class SummariesController < ApplicationController
     @comments = @summary.comments.includes(:user).order(created_at: :desc)
   end
 
-
   def original
     @summary = @group.summaries.find(params[:id])
-    unless (@summary.user_id == current_user.id)
-      redirect_to group_summaries_path(@group), alert: '原文を確認できるのは投稿者のみです'
-    end
+    return if @summary.user_id == current_user.id
+
+    redirect_to group_summaries_path(@group), alert: '原文を確認できるのは投稿者のみです'
   end
 
   def new
     @summary = @group.summaries.new
   end
 
+  def edit; end
+
   def create
     client = OpenAI::Client.new(access_token: Rails.application.credentials.OPENAI_ACCESS_TOKEN)
 
     input_content = summary_params[:content]
 
-    if params[:commit] == "AI要約して保存"
+    if params[:commit] == 'AI要約して保存'
       # 入力内容が10文字以下の場合はそのまま出力
       if input_content.length < 10
         summary_text = input_content
       else
-      response = client.chat(
-        parameters: {
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system",
-            content:
-            "あなたは、入力された情報を厳密に要約するAIアシスタントです。以下の条件に従って、要約を行ってください：
+        response = client.chat(
+          parameters: {
+            model: 'gpt-4o-mini',
+            messages: [
+              { role: 'system',
+                content:
+              "あなたは、入力された情報を厳密に要約するAIアシスタントです。以下の条件に従って、要約を行ってください：
             1. 入力された内容を厳密に要約すること。
             2. 書いてない情報は絶対追加しないこと（質問や推測、対策案、メリット、注意点なども一切追加しない）。
             3. #{input_content}の内容を、必ず・を用いた箇条書きで簡潔にまとめること(例: ・内容1)。
@@ -56,19 +58,19 @@ class SummariesController < ApplicationController
             8. ・を用いた箇条書き同士の間には、必ず改行を入れること
             9. 各小見出しでまとめられた項目の直後には、必ず改行を入れること。
             10. 各行の間には、必ず空行は作らない。
-            "
-          },
-            { role: "user",
-            content:
-              "以下の内容を要約してください。
-              #{input_content}"
-            },
-          ],
-        })
-      summary_text = response.dig("choices", 0, "message", "content")
+            " },
+              { role: 'user',
+                content:
+                "以下の内容を要約してください。
+              #{input_content}" }
+            ]
+          }
+        )
+        summary_text = response.dig('choices', 0, 'message', 'content')
       end
 
-      @summary = @group.summaries.new(title: summary_params[:title], content: summary_params[:content], summary: summary_text, user: current_user)
+      @summary = @group.summaries.new(title: summary_params[:title], content: summary_params[:content],
+                                      summary: summary_text, user: current_user)
       if @summary.save
         redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
       else
@@ -76,7 +78,7 @@ class SummariesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
 
-    elsif params[:commit] == "そのまま保存"
+    elsif params[:commit] == 'そのまま保存'
       @summary = @group.summaries.new(
         title: summary_params[:title],
         content: input_content,
@@ -91,9 +93,6 @@ class SummariesController < ApplicationController
       end
     end
   end
-
-
-  def edit; end
 
   def update
     if @summary.update(summary_params)
@@ -123,17 +122,17 @@ class SummariesController < ApplicationController
 
   def authorize_user!
     @group = Group.find(params[:group_id])
-    unless current_user.groups.include?(@group)
-      redirect_to root_path, alert: 'グループメンバーとして承認されていません'
-    end
+    return if current_user.groups.include?(@group)
+
+    redirect_to root_path, alert: 'グループメンバーとして承認されていません'
   end
 
   def authorize_owner!
     @summary = @group.summaries.find(params[:id])
     @group = Group.find(params[:group_id])
-    unless (@summary.user_id == current_user.id) || (@group.owner_id == current_user.id)
-      redirect_to group_summaries_path(@group), alert: '編集・削除ができるのは投稿者とオーナーのみです'
-    end
+    return if (@summary.user_id == current_user.id) || (@group.owner_id == current_user.id)
+
+    redirect_to group_summaries_path(@group), alert: '編集・削除ができるのは投稿者とオーナーのみです'
   end
 
   def summary_params

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PersonalVideosController < ApplicationController
   before_action :set_video, only: %i[edit update destroy]
 
@@ -9,9 +11,11 @@ class PersonalVideosController < ApplicationController
     @video = current_user.videos.new
   end
 
+  def edit; end
+
   def create
     @video = current_user.videos.new(video_params)
-    @video.group_id = nil unless params[:video][:group_id].present?
+    @video.group_id = nil if params[:video][:group_id].blank?
     if @video.save
       redirect_to personal_videos_path, notice: '動画が投稿されました'
     else
@@ -19,8 +23,6 @@ class PersonalVideosController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @video.update(video_params)

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module MarkdownHelper
   def markdown(text)
     options = {
       filter_html: true,
-      space_after_headers: true,
+      space_after_headers: true
     }
 
     extensions = {
@@ -14,7 +16,7 @@ module MarkdownHelper
       lax_spacing: true,
       underline: true,
       highlight: true,
-      quote: true, 
+      quote: true,
       footnotes: true
     }
 

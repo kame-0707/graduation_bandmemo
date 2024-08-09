@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VoicesController < ApplicationController
   before_action :set_voice, only: %i[edit update destroy]
   before_action :set_group
@@ -12,6 +14,8 @@ class VoicesController < ApplicationController
     @voice = @group.voices.find(params[:id])
   end
 
+  def edit; end
+
   def create
     @voice = @group.voices.new(content: voice_params[:content], user: current_user)
     if @voice.save
@@ -24,8 +28,6 @@ class VoicesController < ApplicationController
       end
     end
   end
-
-  def edit; end
 
   def update
     if @voice.update(voice_params)
@@ -55,17 +57,17 @@ class VoicesController < ApplicationController
 
   def authorize_user!
     @group = Group.find(params[:group_id])
-    unless current_user.groups.include?(@group)
-      redirect_to root_path, alert: 'グループメンバーとして承認されていません'
-    end
+    return if current_user.groups.include?(@group)
+
+    redirect_to root_path, alert: 'グループメンバーとして承認されていません'
   end
 
   def authorize_owner!
     @voice = @group.voices.find(params[:id])
     @group = Group.find(params[:group_id])
-    unless @voice.user == current_user
-      redirect_to group_voices_path(@group), alert: '操作の権限がありません'
-    end
+    return if @voice.user == current_user
+
+    redirect_to group_voices_path(@group), alert: '操作の権限がありません'
   end
 
   def voice_params

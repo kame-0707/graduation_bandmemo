@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class PersonalCommentsController < ApplicationController
   def create
     @comment = current_user.comments.new(comment_params)
-    @comment.group_id = nil unless params[:comment][:group_id].present?
+    @comment.group_id = nil if params[:comment][:group_id].blank?
     @comment.save
   end
 

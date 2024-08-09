@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VideosController < ApplicationController
   before_action :set_video, only: %i[edit update destroy]
   before_action :set_group
@@ -12,6 +14,8 @@ class VideosController < ApplicationController
     @video = @group.videos.new
   end
 
+  def edit; end
+
   def create
     @video = @group.videos.new(video_params.merge(user: current_user))
     if @video.save
@@ -21,8 +25,6 @@ class VideosController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @video.update(video_params)
@@ -52,17 +54,17 @@ class VideosController < ApplicationController
 
   def authorize_user!
     @group = Group.find(params[:group_id])
-    unless current_user.groups.include?(@group)
-      redirect_to root_path, alert: 'グループメンバーとして承認されていません'
-    end
+    return if current_user.groups.include?(@group)
+
+    redirect_to root_path, alert: 'グループメンバーとして承認されていません'
   end
 
   def authorize_owner!
     @video = @group.videos.find(params[:id])
     @group = Group.find(params[:group_id])
-    unless @video.user == current_user
-      redirect_to group_videos_path(@group), alert: '操作の権限がありません'
-    end
+    return if @video.user == current_user
+
+    redirect_to group_videos_path(@group), alert: '操作の権限がありません'
   end
 
   def video_params

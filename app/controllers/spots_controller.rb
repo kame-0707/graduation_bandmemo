@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SpotsController < ApplicationController
   before_action :set_spot, only: %i[edit update destroy]
   before_action :set_group
@@ -16,6 +18,8 @@ class SpotsController < ApplicationController
     @spot = @group.spots.new
   end
 
+  def edit; end
+
   def create
     @spot = @group.spots.new(spot_params.merge(user: current_user))
     if @spot.save
@@ -25,8 +29,6 @@ class SpotsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  def edit; end
 
   def update
     if @spot.update(spot_params)
@@ -56,20 +58,21 @@ class SpotsController < ApplicationController
 
   def authorize_user!
     @group = Group.find(params[:group_id])
-    unless current_user.groups.include?(@group)
-      redirect_to root_path, alert: 'グループメンバーとして承認されていません'
-    end
+    return if current_user.groups.include?(@group)
+
+    redirect_to root_path, alert: 'グループメンバーとして承認されていません'
   end
 
   def authorize_owner!
     @spot = @group.spots.find(params[:id])
     @group = Group.find(params[:group_id])
-    unless @spot.user == current_user
-      redirect_to group_voices_path(@group), alert: '操作の権限がありません'
-    end
+    return if @spot.user == current_user
+
+    redirect_to group_voices_path(@group), alert: '操作の権限がありません'
   end
 
   def spot_params
-    params.require(:spot).permit(:registered_title, :start_datetime, :address, :lat, :lng, :opening_hours, :phone_number, :website, :place_id)
+    params.require(:spot).permit(:registered_title, :start_datetime, :address, :lat, :lng, :opening_hours,
+                                 :phone_number, :website, :place_id)
   end
 end

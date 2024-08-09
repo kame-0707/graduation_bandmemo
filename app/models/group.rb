@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Group < ApplicationRecord
   has_many :summaries, dependent: :destroy
   has_many :voices, dependent: :destroy
