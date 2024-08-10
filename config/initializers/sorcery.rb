@@ -83,6 +83,8 @@ Rails.application.config.sorcery.configure do |config|
   # Default: `[]`
   #
   config.external_providers = %i[google]
+  config.external_providers = %i[line]
+
 
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
   # Path to ca_file. By default use a internal ca-bundle.crt.
@@ -107,7 +109,8 @@ Rails.application.config.sorcery.configure do |config|
   #
   # For information about XING API:
   # - user info fields go to https://dev.xing.com/docs/get/users/me
-  #
+
+  # google認証
   # credentials.ymlから情報を取得
   config.google.key = Rails.application.credentials.dig(:google, :google_client_id)
   config.google.secret = Rails.application.credentials.dig(:google, :google_client_secret)
@@ -116,6 +119,11 @@ Rails.application.config.sorcery.configure do |config|
   # 外部サービスから取得したユーザー情報をUserモデルの指定した属性にマッピング
   config.google.user_info_mapping = { email: 'email', name: 'name' }
 
+  #line認証
+  config.line.key = Rails.application.credentials.dig(:line, :channel_id)
+  config.line.secret = Rails.application.credentials.dig(:line, :channel_secret)
+  config.line.callback_url = 'https://bandmemo-app.com/oauth/callback?provider=line'
+  config.line.scope = 'profile'
   #
   #
   # Twitter will not accept any requests nor redirect uri containing localhost,
