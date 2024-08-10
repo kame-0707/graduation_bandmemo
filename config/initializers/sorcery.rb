@@ -125,7 +125,7 @@ Rails.application.config.sorcery.configure do |config|
   config.line.callback_url = 'https://bandmemo-app.com/oauth/callback?provider=line'
   config.line.scope = 'profile'
   config.line.bot_prompt = 'aggressive'
-  config.google.user_info_mapping = { name: 'displayName', email: 'userId' }
+  config.line.user_info_mapping = { name: 'displayName', email: 'userId' }
   #
   #
   # Twitter will not accept any requests nor redirect uri containing localhost,
