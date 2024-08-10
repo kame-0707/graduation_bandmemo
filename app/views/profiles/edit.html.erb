@@ -4,8 +4,6 @@
   <%= form_with model: @user, url: profile_path do |f| %>
   <%= render 'shared/error_messages', object: f.object%>
     <div class="grid grid-cols-1 gap-4 justify-items-center mx-auto">
-      <%= f.label :email, 'メールアドレス' %>
-      <%= f.text_area :email, rows: 1, class: "rounded-lg p-4 w-[60vw]" %>
       <%= f.label :name, '名前' %>
       <%= f.text_area :name, rows: 1, class: "rounded-lg p-4 w-[60vw]" %>
     </div>
