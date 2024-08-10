@@ -7,10 +7,33 @@ ja:
         password: パスワード
         password_confirmation: パスワード確認
         created_at: 作成日時
-      board:
+      group:
+        name: グループ名
+        introduction: 紹介文
+        created_at: 作成日時
+      spot: 
+        registered_title: タイトル
+        address: 住所
+        lat: 緯度
+        lng: 経度
+        opening_hours: 営業時間
+        phone_number: 電話番号
+        website: ウェブサイト
+        created_at: 作成日時
+      voice:
+        content: 音声
+        created_at: 作成日時
+      summary:
         title: タイトル
-        body: 本文
-        board_image: サムネイル
+        content: 内容
+        summary: 要約
         created_at: 作成日時
       comment:
-        body: コメント
+        content: コメント
+        created_at: 作成日時
+      video:
+        title: タイトル
+        videos_url: 動画URL
+        created_at: 作成日時
+
+      
