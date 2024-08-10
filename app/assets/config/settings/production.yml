@@ -1,2 +1,3 @@
 sorcery:
     google_callback_url: 'https://bandmemo-app.com/oauth/callback?provider=google'
+    line_callback_url: 'https://bandmemo-app.com/oauth/callback?provider=line'

@@ -24,10 +24,16 @@
         <p>or</p>
         <p>---------------------------------</p>
       </div>
-      <div class="flex justify-center mb-10">
+      <div class="flex justify-center mb-4">
         <%# googleでログイン %>
         <%= link_to auth_at_provider_path(provider: :google) do %>
           <button class="btn btn-secondary">Googleでログイン</button>
+        <% end %>
+      </div>
+            <div class="flex justify-center">
+        <%# lineでログイン %>
+        <%= link_to auth_at_provider_path(provider: :line) do %>
+          <button class="btn btn-success">LINEでログイン</button>
         <% end %>
       </div>
     </div>
