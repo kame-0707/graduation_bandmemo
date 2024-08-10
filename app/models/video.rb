@@ -4,7 +4,7 @@ class Video < ApplicationRecord
   belongs_to :user
   belongs_to :group, optional: true
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 255 }
   validates :videos_url, presence: true
 
   def split_id_from_youtube_url

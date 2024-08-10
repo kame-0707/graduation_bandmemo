@@ -32,9 +32,9 @@ class SpotsController < ApplicationController
 
   def update
     if @spot.update(spot_params)
-      redirect_to group_spots_path(@group, @spot), notice: '音声メモが更新されました'
+      redirect_to group_spots_path(@group, @spot), notice: 'スタジオが更新されました'
     else
-      flash.now[:alert] = '音声メモを更新できませんでした'
+      flash.now[:alert] = 'スタジオを更新できませんでした'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -42,7 +42,7 @@ class SpotsController < ApplicationController
   def destroy
     spot = @spot
     spot.destroy!
-    redirect_to group_spots_path(@group), status: :see_other, notice: '音声メモが削除されました'
+    redirect_to group_spots_path(@group), status: :see_other, notice: 'スタジオが削除されました'
   end
 
   private
