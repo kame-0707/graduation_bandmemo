@@ -7,6 +7,13 @@ Rails.application.routes.draw do
   get 'static_pages/service' => 'static_pages#service'
   get 'static_pages/policy' => 'static_pages#policy'
 
+  get 'tries/spot' => 'tries#spot'
+  get 'tries/voice' => 'tries#voice'
+  get 'tries/summary_new' => 'tries#summary_new'
+  get 'tries/summary_index' => 'tries#summary_index'
+  get 'tries/video' => 'tries#video'
+
+
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update destroy]
   resources :password_resets, only: %i[new create edit update]

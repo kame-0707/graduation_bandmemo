@@ -27,15 +27,15 @@
       <div class="flex justify-center mb-4">
         <%# lineでログイン %>
         <%= link_to auth_at_provider_path(provider: :line) do %>
-          <button class="btn btn-success">LINEでログイン</button>
+          <%= image_tag 'line.png', width: '150', height: '100' %>
         <% end %>
       </div>
-      <!--<div class="flex justify-center">
+      <div class="flex justify-center">
         <%# googleでログイン %>
         <%= link_to auth_at_provider_path(provider: :google) do %>
-          <button class="btn btn-secondary">Googleでログイン</button>
+          <%= image_tag 'google.png', width: '200', height: '100' %>
         <% end %>
-      </div>-->
+      </div>
     </div>
   </div>
 </div>
