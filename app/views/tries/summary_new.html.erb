@@ -1,1 +1,71 @@
+<div class="flex justify-center font-bold mt-2">
+    <%= "《参考バンド：たーとるず》" %>
+</div>
+<div class="text-center text-xl font-bold my-2">②メモを要約・保存</div>
+
+<div class="flex flex-col items-center mt-4">
+    <div class="grid grid-cols-1 gap-4 justify-items-center mx-auto">
+      タイトル
+      <div class="bg-white rounded-lg p-4 w-[90vw] text-sm mb-4", style="color:#6F8CA7">
+        ログイン後、作成されたメモで入力可能です
+      </div>
+      メモ内容
+      <div class="bg-white rounded-lg p-4 w-[90vw] text-sm mb-4", style="color:#6F8CA7">
+        ログイン後、作成されたメモで入力可能です
+        <br>
+        <br>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4">
+      <button class="text-xs btn btn-outline btn-success mr-4" onclick="ai_summary_save.showModal()">AI要約して保存</button>
+      <dialog id="ai_summary_save" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box w-[90vw]">
+          <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">閉じる</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+      <button class="text-xs btn btn-outline btn-success mr-4" onclick="original_save.showModal()">そのまま保存</button>
+      <dialog id="original_save" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box w-[90vw]">
+          <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">閉じる</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
+    <div class="flex justify-center mt-4">
+      <button class="text-xs btn btn-outline btn-secondary mr-4" onclick="to_memo_list.showModal()">練習メモ一覧へ</button>
+      <dialog id="to_memo_list" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box w-[90vw]">
+          <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">閉じる</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  <div class="text-xs mt-2">※入力した原文は一覧画面で確認可能です</div>
+
+  <button class="btn" onclick="my_modal_2.showModal()">▼入力例文を見てみる</button>
+  <dialog id="my_modal_2" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">入力例文</h3>
+        <p class="py-4">皆さん、先日の初めてのバンド練習、お疲れ様でした。いくつか重要な決定事項と注意点があるので、次回の練習までに確認しておいてくださいね。まず、キーとテンポについてですが、キーは原曲のままのGメジャーでいきます。そしてテンポはBPM 160、原曲と同じ速さで合わせます。イントロについては、キーボードがリードし、ドラムは軽くフィルインを入れてください。ギターはイントロでクリーンな音色を使うことにしましょう。サビ前のブレイクについてですが、サビに入る前に一拍のブレイクを全員で入れます。リードギターがフィルを入れるので、タイミングをしっかり合わせてください。アウトロについては、原曲通りのフェードアウトではなく、しっかりとエンディングを決めて締めることにします。エンディングのパターンは次回の練習で詳細を決めます。注意点ですが、ボーカルはメロディラインをしっかりとキープし、特にサビで声が埋もれないように気をつけてください。次回の練習ではこれらのポイントを踏まえて、さらに細かい部分を詰めていきましょう。質問や不明点があれば、遠慮なく連絡してくださいね。みんなで素晴らしい演奏を目指しましょう。よろしくお願いします。</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">閉じる</button>
+          </form>
+        </div>
+    </div>
+  </dialog>
+</div>
 <%= render 'shared/in_tries_menu' %>

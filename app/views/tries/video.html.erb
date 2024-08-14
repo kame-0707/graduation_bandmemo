@@ -1,1 +1,72 @@
+<div class="flex justify-center font-bold mt-2">
+    <%= "《参考バンド：たーとるず》" %>
+</div> 
+<div class="text-center text-xl font-bold my-2">参考動画一覧</div >
+<div class="flex justify-center mt-4">
+  <button class="btn btn-accent text-xs" onclick="video_register.showModal()">動画を登録する</button>
+  <dialog id="video_register" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box w-[90vw]">
+      <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn">閉じる</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+</div>
+<div class="flex justify-center mt-4">
+    <ul class="grid grid-cols-1 gap-4 justify-items-center mx-auto mb-4">
+          <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mx-auto">
+            <div class="flex justify-center mt-auto">
+                <div class="flex space-x-8">
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-pen"></i>
+                  <% end %>
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                </div>               
+            </div>
+              <div class="text-center text-lg font-bold mt-2">Summer in COLORZ with yui</div>
+              <div class="text-center mt-2">作成：kame</div>
+              <div class="text-center mt-2">2024/08/01 22:29</div>
+              <div class="text-center mt-2">
+                <div class="relative w-full pb-[56.25%]">
+                  <iframe src="https://www.youtube.com/embed/wHOBGd3e5v8?si=PSMHHszwjGDds12L", 
+                      allow ="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", 
+                      allowfullscreen="", 
+                      frameborder="0", 
+                      class="absolute top-0 left-0 w-full h-full">
+                  </iframe>
+                </div>
+              </div>
+          </li>
+          <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mx-auto">
+            <div class="flex justify-center mt-auto">
+                <div class="flex space-x-8">
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-pen"></i>
+                  <% end %>
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                </div>               
+            </div>
+              <div class="text-center text-lg font-bold mt-2">Ginger</div>
+              <div class="text-center mt-2">作成：kame</div>
+              <div class="text-center mt-2">2024/08/01 22:29</div>
+              <div class="text-center mt-2">
+                <div class="relative w-full pb-[56.25%]">
+                  <iframe src="https://www.youtube.com/embed/VhXqEbVtgos?si=DOInXxDCF7N9q_Lr", 
+                      allow ="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture", 
+                      allowfullscreen="", 
+                      frameborder="0", 
+                      class="absolute top-0 left-0 w-full h-full">
+                  </iframe>
+                </div>
+              </div>
+          </li>
+    </ul>
+</div>
 <%= render 'shared/in_tries_menu' %>

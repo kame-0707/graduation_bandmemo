@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>音声入力</title>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="flex justify-center font-bold mt-2">
+    <%= "《参考バンド：たーとるず》" %>
+  </div>
+  <div class="text-center text-xl font-bold my-2">①音声文字起こしで仮メモ作成</div>
+  
+  <div class="flex justify-center mt-4 mb-4">
+    <button class="btn btn-outline btn-secondary mr-4" onclick="voice_start.showModal()">録音開始</button>
+    <dialog id="voice_start" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box w-[90vw]">
+        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">閉じる</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
+    <button class="btn btn-outline btn-secondary mr-4" onclick="voice_stop.showModal()">録音停止</button>
+    <dialog id="voice_stop" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box w-[90vw]">
+        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">閉じる</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </div>
+
+  <div class="text-center text-sm mx-10">
+    <div id="status">
+      <p>「録音開始」ボタンをクリックして話し始めてください..</p>
+      <p>※日本語のみに対応</p>
+    </div>
+    <div id="result-div"></div>
+  </div>
+
+  <div class="text-center text-base font-bold mt-4 mb-4">【音声文字起こし一覧】</div>
+  <div class="flex justify-center mt-4">
+    <button class="btn btn-secondary text-xs mr-4 mb-4" onclick="button_to_new_memo.showModal()">必要な仮メモをコピー後、<br>メモを要約・保存ページへ</button>
+    <dialog id="button_to_new_memo" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box w-[90vw]">
+        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">閉じる</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </div>
+ 
+<ul class="grid grid-cols-1 justify-items-center mx-auto">
+      <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mb-4 flex justify-between">
+        <div class="mt-1">
+          ドラムのフィルインは大きめ
+        </div>
+        <div class="ml-auto">
+          <button class="btn btn-sm btn-success" onclick="voice_edit_delete_1.showModal()">
+            <i class="fa-solid fa-pen"></i>
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <dialog id="voice_edit_delete_1" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box w-[90vw]">
+              <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+              <div class="modal-action">
+                <form method="dialog">
+                  <button class="btn">閉じる</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+        </div>
+      </li>
+      <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mb-4 flex justify-between">
+        <div class="mt-1">
+          Cメロはシンセとリードギターが入りを合わせる
+        </div>
+        <div class="ml-auto">
+        <div class="ml-auto">
+          <button class="btn btn-sm btn-success" onclick="voice_edit_delete_2.showModal()">
+            <i class="fa-solid fa-pen"></i>
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <dialog id="voice_edit_delete_2" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box w-[90vw]">
+              <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+              <div class="modal-action">
+                <form method="dialog">
+                  <button class="btn">閉じる</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+        </div>
+        </div>
+      </li>
+
+</ul>
 <%= render 'shared/in_tries_menu' %>
+</body>
+</html>

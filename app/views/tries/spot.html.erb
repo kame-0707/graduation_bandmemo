@@ -1,1 +1,121 @@
-<%= render 'shared/in_tries_menu' %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スタジオ一覧</title>
+</head>
+<body>
+  <div class="flex justify-center font-bold mt-2">
+    <%= "《参考バンド：たーとるず》" %>
+  </div>
+  <div class="flex flex-col items-center">
+    <div class="text-center text-xl font-bold my-2">スタジオ一覧</div>
+    <button class="btn btn-sm btn-success mb-4" onclick="spot_register.showModal()">スタジオ登録画面へ</button>
+    <dialog id="spot_register" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box w-[90vw]">
+        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">閉じる</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  </div>
+
+  <div id="map"></div>
+
+  <style>
+    #map {
+      height: 250px;
+      width: 90%;
+      margin: 0 auto;
+    }
+  </style>
+
+  <ul class="grid grid-cols-1 justify-items-center mx-auto mt-4" id="spot-list">
+    <li class="bg-white shadow-md rounded-lg p-4 w-[90vw] mb-4">
+      <div class="flex justify-between items-center mt-2">
+        <div>
+          <a href="#" class="spot-link link-hover" data-index="0">
+            <div>第一回練習</div>
+            <div class="text-sm text-gray-500 mt-2">日本、東京都新宿区新宿４丁目２−６ スタジオペンタ新宿店</div>
+            <div class="text-sm text-gray-500 mt-2">練習開始：2024/08/10 19:00</div>
+          </a>
+        </div>
+        <button class="btn btn-sm btn-success mb-4" onclick="spot_show_1.showModal()">詳細</button>
+        <dialog id="spot_show_1" class="modal modal-bottom sm:modal-middle">
+          <div class="modal-box w-[90vw]">
+            <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+            <div class="modal-action">
+              <form method="dialog">
+                <button class="btn">閉じる</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </div>
+    </li>
+  </ul>
+
+  <%= render 'shared/in_tries_menu' %>
+
+  <script>
+    function initMap() {
+      const latlng = new google.maps.LatLng(35.6803997, 139.7690174);
+      const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: latlng
+      });
+
+      let activeInfoWindow;
+      const markers = [];
+      const infoWindows = [];
+
+      const markerLatLng = { lat: 35.688999, lng: 139.702875 };
+      const marker = new google.maps.Marker({
+        position: markerLatLng,
+        map: map
+      });
+      markers.push(marker);
+
+      const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=35.688999,139.702875&query_place_id=ChIJsaH9w9qMGGAR4B59y-84l0Q";
+      const infowindow = new google.maps.InfoWindow({
+        position: markerLatLng,
+        content: `
+          <a href='#'>
+            第一回練習
+          </a><br>
+          <a href='${googleMapsUrl}' target='_blank' class='text-blue-600 link-hover'>
+            Googleマップで見る
+          </a>`
+      });
+      infoWindows.push(infowindow);
+
+      marker.addListener('click', function() {
+        if (activeInfoWindow) {
+          activeInfoWindow.close();
+        }
+        infowindow.open(map, marker);
+        activeInfoWindow = infowindow;
+      });
+
+      document.querySelectorAll('.spot-link').forEach(function(link, index) {
+        link.addEventListener('click', function(event) {
+          event.preventDefault();
+          const marker = markers[index];
+          const infowindow = infoWindows[index];
+
+          if (activeInfoWindow) {
+            activeInfoWindow.close();
+          }
+          infowindow.open(map, marker);
+          activeInfoWindow = infowindow;
+        });
+      });
+    }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= Rails.application.credentials.google_map_api_key %>&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>

@@ -11,14 +11,21 @@
 </div>
 
 <% if logged_in? %> 
-  <div class="flex justify-center mb-10">
-    <%= link_to personal_spots_path do %>
-        <button class="btn btn-accent">
-          <div class="text-xs">個人用機能を使う</div>
-        </button>
+<div class="flex justify-center mb-10">
+    <%= link_to tries_spot_path do %>
+      <button class="btn btn-accent">
+        <div class="text-xs">使い方イメージを見てみる</div>
+      </button>
     <% end %>
   </div>
   <div class="flex justify-center mb-10 mx-4">
+    <%= link_to personal_spots_path do %>
+      <div class="mr-4">
+        <button class="btn btn-primary">
+          <div class="text-xs">ひとりで機能を使う</div>
+        </button>
+      </div>
+    <% end %>
     <%= link_to new_group_path do %>
       <div class="mr-4">
         <button class="btn btn-accent">
