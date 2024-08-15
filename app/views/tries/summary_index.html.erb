@@ -1,1 +1,117 @@
+<div class="flex justify-center font-bold mt-2">
+    <%= "《参考バンド：たーとるず》" %>
+</div>
+<div class="text-center text-xl font-bold my-2">③練習メモ一覧</div >
+<div class="flex justify-center mt-4">
+  <button class="btn btn-secondary text-xs mr-4" onclick="to_summary_new_page.showModal()">メモを要約・保存</button>
+  <dialog id="to_summary_new_page" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box w-[90vw]">
+      <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn">閉じる</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+</div>
+<div class="flex justify-center mt-4">
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-center w-[90vw] mb-4">
+          <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
+            <div class="flex justify-center mt-auto">
+              <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="original_content_1.showModal()">原文はこちら</button>
+              <dialog id="original_content_1" class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box w-[90vw]">
+                  <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="btn">閉じる</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+
+              <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="summary_show_1.showModal()">詳細・コメント</button>
+              <dialog id="summary_show_1" class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box w-[90vw]">
+                  <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="btn">閉じる</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+            </div>
+            <div class="flex justify-between items-center mt-auto">
+                <div class="ml-4 mr-auto flex space-x-4">
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-pen"></i>
+                  <% end %>
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                </div>
+                <%= link_to '#', class: 'ml-auto mr-4' do %>
+                  <i class="fa-solid fa-heart"></i>
+                <% end %>
+            </div>
+            <div class="flex-grow">
+              <div class="text-center text-lg font-bold mt-2">8/15決定事項</div>
+              <div class="text-center mt-2">作成：mako</div>
+              <div class="text-center mt-2">2024/08/15 22:31</div>
+              <div class="mt-2">
+                <%= render 'shared/summary_example_2'%>
+              </div>
+            </div>
+          </li>
+          <li class="bg-white shadow-md rounded-lg p-4 w-5/6 max-w-md">
+            <div class="flex justify-center mt-auto">
+              <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="original_content_2.showModal()">原文はこちら</button>
+              <dialog id="original_content_2" class="modal modal-bottom sm:modal-middle">
+                <div class="modal-box w-[90vw]">
+                  <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                  <div class="modal-action">
+                    <form method="dialog">
+                      <button class="btn">閉じる</button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+              <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="summary_show_2.showModal()">詳細・コメント</button>
+                <dialog id="summary_show_2" class="modal modal-bottom sm:modal-middle">
+                  <div class="modal-box w-[90vw]">
+                    <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                    <div class="modal-action">
+                      <form method="dialog">
+                        <button class="btn">閉じる</button>
+                      </form>
+                    </div>
+                  </div>
+                </dialog>
+            </div>
+            <div class="flex justify-between items-center mt-auto">
+                <div class="ml-4 mr-auto flex space-x-4">
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-pen"></i>
+                  <% end %>
+                  <%= link_to '#' do %>
+                      <i class="fa-solid fa-trash"></i>
+                  <% end %>
+                </div>
+                <%= link_to '#', class: 'ml-auto mr-4' do %>
+                  <i class="fa-regular fa-heart"></i>
+                <% end %>
+            </div>
+            <div class="flex-grow">
+              <div class="text-center text-lg font-bold mt-2">8/10練習</div>
+              <div class="text-center mt-2">作成：kame</div>
+              <div class="text-center mt-2">2024/08/10 22:00</div>
+              <div class="mt-2">
+                <%= render 'shared/summary_example_1'%>
+              </div>
+            </div>
+          </li>
+    </ul>
+</div>
 <%= render 'shared/in_tries_menu' %>

@@ -2,10 +2,8 @@
 <div class="text-center text-xl font-bold my-2">③練習メモ一覧</div >
 <div class="flex justify-center mt-4">
   <%= link_to  new_group_summary_path(@group) do %>
-    <div class="mr-4">
-      <button class="btn btn-secondary">
-        <div class="text-xs">メモを要約・保存</div>
-      </button>
+    <div class="btn btn-secondary text-xs mr-4">
+      メモを要約・保存
     </div>
   <% end %>
 </div>
@@ -18,18 +16,14 @@
             <div class="flex justify-center mt-auto">
               <% if summary.user_id == current_user.id %>
                 <%= link_to group_original_path(@group, summary) do %>
-                  <div class="mb-4 mr-4">
-                    <button class="btn btn-outline btn-info">
-                      <div class="text-xs">原文はこちら</div>
-                    </button>
+                  <div class="btn btn-outline btn-info text-xs mb-4 mr-4">
+                    原文はこちら
                   </div>
                 <% end %>
               <% end %>
               <%= link_to group_summary_path(@group, summary) do %>
-                <div class="mb-4 mr-4">
-                  <button class="btn btn-outline btn-info">
-                    <div class="text-xs">詳細・コメント</div>
-                  </button>
+                <div class="btn btn-outline btn-info text-xs mb-4 mr-4">
+                  詳細・コメント
                 </div>
               <% end %>
             </div>
