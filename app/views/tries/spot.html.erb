@@ -13,7 +13,7 @@
     <button class="btn btn-sm btn-success mb-4" onclick="spot_register.showModal()">スタジオ登録画面へ</button>
     <dialog id="spot_register" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box w-[90vw]">
-        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <%= render 'shared/please_login' %>
         <div class="modal-action">
           <form method="dialog">
             <button class="btn">閉じる</button>
@@ -46,7 +46,7 @@
         <button class="btn btn-sm btn-success mb-4" onclick="spot_show_1.showModal()">詳細</button>
         <dialog id="spot_show_1" class="modal modal-bottom sm:modal-middle">
           <div class="modal-box w-[90vw]">
-            <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+            <%= render 'shared/please_login' %>
             <div class="modal-action">
               <form method="dialog">
                 <button class="btn">閉じる</button>

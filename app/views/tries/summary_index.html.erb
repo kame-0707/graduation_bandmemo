@@ -6,7 +6,7 @@
   <button class="btn btn-secondary text-xs mr-4" onclick="to_summary_new_page.showModal()">メモを要約・保存</button>
   <dialog id="to_summary_new_page" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box w-[90vw]">
-      <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+      <%= render 'shared/please_login' %>
       <div class="modal-action">
         <form method="dialog">
           <button class="btn">閉じる</button>
@@ -22,7 +22,7 @@
               <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="original_content_1.showModal()">原文はこちら</button>
               <dialog id="original_content_1" class="modal modal-bottom sm:modal-middle">
                 <div class="modal-box w-[90vw]">
-                  <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                  <%= render 'shared/please_login' %>
                   <div class="modal-action">
                     <form method="dialog">
                       <button class="btn">閉じる</button>
@@ -34,7 +34,7 @@
               <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="summary_show_1.showModal()">詳細・コメント</button>
               <dialog id="summary_show_1" class="modal modal-bottom sm:modal-middle">
                 <div class="modal-box w-[90vw]">
-                  <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                  <%= render 'shared/please_login' %>
                   <div class="modal-action">
                     <form method="dialog">
                       <button class="btn">閉じる</button>
@@ -70,7 +70,7 @@
               <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="original_content_2.showModal()">原文はこちら</button>
               <dialog id="original_content_2" class="modal modal-bottom sm:modal-middle">
                 <div class="modal-box w-[90vw]">
-                  <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                  <%= render 'shared/please_login' %>
                   <div class="modal-action">
                     <form method="dialog">
                       <button class="btn">閉じる</button>
@@ -81,7 +81,7 @@
               <button class="btn btn-outline btn-info text-xs mb-4 mr-4" onclick="summary_show_2.showModal()">詳細・コメント</button>
                 <dialog id="summary_show_2" class="modal modal-bottom sm:modal-middle">
                   <div class="modal-box w-[90vw]">
-                    <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+                    <%= render 'shared/please_login' %>
                     <div class="modal-action">
                       <form method="dialog">
                         <button class="btn">閉じる</button>

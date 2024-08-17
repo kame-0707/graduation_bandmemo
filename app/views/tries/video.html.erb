@@ -6,7 +6,7 @@
   <button class="btn btn-accent text-xs" onclick="video_register.showModal()">動画を登録する</button>
   <dialog id="video_register" class="modal modal-bottom sm:modal-middle">
     <div class="modal-box w-[90vw]">
-      <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+      <%= render 'shared/please_login' %>
       <div class="modal-action">
         <form method="dialog">
           <button class="btn">閉じる</button>

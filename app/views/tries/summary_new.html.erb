@@ -20,7 +20,7 @@
       <button class="text-xs btn btn-outline btn-success mr-4" onclick="ai_summary_save.showModal()">AI要約して保存</button>
       <dialog id="ai_summary_save" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box w-[90vw]">
-          <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+          <%= render 'shared/please_login' %>
           <div class="modal-action">
             <form method="dialog">
               <button class="btn">閉じる</button>
@@ -31,7 +31,7 @@
       <button class="text-xs btn btn-outline btn-success mr-4" onclick="original_save.showModal()">そのまま保存</button>
       <dialog id="original_save" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box w-[90vw]">
-          <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+          <%= render 'shared/please_login' %>
           <div class="modal-action">
             <form method="dialog">
               <button class="btn">閉じる</button>
@@ -44,7 +44,7 @@
       <button class="text-xs btn btn-outline btn-secondary mr-4" onclick="to_memo_list.showModal()">練習メモ一覧へ</button>
       <dialog id="to_memo_list" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box w-[90vw]">
-          <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+          <%= render 'shared/please_login' %>
           <div class="modal-action">
             <form method="dialog">
               <button class="btn">閉じる</button>

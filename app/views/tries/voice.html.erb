@@ -14,7 +14,7 @@
     <button class="btn btn-outline btn-secondary mr-4" onclick="voice_start.showModal()">録音開始</button>
     <dialog id="voice_start" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box w-[90vw]">
-        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <%= render 'shared/please_login' %>
         <div class="modal-action">
           <form method="dialog">
             <button class="btn">閉じる</button>
@@ -26,7 +26,7 @@
     <button class="btn btn-outline btn-secondary mr-4" onclick="voice_stop.showModal()">録音停止</button>
     <dialog id="voice_stop" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box w-[90vw]">
-        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <%= render 'shared/please_login' %>
         <div class="modal-action">
           <form method="dialog">
             <button class="btn">閉じる</button>
@@ -51,7 +51,7 @@
     <button class="btn btn-secondary text-xs mr-4 mb-4" onclick="button_to_new_memo.showModal()">必要な仮メモをコピー後、<br>メモを要約・保存ページへ</button>
     <dialog id="button_to_new_memo" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box w-[90vw]">
-        <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+        <%= render 'shared/please_login' %>
         <div class="modal-action">
           <form method="dialog">
             <button class="btn">閉じる</button>
@@ -73,7 +73,7 @@
           </button>
           <dialog id="voice_edit_delete_1" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box w-[90vw]">
-              <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+              <%= render 'shared/please_login' %>
               <div class="modal-action">
                 <form method="dialog">
                   <button class="btn">閉じる</button>
@@ -95,7 +95,7 @@
           </button>
           <dialog id="voice_edit_delete_2" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box w-[90vw]">
-              <p class="py-4">ログイン後、自分のメモを使ってみましょう！</p>
+              <%= render 'shared/please_login' %>
               <div class="modal-action">
                 <form method="dialog">
                   <button class="btn">閉じる</button>
