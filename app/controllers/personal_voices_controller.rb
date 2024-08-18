@@ -4,11 +4,11 @@ class PersonalVoicesController < ApplicationController
   before_action :set_voice, only: %i[edit update destroy]
 
   def index
-    @voices = current_user.voices.order(created_at: :desc)
+    @voices = current_user.voices.where(group_id: nil).order(created_at: :desc)
   end
 
   def show
-    @voice = current_user.voices.find(params[:id])
+    @voice = current_user.voices.where(group_id: nil).find(params[:id])
   end
 
   def edit; end
@@ -45,7 +45,7 @@ class PersonalVoicesController < ApplicationController
   private
 
   def set_voice
-    @voice = current_user.voices.find(params[:id])
+    @voice = current_user.voices.where(group_id: nil).find(params[:id])
   end
 
   def voice_params

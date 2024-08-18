@@ -6,11 +6,11 @@ class PersonalSummariesController < ApplicationController
   before_action :set_summary, only: %i[edit update destroy]
 
   def index
-    @summaries = current_user.summaries.order(created_at: :desc)
+    @summaries = current_user.summaries.where(group_id: nil).order(created_at: :desc)
   end
 
   def show
-    @summary = current_user.summaries.find(params[:id])
+    @summary = current_user.summaries.where(group_id: nil).find(params[:id])
     @comment = Comment.new
     @comments = @summary.comments.includes(:user).order(created_at: :desc)
   end
@@ -110,7 +110,7 @@ class PersonalSummariesController < ApplicationController
   private
 
   def set_summary
-    @summary = current_user.summaries.find(params[:id])
+    @summary = current_user.summaries.where(group_id: nil).find(params[:id])
   end
 
   def summary_params

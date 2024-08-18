@@ -4,7 +4,7 @@ class PersonalVideosController < ApplicationController
   before_action :set_video, only: %i[edit update destroy]
 
   def index
-    @videos = current_user.videos.includes(:user).order(created_at: :desc)
+    @videos = current_user.videos.where(group_id: nil).order(created_at: :desc)
   end
 
   def new
@@ -42,7 +42,7 @@ class PersonalVideosController < ApplicationController
   private
 
   def set_video
-    @video = current_user.videos.find(params[:id])
+    @video = current_user.videos.where(group_id: nil).find(params[:id])
   end
 
   def video_params

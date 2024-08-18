@@ -4,11 +4,11 @@ class PersonalSpotsController < ApplicationController
   before_action :set_spot, only: %i[edit update destroy]
 
   def index
-    @spots = current_user.spots.order(start_datetime: :asc)
+    @spots = current_user.spots.where(group_id: nil).order(start_datetime: :asc)
   end
 
   def show
-    @spot = current_user.spots.find(params[:id])
+    @spot = current_user.spots.where(group_id: nil).find(params[:id])
   end
 
   def new
@@ -46,7 +46,7 @@ class PersonalSpotsController < ApplicationController
   private
 
   def set_spot
-    @spot = current_user.spots.find(params[:id])
+    @spot = current_user.spots.where(group_id: nil).find(params[:id])
   end
 
   def spot_params
