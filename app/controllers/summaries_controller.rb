@@ -31,30 +31,21 @@ class SummariesController < ApplicationController
 
   def create
     input_content = summary_params[:content]
-    if params[:commit] == 'AI要約して保存'
-      summary_text = OpenaiService.new(input_content).call
-      @summary = @group.summaries.new(title: summary_params[:title], content: summary_params[:content],
-                                      summary: summary_text, user: current_user)
-      if @summary.save
-        redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
-      else
-        flash.now[:alert] = 'メモの保存ができませんでした'
-        render :new, status: :unprocessable_entity
-      end
 
-    elsif params[:commit] == 'そのまま保存'
-      @summary = @group.summaries.new(
-        title: summary_params[:title],
-        content: input_content,
-        summary: nil,
-        user: current_user
-      )
-      if @summary.save
-        redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
-      else
-        flash.now[:alert] = 'メモの保存ができませんでした'
-        render :new, status: :unprocessable_entity
-      end
+    @summary = if params[:commit] == 'AI要約して保存'
+                 summary_text = OpenaiService.new(input_content).call
+                 @group.summaries.new(title: summary_params[:title], content: input_content,
+                                      summary: summary_text, user: current_user)
+               elsif params[:commit] == 'そのまま保存'
+                 @group.summaries.new(title: summary_params[:title], content: input_content,
+                                      summary: nil, user: current_user)
+               end
+
+    if @summary&.save
+      redirect_to group_summaries_path(@group), notice: 'メモが保存されました'
+    else
+      flash.now[:alert] = 'メモの保存ができませんでした'
+      render :new, status: :unprocessable_entity
     end
   end
 
