@@ -75,6 +75,12 @@ gem 'bootsnap', require: false
 gem 'pry-byebug'
 gem 'pry-rails'
 
+#モデルスペック
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+end
+
 # lintチェック
 gem 'rubocop', require: false
 gem 'rubocop-capybara', require: false
