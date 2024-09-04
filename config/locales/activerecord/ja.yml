@@ -13,6 +13,7 @@ ja:
         created_at: 作成日時
       spot: 
         registered_title: タイトル
+        start_datetime: 練習開始日時
         address: 住所
         lat: 緯度
         lng: 経度
