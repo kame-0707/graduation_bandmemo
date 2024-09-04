@@ -101,7 +101,7 @@ https://bandmemo-app.com/
 
 | カテゴリ | 技術 |
 | --- | --- |
-| フロントエンド | Rails 7.1.3.3 (Hotwire/Turbo), TailwindCSS, DaisyUI |
+| フロントエンド | Rails 7.1.3.3 (Hotwire/Turbo), JavaScript, TailwindCSS, DaisyUI |
 | バックエンド | Rails 7.1.3.3 (Ruby 3.2.3 ) |
 | データベース | PostgreSQL |
 | 認証 | Sorcery |
