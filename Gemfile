@@ -108,3 +108,6 @@ group :test do
   gem 'selenium-webdriver'
   gem "webdrivers"
 end
+
+#カバレッジ計測
+gem 'simplecov', require: false, group: :test
