@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -20,7 +22,7 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
 
@@ -40,7 +42,7 @@ RSpec.configure do |config|
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
     Capybara.ignore_hidden_elements = false
   end
-  
+
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]

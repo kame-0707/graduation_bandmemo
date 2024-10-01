@@ -1,0 +1,199 @@
+ja:
+  time:
+    am: 午前
+    formats:
+        default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+        long: "%Y/%m/%d %H:%M"
+        short: "%m/%d %H:%M"
+  defaults: 
+    show: 詳細
+    edit: 編集
+    delete: 削除
+    delete_confirm: 削除しますか
+  helpers:
+    submit:
+      create: 登録
+      submit: 保存
+      update: 更新する
+      post: 投稿する
+      application: 送信する
+    label:
+      email: メールアドレス
+      password: パスワード
+      name: 名前
+    authenticate:
+      failure: ログインしてください
+  users:
+    new:
+      title: ユーザー登録
+      to_login_page: ログインページへ
+    create:
+      success: ユーザー登録が完了しました
+      failure: ユーザー登録ができませんでした
+  user_sessions:
+    new:
+      title: ログイン
+      login: ログイン
+      to_register_page: 新規登録ページへ
+      password_forget: パスワードをお忘れの方はこちら
+    create:
+      success: ログインしました
+      failure: ログインできませんでした
+    destroy:
+      success: ログアウトしました
+  password_resets:
+    new:
+      title: パスワードリセット申請
+      send: 送信する
+      to_login_page: ログインページへ
+    edit:
+      title: パスワードリセット
+    create:
+      success: パスワードリセット手順を送信しました
+    update:
+      success: パスワードが更新されました
+  profiles:
+    show:
+      title: プロフィール
+    edit:
+      title: プロフィール編集
+    update:
+      success: ユーザーを更新しました
+      failure: ユーザーを更新出来ませんでした
+  groups:
+    index:
+      title: グループ一覧
+      no_result: グループ一覧がありません
+      group_name: グループ名
+      people: 人数
+      status: ステータス
+      join: 加入・入室
+      details: 詳細
+      waiting_approval: オーナー：承認待ちユーザーがいます
+      owner: オーナー
+      joining: 加入中
+      pending: 加入申請中
+      cancell: 申請取消
+      enter_room: 入室
+      application: 加入申請
+    new:
+      title: グループ作成
+      group_name: バンド・グループ名
+      introduction: 紹介文
+    show:
+      title: グループ詳細
+      group_name: グループ名
+      introduction: 紹介文
+      exit: 脱退
+      only_owner: オーナー専用
+      exit_confirm: 本当に脱退しますか
+      waiting_approval_list: 承認待ち一覧
+      group_edit: グループ編集
+      group_delete: グループ削除
+      delete_confirm: 本当に削除しますか？※グループ内のデータは全て削除されます。
+      to_index: グループ一覧に戻る
+    edit:
+      title: グループ編集
+      group_name: バンド・グループ名
+      introduction: 紹介文
+      submit: 編集して保存
+      to_show: グループ詳細に戻る
+    create:
+      success: グループが作成されました
+      failure: グループを作成できませんでした
+    update:
+      success: グループが更新されました
+      failure: グループを更新できませんでした
+    destroy:
+      deleted: グループが削除されました
+    alert:
+      owner_authority: グループ作成者のみ編集可能です
+  permits:
+    index:
+      title: 承認待ち一覧
+      join_permisssion: 加入許可
+      no_result: 承認待ちユーザーはいません。
+      to_group_index: 戻る
+  spots:
+    index:
+      title:
+    new:
+      title: 
+    show:
+      title:
+    edit: 
+      title:
+    create: 
+      success: 
+      failure: 
+    update:
+      success: 
+      failure:
+    destroy:
+      deleted:
+  voices:
+    index:
+      title:
+    new:
+      title: 
+    show:
+      title:
+    edit: 
+      title:
+    create: 
+      success: 
+      failure: 
+    update:
+      success: 
+      failure:
+    destroy:
+      deleted:
+  summaries:
+    index:
+      title:
+    new:
+      title: 
+    show:
+      title:
+    edit: 
+      title:
+    create: 
+      success: 
+      failure: 
+    update:
+      success: 
+      failure:
+    destroy:
+      deleted:
+  comments:
+    new:
+      title: 
+    create: 
+      success: 
+      failure: 
+    destroy:
+      deleted: 
+  likes:
+    create: 
+    destroy: 
+  videos:
+    index:
+      title:
+    new:
+      title: 
+    edit: 
+      title:
+    create: 
+      success: 
+      failure: 
+    update:
+      success: 
+      failure:
+    destroy:
+      deleted:
+  header:
+    login: ログイン
+    logout: ログアウト
+    profile: プロフィール
+    create_group: グループを作成する
+    group_index: グループ一覧

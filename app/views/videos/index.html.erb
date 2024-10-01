@@ -18,7 +18,7 @@
                   <%= link_to edit_group_video_path(@group, video) do %>
                       <i class="fa-solid fa-pen"></i>
                   <% end %>
-                  <%= link_to group_video_path(@group, video), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                  <%= link_to group_video_path(@group, video), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do %>
                       <i class="fa-solid fa-trash"></i>
                   <% end %>
                 </div>               

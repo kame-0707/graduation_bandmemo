@@ -34,7 +34,7 @@ class PersonalSummariesController < ApplicationController
                  current_user.summaries.new(title: summary_params[:title], content: summary_params[:content],
                                             summary: summary_text, user: current_user)
                elsif params[:commit] == 'そのまま保存'
-                current_user.summaries.new(title: summary_params[:title], content: input_content,
+                 current_user.summaries.new(title: summary_params[:title], content: input_content,
                                             summary: nil, user: current_user)
                end
     @summary.group_id = nil if params[:summary][:group_id].blank?

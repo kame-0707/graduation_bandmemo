@@ -15,7 +15,7 @@
       <% end %>
     </div>
     <div class="mr-4">
-      <%= link_to group_spot_path, data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do%>
+      <%= link_to group_spot_path, data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do%>
         <i class="fa-solid fa-trash"></i>
       <% end %>
     </div>

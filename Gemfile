@@ -75,10 +75,10 @@ gem 'bootsnap', require: false
 gem 'pry-byebug'
 gem 'pry-rails'
 
-#モデルスペック
+# モデルスペック
 group :development, :test do
-  gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'rspec-rails'
 end
 
 # lintチェック
@@ -106,8 +106,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem "webdrivers"
+  gem 'webdrivers'
 end
 
-#カバレッジ計測
+# カバレッジ計測
 gem 'simplecov', require: false, group: :test

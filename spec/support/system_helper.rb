@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module SystemHelper
   def login_as(user)
     visit root_path
-    click_link "ログイン"
+    click_link 'ログイン'
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: '12345678'
     click_button 'ログイン'
-    Capybara.assert_current_path("/", ignore_query: true)
+    Capybara.assert_current_path('/', ignore_query: true)
   end
 end
 

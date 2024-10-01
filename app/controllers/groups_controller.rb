@@ -24,18 +24,18 @@ class GroupsController < ApplicationController
     @group.owner_id = current_user.id
     if @group.save
       GroupUser.create(user_id: current_user.id, group_id: @group.id)
-      redirect_to groups_path, notice: 'グループが作成されました'
+      redirect_to groups_path, notice: t('groups.create.success')
     else
-      flash.now[:alert] = 'グループを作成できませんでした'
+      flash.now[:alert] = t('groups.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
     if @group.update(group_params)
-      redirect_to groups_path, notice: 'グループが更新されました'
+      redirect_to groups_path, notice: t('groups.update.success')
     else
-      flash.now[:alert] = 'グループを更新できませんでした'
+      flash.now[:alert] = t('groups.update.failure')
       render :edit, status: :unprocessable_entity
     end
   end
@@ -43,7 +43,7 @@ class GroupsController < ApplicationController
   def destroy
     group = @group
     group.destroy!
-    redirect_to groups_path, status: :see_other, notice: 'グループが削除されました'
+    redirect_to groups_path, status: :see_other, notice: t('groups.destroy.deleted')
   end
 
   def permits
@@ -63,6 +63,6 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     return if @group.owner_id == current_user.id
 
-    redirect_to group_path(@group), alert: 'グループ作成者のみ編集可能です'
+    redirect_to group_path(@group), alert: t('groups.alert.owner_authority')
   end
 end

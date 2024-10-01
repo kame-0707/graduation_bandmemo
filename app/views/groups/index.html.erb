@@ -1,14 +1,13 @@
-<div class="text-center text-xl font-bold mt-10 mb-4">グループ一覧</div >
+<div class="text-center text-xl font-bold mt-10 mb-4"><%= t('groups.index.title') %></div >
 <div class="overflow-x-auto">
   <table class="table table-xs table-pin-rows table-pin-cols mx-4">
     <thead>
       <tr>
-        <td>グループ名</td>
-
-        <td>人数</td>
-        <td>ステータス</td>
-        <td>加入・入室</td>
-        <td>詳細</td>
+        <td><%= t('groups.index.group_name') %></td>
+        <td><%= t('groups.index.people') %></td>
+        <td><%= t('groups.index.status') %></td>
+        <td><%= t('groups.index.join') %></td>
+        <td><%= t('groups.index.details') %></td>
       </tr>
     </thead>
     <tbody>
@@ -19,28 +18,28 @@
           <td><%= group.group_users.count %></td>
           <td>
             <% if group.owner_id == current_user.id && group.permits.exists? %>
-              <p class="text-blue-600">オーナー：承認待ちユーザーがいます</p>
+              <p class="text-blue-600"><%= t('groups.index.waiting_approval') %></p>
             <% elsif group.owner_id == current_user.id %>
-              オーナー
+              <%= t('groups.index.owner') %>
             <% elsif (group.owner_id != current_user.id) && (group.group_users.exists?(user_id: current_user.id)) %>
-              加入中
+              <%= t('groups.index.joining') %>
             <% elsif (group.owner_id != current_user.id) && (group.permits.exists?(user_id: current_user.id)) %>
-              加入申請中
+              <%= t('groups.index.pending') %>
             <% else %>
             <% end %>
           </td>
           <td>
             <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
             <% if group.permits.exists?(user_id: current_user.id) %>
-              <%= link_to '申請取消', group_permits_path(group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %> 
+              <%= link_to t('groups.index.cancell'), group_permits_path(group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "申請取消しますか" } %> 
             <% elsif group.group_users.exists?(user_id: current_user.id) %>
-              <%= link_to '入室', group_spots_path(group), class: "btn btn-outline btn-sm btn-secondary" %>   
+              <%= link_to t('groups.index.enter_room'), group_spots_path(group), class: "btn btn-outline btn-sm btn-secondary" %>   
             <% elsif (group.owner_id != current_user.id) %>
-              <%= button_to '加入申請', group_permits_path(group), class: "btn btn-sm btn-success" %>
+              <%= button_to t('groups.index.application'), group_permits_path(group), class: "btn btn-sm btn-success" %>
             <% end %>
           </td>
           <td>
-            <%= link_to '詳細', group_path(group), class: "btn btn-outline btn-sm btn-secondary" %>
+            <%= link_to t('groups.index.details'), group_path(group), class: "btn btn-outline btn-sm btn-secondary" %>
           </td>
         </tr>
       <% end %>

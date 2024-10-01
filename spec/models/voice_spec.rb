@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Voice, type: :model do
-
   context '全てのフィールドが有効な場合' do
     it '有効であること' do
       voice = build(:voice)
@@ -19,14 +20,14 @@ RSpec.describe Voice, type: :model do
 
   context '音声が65535文字以下の場合' do
     it '有効であること' do
-      voice = build(:voice, content: 'a' * 65535)
+      voice = build(:voice, content: 'a' * 65_535)
       expect(voice).to be_valid
     end
   end
 
   context '音声が65536文字以上の場合' do
     it '無効であること' do
-      voice = build(:voice, content: 'a' * 65536)
+      voice = build(:voice, content: 'a' * 65_536)
       expect(voice).to be_invalid
       expect(voice.errors[:content]).to include('は65535文字以内で入力してください')
     end

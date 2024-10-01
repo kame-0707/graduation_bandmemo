@@ -1,4 +1,4 @@
-<div class="text-center text-xl font-bold mt-10">ユーザー登録</div>
+<div class="text-center text-xl font-bold mt-10"><%= t('users.new.title') %></div>
 
 <div class="flex flex-col items-center mt-4">
   <%= form_with model: @user, url: users_path do |f| %>
@@ -30,7 +30,7 @@
     </div>
   <% end %>
   <div class='text-center text-blue-600 underline'>
-    <%= link_to 'ログインページへ', login_path %>
+    <%= link_to t('users.new.to_login_page'), login_path %>
   </div>
 </div>
 

@@ -1,7 +1,7 @@
 <div class="flex justify-center">
   <div class="row">
     <div class="col-md-10 col-lg-8 mx-auto">
-      <h1 class="text-center text-xl font-bold mt-10">パスワードリセット</h1>
+      <h1 class="text-center text-xl font-bold mt-10"><%= t('password_resets.edit.title') %></h1>
       <%= form_with model: @user, url: password_reset_path(@token) do |f| %>
       <%= render 'shared/error_messages', object: f.object%>
         <div class="my-3">
@@ -18,7 +18,7 @@
           <%= f.password_field :password_confirmation, rows: 1, class: "rounded-lg p-4 w-full"%>
         </div>
         <div class="flex justify-center">
-            <%= f.submit "更新する", class: "btn btn-primary" %>
+            <%= f.submit t('helpers.submit.update'), class: "btn btn-primary" %>
         </div>
       <% end %>
     </div>

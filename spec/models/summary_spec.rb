@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Summary, type: :model do
-
   context '全てのフィールドが有効な場合' do
     it '有効であること' do
       summary = build(:summary)
@@ -42,14 +43,14 @@ RSpec.describe Summary, type: :model do
 
   context '本文が65535文字以内の場合' do
     it '有効であること' do
-      summary = build(:summary, content: 'a' * 65535)
+      summary = build(:summary, content: 'a' * 65_535)
       expect(summary).to be_valid
     end
   end
 
   context '本文が65536文字以上の場合' do
     it '無効であること' do
-      summary = build(:summary, content: 'a' * 65536)
+      summary = build(:summary, content: 'a' * 65_536)
       expect(summary).to be_invalid
       expect(summary.errors[:content]).to include('は65535文字以内で入力してください')
     end

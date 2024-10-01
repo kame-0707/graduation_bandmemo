@@ -7,7 +7,7 @@
     <td class="action">
       <ul class="list-inline justify-content-center" style="float: right;">
         <li class="list-inline-item">
-          <%= link_to personal_summary_personal_comment_path(summary, comment), class: "delete-comment-link", data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+          <%= link_to personal_summary_personal_comment_path(summary, comment), class: "delete-comment-link", data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do %>
             <i class="fa-solid fa-trash"></i>
           <% end %>
         </li>

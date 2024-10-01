@@ -11,9 +11,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       auto_login(@user)
-      redirect_to root_path, notice: 'ユーザー登録が完了しました'
+      redirect_to root_path, notice: t('users.create.success')
     else
-      flash.now[:alert] = 'ユーザー登録ができませんでした'
+      flash.now[:alert] = t('users.create.failure')
       render :new
     end
   end

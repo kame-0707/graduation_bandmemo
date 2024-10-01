@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get 'tries/summary_index' => 'tries#summary_index'
   get 'tries/video' => 'tries#video'
 
-
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update destroy]
   resources :password_resets, only: %i[new create edit update]

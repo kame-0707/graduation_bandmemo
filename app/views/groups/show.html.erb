@@ -1,15 +1,15 @@
-<div class="text-center text-xl font-bold mt-10 mb-4">グループ詳細</div >
+<div class="text-center text-xl font-bold mt-10 mb-4"><%= t('groups.show.title') %></div >
 <div class="overflow-x-auto">
   <table class="table table-xs table-pin-rows table-pin-cols mx-4">
     <thead>
       <tr>
-        <th>グループ名</th>
-        <th>紹介文</th>
+        <th><%= t('groups.show.group_name') %></th>
+        <th><%= t('groups.show.introduction') %></th>
         <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
-          <th>脱退</th>
+          <th><%= t('groups.show.exit') %></th>
         <% end %>
         <% if @group.owner_id == current_user.id %>
-          <th>オーナー専用</th>
+          <th><%= t('groups.show.only_owner') %></th>
         <% end %>
       </tr>
     </thead>
@@ -20,15 +20,15 @@
             <%# 自分のuser_idを持つgroup_userがあるかどうかで、ボタンの表示を変更 %>
             <% if (@group.owner_id != current_user.id) && (@group.group_users.exists?(user_id: current_user.id)) %>
               <td>
-                <%= link_to '脱退', group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "本当に脱退しますか" } %>
+                <%= link_to t('groups.show.exit'), group_group_users_path(@group), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: t('groups.show.exit_confirm') } %>
               </td>
             <% end %>
             <% if @group.owner_id == current_user.id %>
               <td>
                 <div class="flex flex-col space-y-1 ">
-                  <%= link_to '承認待ち一覧', permits_path(@group),  class: "btn btn-sm btn-outline btn-info w-1/2" %> 
-                  <%= link_to 'グループ編集', edit_group_path(@group), class: "btn btn-sm btn-outline btn-success w-1/2" %>
-                  <%= link_to 'グループ削除', group_path(@group), class: "btn btn-sm btn-outline btn-error w-1/2", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？※グループ内のデータは全て削除されます。" }%>
+                  <%= link_to t('groups.show.waiting_approval_list'), permits_path(@group),  class: "btn btn-sm btn-outline btn-info w-1/2" %> 
+                  <%= link_to t('groups.show.group_edit'), edit_group_path(@group), class: "btn btn-sm btn-outline btn-success w-1/2" %>
+                  <%= link_to t('groups.show.group_delete'), group_path(@group), class: "btn btn-sm btn-outline btn-error w-1/2", data: { turbo_method: :delete, turbo_confirm: t('groups.show.delete_confirm') }%>
                 </div>
               </td> 
             <% end %>
@@ -37,6 +37,6 @@
   </table>
 </div>
 <div class="flex justify-center mt-4 mx-4">
-  <%= link_to 'グループ一覧に戻る', groups_path,  class: "btn btn-success" %> 
+  <%= link_to t('groups.show.to_index'), groups_path,  class: "btn btn-success" %> 
 </div>
 

@@ -32,7 +32,7 @@
                   <%= link_to edit_personal_summary_path(summary) do %>
                       <i class="fa-solid fa-pen"></i>
                   <% end %>
-                  <%= link_to personal_summary_path(summary), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                  <%= link_to personal_summary_path(summary), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do %>
                       <i class="fa-solid fa-trash"></i>
                   <% end %>
                 </div>

@@ -1,17 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'ユーザー登録', type: :system do
   context '入力情報正常系' do
     it 'ユーザーが新規作成できること' do
       visit '/users/new'
-      expect {
+      expect do
         fill_in '名前', with: 'たーとる'
         fill_in 'メールアドレス', with: 'example@example.com'
         fill_in 'パスワード', with: '12345678'
         fill_in 'パスワード確認', with: '12345678'
         click_button '登録'
-        Capybara.assert_current_path("/", ignore_query: true)
-      }.to change { User.count }.by(1)
+        Capybara.assert_current_path('/', ignore_query: true)
+      end.to change { User.count }.by(1)
       expect(page).to have_content('ユーザー登録が完了しました'), 'フラッシュメッセージ「ユーザー登録が完了しました」が表示されていません'
     end
   end
@@ -19,10 +21,10 @@ RSpec.describe 'ユーザー登録', type: :system do
   context '入力情報異常系' do
     it 'ユーザーが新規作成できない' do
       visit '/users/new'
-      expect {
+      expect do
         fill_in 'メールアドレス', with: 'example@example.com'
         click_button '登録'
-      }.to change { User.count }.by(0)
+      end.to change { User.count }.by(0)
       expect(page).to have_content('ユーザー登録ができませんでした'), 'フラッシュメッセージ「ユーザー登録ができませんでした」が表示されていません'
       expect(page).to have_content('名前を入力してください'), 'エラーメッセージ「名前を入力してください」が表示されていません'
       expect(page).to have_content('パスワードは3文字以上で入力してください'), 'フラッシュメッセージ「パスワードは3文字以上で入力してください」が表示されていません'

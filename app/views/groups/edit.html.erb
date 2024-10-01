@@ -1,24 +1,24 @@
-<div class="text-center text-xl font-bold mt-10">グループ編集</div>
+<div class="text-center text-xl font-bold mt-10"><%= t('groups.edit.title') %></div>
 
 <div class="flex flex-col items-center mt-4">
   <%= form_with model: @group, local: true do |form| %>
   <%= render 'shared/error_messages', object: form.object%>
     <div class="grid grid-cols-1 gap-4 justify-items-center mx-auto">
-      <%= form.label :name, 'グループ名'%>
+      <%= form.label :name, t('groups.edit.group_name')%>
       <%= form.text_area :name, rows: 1, class: "rounded-lg p-4 w-[90vw]" %>
-      <%= form.label :introduction, 'グループ紹介'%>
+      <%= form.label :introduction, t('groups.edit.introduction')%>
       <%= form.text_area :introduction, rows: 1, class: "rounded-lg p-4 w-[90vw]" %>
     </div>
     <div class="flex justify-center mt-4 mx-4">
       <div class="mr-4"">
         <button class="btn btn-outline btn-success">
-          <div class="text-xs"><%= form.submit "編集して保存" %></div>
+          <div class="text-xs"><%= form.submit t('groups.edit.submit') %></div>
         </button>
       </div>
       <div class="mr-4"">
         <%= link_to group_path(@group) do %>
           <button class="btn btn-outline btn-secondary">
-            <div class="text-xs">グループ詳細に戻る</div>
+            <div class="text-xs"><%= form.submit t('groups.edit.to_show') %></div>
           </button>
         <% end %>
       </div>

@@ -84,7 +84,6 @@ Rails.application.config.sorcery.configure do |config|
   #
   config.external_providers = %i[google line]
 
-
   # You can change it by your local ca_file. i.e. '/etc/pki/tls/certs/ca-bundle.crt'
   # Path to ca_file. By default use a internal ca-bundle.crt.
   # Default: `'path/to/ca_file'`
@@ -118,7 +117,7 @@ Rails.application.config.sorcery.configure do |config|
   # 外部サービスから取得したユーザー情報をUserモデルの指定した属性にマッピング
   config.google.user_info_mapping = { email: 'email', name: 'name' }
 
-  #line認証
+  # line認証
   config.line.key = Rails.application.credentials.dig(:line, :channel_id)
   config.line.secret = Rails.application.credentials.dig(:line, :channel_secret)
   config.line.callback_url = 'https://bandmemo-app.com/oauth/callback?provider=line'

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Video, type: :model do
-
   context '全てのフィールドが有効な場合' do
     it '有効であること' do
       video = build(:video)

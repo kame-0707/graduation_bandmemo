@@ -17,7 +17,7 @@
                   <%= link_to edit_personal_video_path(video) do %>
                       <i class="fa-solid fa-pen"></i>
                   <% end %>
-                  <%= link_to personal_video_path(video), data: { turbo_method: :delete, turbo_confirm: "削除しますか" } do %>
+                  <%= link_to personal_video_path(video), data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do %>
                       <i class="fa-solid fa-trash"></i>
                   <% end %>
                 </div>               
