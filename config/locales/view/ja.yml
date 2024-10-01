@@ -115,14 +115,26 @@ ja:
       no_result: 承認待ちユーザーはいません。
       to_group_index: 戻る
   spots:
-    index:
-      title:
+    index: 
+      title: スタジオ一覧
+      to_new: スタジオ登録画面へ
+      to_show: 詳細
+      no_result: 登録したスタジオが見つかりません
     new:
-      title: 
+      title: スタジオを登録
+      start_time: 練習開始日時
+      register_studio: ②スタジオ一覧に登録する
+      to_index: スタジオ一覧に戻る
     show:
-      title:
+      title: 登録したスタジオ詳細
+      post_name: 【登録タイトル】
+      start_time: 【練習開始日時】
+      person_name: 【投稿者名】
+      to_index: スタジオ一覧に戻る
     edit: 
-      title:
+      title: スタジオ編集
+      post_name: 登録タイトル
+      start_time: 練習開始日時
     create: 
       success: 
       failure: 

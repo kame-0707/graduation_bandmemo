@@ -1,19 +1,19 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold my-2">スタジオ編集</div>
+<div class="text-center text-xl font-bold my-2"><%= t('spots.edit.title') %></div>
 
 <div class="flex flex-col items-center mt-4">
   <%= form_with model: @spot, url: group_spot_path(@group) do |f| %>
   <%= render 'shared/error_messages', object: f.object%>
     <div class="grid grid-cols-1 gap-4 justify-items-center max-w-4xl mx-auto">
-      <%= f.label :registered_title, '登録タイトル' %>
+      <%= f.label :registered_title, t('spots.edit.post_name') %>
       <%= f.text_area :registered_title, rows: 1, class: "rounded-lg p-4 w-full" %>
-      <%= f.label :start_datetime, '練習開始日時', class: "font-semibold"%>
+      <%= f.label :start_datetime, t('spots.edit.start_time'), class: "font-semibold"%>
       <%= f.datetime_field :start_datetime %>
     </div>
     <div class="flex justify-center mt-4 mx-4">
       <div class="mr-4"">
         <button class="btn btn-outline btn-success">
-          <div class="text-xs"><%= f.submit "更新する" %></div>
+          <div class="text-xs"><%= f.submit t('helpers.submit.update') %></div>
         </button>
       </div>
     </div>

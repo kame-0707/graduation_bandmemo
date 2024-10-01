@@ -1,11 +1,11 @@
 <%= render 'shared/band_name' %> 
-<div class="text-center text-xl font-bold my-2">登録したスタジオ詳細</div>
+<div class="text-center text-xl font-bold my-2"><%= t('spots.show.title') %></div>
 <div class="flex flex-col items-center">
-  <div class="mt-4 font-bold">【登録タイトル】</div>
+  <div class="mt-4 font-bold"><%= t('spots.show.post_name') %></div>
   <div class="mt-4"><%= @spot.registered_title %></div>
-  <div class="mt-4 font-bold">【練習開始日時】</div>
+  <div class="mt-4 font-bold"><%= t('spots.show.start_time') %></div>
   <div class="mt-4"><%= @spot.start_datetime.strftime("%Y/%m/%d %H:%M") %></div>
-  <div class="mt-4 font-bold">【投稿者名】</div>
+  <div class="mt-4 font-bold"><%= t('spots.show.person_name') %></div>
   <div class="mt-4"><%= @spot.user.name %></div>
 
   <div class="flex justify-center mt-4">
@@ -20,6 +20,6 @@
       <% end %>
     </div>
   </div>
-  <%= link_to "スタジオ一覧に戻る", group_spots_path(@group), class: "underline text-blue-600 my-4"%>
+  <%= link_to t('spots.show.to_index'), group_spots_path(@group), class: "underline text-blue-600 my-4"%>
 </div>
 <%= render 'shared/in_group_menu' %>

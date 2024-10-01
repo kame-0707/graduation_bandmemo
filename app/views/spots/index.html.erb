@@ -2,13 +2,13 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>スタジオ一覧</title>
+  <title><%= t('spots.index.title') %></title>
 </head>
 <body>
   <%= render 'shared/band_name' %> 
   <div class="flex flex-col items-center">
-    <div class="text-center text-xl font-bold my-2">スタジオ一覧</div>
-    <%= link_to 'スタジオ登録画面へ', new_group_spot_path(@group), class: "btn btn-sm btn-success mb-4" %>
+    <div class="text-center text-xl font-bold my-2"><%= t('spots.index.title') %></div>
+    <%= link_to t('spots.index.to_new'), new_group_spot_path(@group), class: "btn btn-sm btn-success mb-4" %>
   </div>
   <div id="map"></div>
 
@@ -32,12 +32,12 @@
                 <div class="text-sm text-gray-500 mt-2">練習開始：<%= spot.start_datetime.strftime("%Y/%m/%d %H:%M") %></div>
               </a>
             </div>
-            <%= link_to '詳細', group_spot_path(@group, spot), class: "btn btn-sm btn-success my-4 mx-4" %>
+            <%= link_to t('spots.index.to_show'), group_spot_path(@group, spot), class: "btn btn-sm btn-success my-4 mx-4" %>
           </div>
         </li>
       <% end %>
     <% else %>
-        <div>登録したスタジオが見つかりません</div>
+        <div><%= t('spots.index.no_result') %></div>
     <% end %>
   </ul>
   <%= render 'shared/in_group_menu' %>
