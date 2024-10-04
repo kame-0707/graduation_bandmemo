@@ -17,12 +17,6 @@ class ProfilesController < ApplicationController
   end
 
   def destroy
-    user = @user
-    user.destroy!
-    redirect_to root_path, status: :see_other, alert: 'ユーザーが削除されました'
-  end
-
-  def destroy
     if current_user.groups.exists?(owner_id: current_user.id)
       redirect_to profile_path, alert: '自分がオーナーのグループがあります。ユーザー削除をするためには、バンドメンバーに確認の上、自分がオーナーのグループを全て削除してから実行してください。'
     else

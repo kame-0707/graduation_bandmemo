@@ -83,8 +83,10 @@ end
 
 # lintチェック
 gem 'rubocop', require: false
-gem 'rubocop-capybara', require: false
 gem 'rubocop-rails', require: false
+gem "rubocop-performance", require: false
+gem "rubocop-rspec", require: false
+gem 'rubocop-capybara', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
