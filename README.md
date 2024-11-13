@@ -110,6 +110,10 @@ https://bandmemo-app.com/
 | Web API | Google Maps JavaScript API / Google Maps Places API / Google Maps Geocording API / Web Speech API / OpenAI API |
 | その他 | VCS: GitHub |
 
+## インフラ構成図
+
+[![Image from Gyazo](https://i.gyazo.com/1a9ac30ea367fe8bd6881eceb3690f5f.png)](https://gyazo.com/1a9ac30ea367fe8bd6881eceb3690f5f)
+
 ## 画面遷移図
 Figma: https://www.figma.com/design/iceBBDiXRMMOOlIupKZ8rL/%E4%BA%80%E6%BE%A4_%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0-1&t=IXuLFYm8TI1nnTZm-1
 
