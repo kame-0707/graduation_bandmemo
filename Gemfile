@@ -113,3 +113,6 @@ end
 
 #カバレッジ計測
 gem 'simplecov', require: false, group: :test
+
+#ダミーデータ作成
+gem 'faker'

@@ -9,3 +9,18 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+User.create!(
+  name:  "kamekame",
+  email: "brabra-1@practice.com",
+  password:              "password",
+  password_confirmation: "password"
+)
+
+99.times do |n|
+  Summary.create!(
+    title:  Faker::Music.band,
+    content: "brabra-#{n+1}",
+    user_id: 1
+    )
+end
